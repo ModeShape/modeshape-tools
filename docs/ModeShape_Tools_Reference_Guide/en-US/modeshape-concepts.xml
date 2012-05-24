@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>-->
+
+<section id="sect-ModeShape_Tools_Reference_Guide-Concepts-ModeShape">
+   <title>ModeShape</title>
+	 <para>
+	    ModeShape is a component that maintains repositories of resources for your application server, through the implementation of a JCR (Java Content Repository) view. The resources stored can come from many different kinds of systems. 
+	</para>
+	<para>
+	   To your applications, ModeShape looks and behaves like a regular JCR repository. Using the standard JCR API, applications can search, navigate and listen for changes in content. However, ModeShape retrieves its content by federating multiple back-end systems (such as databases, services and other repositories). This allows those systems to maintain ownership of the information, while ensuring the unified repository remains current.
+	</para>
+	<para>
+	   ModeShape repositories can be used in a variety of applications. One such application is provisioning and management. In provisioning and management it is critical to understand and keep track of the metadata for models, databases, services, components, applications, clusters, machines, and other systems used in an enterprise environment. Governance takes this further, by also tracking the policies and expectations against which performance can be verified. In these cases, a repository is an excellent mechanism for managing this complex and highly-varied information.
+	</para>
+	<para>
+	   A ModeShape repository does not have to be large and complex. It could be setup to only manage configuration information for an application, or provide a JCR interface on top of non-JCR systems.
+	</para>
+</section>
+

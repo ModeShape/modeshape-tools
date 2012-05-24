@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>-->
+<chapter id="chap-ModeShape_Tools_Reference_Guide-Tasks">
+	<title>Tasks</title>
+	<para>
+		This section outlines different tasks that can be achieved through the use of the ModeShape tools.
+	</para>
+	<xi:include href="register_a_new_repository-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="publish_or_unpublish_a_resource-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="setting_preferences-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</chapter>
+
+

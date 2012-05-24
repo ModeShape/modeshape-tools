@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>-->
+
+<section id="sect-ModeShape_Tools_Reference_Guide-Tasks-Publish_or_unpublish_a_resource">
+   <title>Publish or unpublish a resource</title>
+	 <para>
+	    Having registered your ModeShape server instances in <xref linkend="sect-ModeShape_Tools_Reference_Guide-Tasks-Register_a_repository_on_a_new_server"/>, you can now publish files to the repositories on these servers.
+	</para>
+	<para>
+	    Right-clicking on one or more projects, folders, or files in your Eclipse workspace will display the context menu for those files. This menu will now include a ModeShape submenu that allows you to publish or unpublish the resources to your ModeShape repository.
+        </para>
+	<para>
+	   When only one resource is selected you can also view the locations where that resource has been published. The published locations of a resource can be viewed by right-clicking on an individual resource and navigating the ModeShape context submenu to the <guimenuitem>Show Published Locations</guimenuitem> option.
+        </para>
+	<figure>
+	   <title>ModeShape context submenu</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/ModeShape_context_submenu.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   The ModeShape publishing wizard is displayed when you select <guimenuitem>publish</guimenuitem> or <guimenuitem>unpublish</guimenuitem> from the context menu.
+        </para>
+	<figure id="ModeShape_publishing_wizard">
+	   <title>ModeShape publishing wizard</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Publish_Wizard.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   The publishing wizard (shown in <xref linkend="ModeShape_publishing_wizard"/>) allows you to choose which ModeShape Java Content Repositories (JCR) type repository to interact with and displays the selected files the operation will be performed on. When a project or folder is selected all their included files are acted upon.
+        </para>
+	<para>
+	   Publishing to a <guilabel>Publish Area</guilabel> will automatically sequence your files to extract useful information and make it available to our repository users. Extracted information depends upon the type of file and the configuration of the ModeShape repository. The location where files will be published is constructed by appending the server URL, the names of the JCR repository and workspace, the path to the publish area, and the path of the files and folders within your Eclipse workspace. 
+	</para>
+	<para>
+		As ModeShape now allows for the versioning of pubilshed files you will notice a checkbox labelled <guilabel>Version the published files (change default in your preferences)</guilabel>. If you have selected to allow for file versioning in your ModeShape preferences then this checkbox will automatically be checked.
+	</para>
+	<para>
+		If your server instance does not permit the versioning of files, reguardless of the settings you choose in the preferences for ModeShape, the checkbox labelled <guilabel>Version the published files (change default in your preferences)</guilabel> will be greyed out.
+	</para>
+	<figure id="ModeShape_publishing_wizard-no_versioning">
+		<title>ModeShape publishing wizard - server without versioning ability</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/Publish_Wizard-no_versioning.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<warning>
+	    <para>
+		  When performing a publish operation, make sure you are aware of the following:
+	    </para>
+	    <itemizedlist>
+	       <listitem>
+		     <para>
+			   If you publish a file to a ModeShape repository where a version of the same file has previously been published to the repository by you or someone else, the publishing action will overwrite the file currently in the repository.
+		     </para>
+	       </listitem>
+	    </itemizedlist>
+	    <para>
+	       When performing an unpublish operation, make sure you are aware of the following:
+	    </para>
+	    <itemizedlist>
+		  <listitem>
+			<para>
+			      If you are interacting with a multi-user repository, the version of the file you are unpublishing may have been updated by someone else after you.
+			</para>
+		  </listitem>
+		  <listitem>
+			<para>
+			      It is important to be positive a file is no longer necessary when unpublishing as the file in question will be deleted from the repository with this operation.
+			</para>
+		  </listitem>
+	    </itemizedlist>
+	 </warning>
+	<para>
+	   When publishing or unpublishing files, you can see the operation output in the <guilabel>Console</guilabel> view. The type of information that you can view includes the repository where the operation took place, how long the operation took, the outcome for each file included in the operation, a hyperlink that allows you to open the file in an Eclipse editor, and a ModeShape repository workspace URL.
+        </para>
+	<figure id="publish_unpublish_console_output">
+	   <title>Console output</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/publish_unpublish_console_output.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   If you wish for certain folders or file types to never be published or unpublished, these conditions can be set through the ModeShape preferences dialog explained in <xref linkend="sect-ModeShape_Tools_Reference_Guide-Tasks-Setting_preferences"/> 
+        </para>
+</section>
+

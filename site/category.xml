@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description>
+      To install these features, point Eclipse at this site.
+   </description>
+   <feature url="features/org.jboss.tools.modeshape.jcr.feature_0.0.0.jar" id="org.jboss.tools.modeshape.jcr.feature" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.jcr.test.feature_0.0.0.jar" id="org.jboss.tools.modeshape.jcr.test.feature" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.rest.test.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.test.feature" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.jcr.feature.source_0.0.0.jar" id="org.jboss.tools.modeshape.jcr.feature.source" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.jcr.test.feature.source_0.0.0.jar" id="org.jboss.tools.modeshape.jcr.test.feature.source" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.rest.feature.source_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature.source" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <feature url="features/org.jboss.tools.modeshape.rest.test.feature.source_0.0.0.jar" id="org.jboss.tools.modeshape.rest.test.feature.source" version="0.0.0">
+      <category name="JBoss Tools modeshape Nightly Build Update Site"/>
+   </feature>
+   <category-def name="JBoss Tools modeshape Nightly Build Update Site" label="JBoss Tools modeshape Nightly Build Update Site">
+      <description>
+         JBoss Tools modeshape Nightly Build Update Site: contains all features in this build.
+      </description>
+   </category-def>
+</site>
