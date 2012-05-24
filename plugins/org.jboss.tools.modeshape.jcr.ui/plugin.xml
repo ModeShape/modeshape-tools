@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+-->
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.jboss.tools.modeshape.jcr.ui.cnd.CndEditor"
+            default="true"
+            extensions="cnd"
+            id="org.jboss.tools.modeshape.jcr.ui.cndEditor"
+            icon="icons/cnd-editor-16x.png"
+            name="%cndEditor.name">
+      </editor>
+   </extension>
+
+<!-- CND Preference Page -->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%cndPreferencePage.name"
+            category="modeShapePreferencePage"
+            class="org.jboss.tools.modeshape.jcr.ui.preferences.CndPreferencePage"
+            id="org.jboss.tools.modeshape.jcr.ui.jcrPreferencePage">
+      </page>
+   </extension>
+
+<!-- New wizards
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%modeShapeCategory.name"
+            id="org.modeshape">
+      </category>
+      <wizard
+            name="%newCndWizard.name"
+            icon="icons/new-cnd-wiz.png"
+            category="org.modeshape"
+            class="org.jboss.tools.modeshape.jcr.ui.cnd.NewCndWizard"
+            id="newCndWizard">
+         <description>
+            %newCndWizard.description
+         </description>
+      </wizard>
+   </extension> 
+ -->
+ <!--
+   <extension
+         id="cndMarker"
+         name="%cndMarker.name"
+         point="org.eclipse.core.resources.markers">
+         <super type="org.eclipse.core.resources.problemmarker" />
+         <persistent value="true" />
+   </extension>
+-->
+<!--
+   <extension
+         id="cndBuilder"
+         name="%cndBuilder.name"
+         point="org.eclipse.core.resources.builders">
+      <builder
+         callOnEmptyDelta="false"
+         hasNature="true"
+         isConfigurable="false"
+         supportsConfigurations="false">
+         <run
+            class="org.jboss.tools.modeshape.jcr.ui.cnd.CndBuilder">
+            <parameter name="optimize" value="true"/>
+            <parameter name="comment" value="%cndBuilder.name"/>
+         </run>
+      </builder>
+   </extension>
+-->
+</plugin>

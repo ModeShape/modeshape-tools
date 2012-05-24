@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>-->
+
+<section id="sect-ModeShape_Tools_Reference_Guide-Tasks-Register_a_repository_on_a_new_server">
+   <title>Register a repository on a new server</title>
+	 <para>
+		Registering a repository on a new server is achieved through the <guilabel>ModeShape</guilabel> view. To open the <guilabel>ModeShape</guilabel> view navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem></menuchoice>. From the <guilabel>Show View</guilabel> dialog select the <guimenuitem>ModeShape</guimenuitem> folder followed by the <guimenuitem>ModeShape</guimenuitem> view and click <guibutton>OK</guibutton>.
+	</para>
+	<figure>
+	   <title>Selecting the ModeShape view</title>
+	    <mediaobject>
+		  <imageobject>
+			<imagedata fileref="images/Show_View-ModeShape.png"/>
+		  </imageobject>
+	    </mediaobject>
+        </figure>
+	<para>
+	    To add a ModeShape repository, click on the <guilabel>Create a new server</guilabel> icon that appears in the <guilabel>Modeshape</guilabel> view. This view is located in the lower section of your interface, along with other views such as <guilabel>Severs</guilabel> and <guilabel>Console</guilabel>.
+        </para>
+	<figure id="Adding_a_new_server_for_ModeShape_repositories">
+	   <title>Adding a new server for ModeShape repositories</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/ModeShape_View-Create_a_new_server.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   The <guilabel>New Server</guilabel> dialog will then appear asking for the URL of the server to connect and your authentication information. You can test your connection to the server by clicking the <guibutton>Test</guibutton> button and then clicking the <guibutton>Finish</guibutton> button to add the server to the <guilabel>ModeShape</guilabel> view. 
+        </para>
+	<note>
+	    <para>
+	       Upon testing the connection, if a connection cannot be established, the ModeShape server can still be created. Use the <guibutton>Reconnect</guibutton> button on the ModeShape View's toolbar to try and connect again at a later time.
+	    </para>
+        </note>
+	<figure>
+	   <title>The New Server dialog</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/ModeShape_View-New_Server.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   Once the server with the ModeShape repository has been added three new options become available within the <guilabel>ModeShape</guilabel> view. These options allow you to <guilabel>Edit server properties</guilabel>, <guilabel>Delete a server from the server registry</guilabel> and <guilabel>Reconnect to the selected server</guilabel>. To perform one of these actions either right-click on a server and select from the presented menu of actions, or use the buttons beside the <guilabel>Create a new server</guilabel> button seen in <xref linkend="Adding_a_new_server_for_ModeShape_repositories"/>.
+	</para>
+	<note>
+	   <para>
+	      It is possible for a ModeShape server instance to have numerous ModeShape repositories stored on it. Once you have registered a connection to the server you will have access to all ModeShape repositories on the server. You do not need to register a new connection for each repository on the same server.
+	   </para>
+	</note>
+<!-- The functionality to delete a resource from the workspace using the Modeshape view does not currently exist, but could in a future version -->
+<!--	<para>
+	    The <guilabel>ModeShape</guilabel> view also allows you to remove files from a workspace.
+	 </para> -->
+</section>
+

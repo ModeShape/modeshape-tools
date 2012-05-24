@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>
+<bookinfo id="book-ModeShape_Tools_Reference_Guide-ModeShape_Tools_Reference_Guide">
+	<title>ModeShape Tools Reference Guide</title>
+	<subtitle>ModeShape tools allows you to interact with the contents of numerous ModeShape repositories.</subtitle>
+	<productname>JBoss Developer Studio</productname>
+	<productnumber>4.1</productnumber>
+	<edition>4.1.0</edition>
+	<pubsnumber>3</pubsnumber>
+	<abstract>
+		<para>
+			ModeShape Tools provides the ability to publish and remove content from ModeShape repositories.
+		</para>
+	</abstract>
+	<corpauthor>
+		<inlinemediaobject>
+			<imageobject>
+				<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG" />
+			</imageobject>
+		</inlinemediaobject>
+	</corpauthor>
+	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</bookinfo>
+

@@ -1,0 +1,81 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<h2>ModeShape Publishing Operations Dialog</h2>
+
+<p>The <i>Publishing Operations Dialog</i> is used to publish and unpublish workspace selected files and folders to/from 
+repository workspaces. When publishing, the selected files will be uploaded to the selected repository workspace. When 
+unpublishing, the selected files will be removed from the selected repository workspace (if they exist there). See the 
+<a href="ModeShapePreferencesDialog.html">ModeShape Preference Pages</a> to identify the file extensions and folder names you
+don't want involved in publishing operations. Here is what the <i>Publishing Operations Dialog</i> looks like:</p>
+
+<img src="images/PublishDialog.png" border="0" alt="">
+
+<p>The dialog consists of the following controls:</p>
+
+<table border="1">
+<tr>
+	<td align="right"><strong>Server Combo</strong>&nbsp;</td>
+	<td>allows selection of a registered ModeShape server (the <a href="ServerView.html">ModeShape View</a> lists all the 
+	registered servers)</td>
+</tr>
+<tr>
+	<td align="right"><strong>New Server Button</strong>&nbsp;</td>
+	<td>use to create and register a new server that is hosting one or more ModeShape repositories (see the 
+	<a href="ServerDialog.html">Server Dialog</a>)</td>
+</tr>
+<tr>
+	<td align="right"><strong>Repository Combo</strong>&nbsp;</td>
+	<td>allows selection of a repository found hosted on the selected server</td>
+</tr>
+<tr>
+	<td align="right"><strong>Workspace Combo</strong>&nbsp;</td>
+	<td>allows selection of a workspace of the selected repository</td>
+</tr>
+<tr>
+	<td align="right"><strong>Workspace Area Combo</strong>&nbsp;</td>
+	<td>allows selection of a known root path in the workspace where files will be sequenced (you can also choose to enter one of your own)</td>
+</tr>
+<tr>
+	<td align="right"><strong>Resources List</strong>&nbsp;</td>
+	<td>a list of all the selected files that will be published or unpublished</td>
+</tr>
+<tr>
+    <td align="right"><strong>Recurse Checkbox</strong>&nbsp;</td>
+    <td>when checked will recursively select all files within any selected folders</td>
+</tr>
+<tr>
+    <td align="right"><strong>Version Checkbox</strong>&nbsp;</td>
+    <td>when checked, the files being published will be marked as versionable within the ModeShape repository 
+    (initially set to the preference value). If disabled, the selected ModeShape repository either does not support versioning or
+    does not have versioning enabled.</td>
+</tr>
+<tr>
+    <td align="right"><strong>Preference Page Link</strong>&nbsp;</td>
+    <td>selecting this link will open the <a href="ModeShapePreferencesDialog.html#generalSettingsPrefPage">General Settings Preference Page</a>
+    where you can modify the setting that determines if published files will be marked as versionable by the ModeShape server</td>
+</tr>
+</table>
+
+<p>A server must be selected before a repository can be selected. Likewise, a repository must be selected before a workspace 
+can be selected. The message area at the top of the dialog will indicate the type of operation (publish or unpublish) and if 
+there is any missing information. The workspace area is a path segment in the workspace that will be used as the root path
+for the publishing operation. Once the workspace has been selected the 'Finish' button will be enabled and the operation 
+can be executed. These operations can be run in the background so that multiple operations can be run at the same time. 
+The <a href="ModeShapeMessageConsole.html">ModeShape Message Console</a> displays output from the operations.</p>
+
+<h3>Related Topics</h3>
+
+<ul>
+<li><a href="ModeShapeMessageConsole.html">ModeShape Message Console</a></li>
+<li><a href="ModeShapePreferencesDialog.html">ModeShape Preference Pages</a></li>
+<li><a href="ServerDialog.html">Server Dialog</a></li>
+</ul>

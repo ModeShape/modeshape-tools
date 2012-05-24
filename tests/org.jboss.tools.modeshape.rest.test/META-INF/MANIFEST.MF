@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in
+Bundle-SymbolicName: org.jboss.tools.modeshape.rest.test
+Bundle-Version: 1.1.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.jboss.tools.modeshape.rest,
+ org.junit4,
+ org.jboss.tools.modeshape.client
+Bundle-ClassPath: hamcrest-core-1.1.jar,
+ .,
+ junit-4.4.jar

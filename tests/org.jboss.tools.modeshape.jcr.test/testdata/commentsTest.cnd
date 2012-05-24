@@ -1,0 +1,84 @@
+/*
+ * JBoss, Home of Professional Open Source.
+ *
+ * See the LEGAL.txt file distributed with this work for information regarding copyright ownership and licensing.
+ *
+ * See the AUTHORS.txt file distributed with this work for a full listing of individual contributors.
+ */
+<ex = 'http://namespace.com/ns'>
+
+// comment above node type
+[ex:NodeType] // comment same line as node type name
+
+// comment above supertypes
+> ex:ParentType1, // comment same line as first supertype
+
+// comment between 2 supertypes
+ex:ParentType2 // comment same line as last supertype
+
+// comment above node type attributes
+abstract // comment same line as abstract node type attribute
+// comment between abstract and orderable node type attributes
+orderable // comment same line as orderable node type attribute
+// comment between orderable and mixin node type attributes
+mixin // comment same line as mixin node type attribute
+// comment between mixin and noquery node type attributes
+noquery // comment same line as noquery node type attribute
+// comment between noquery and primaryitem node type attributes
+primaryitem ex:property // comment same line as primaryitem node type attribute
+
+// comment above property
+- ex:property // comment same line as property name
+
+// comment above property type
+(STRING)
+
+// comment above default values
+= 'default1', // comment same line as first default value
+
+// comment between default values
+'default2' // comment same line as last default value
+
+// comment above property attributes
+mandatory // comment same line as mandatory property attribute
+// comment between mandatory and autocreated property attributes
+autocreated // comment same line as autocreated property attribute
+// comment between autocreated and protected property attributes
+protected // comment same line as protected property attribute
+// comment between protected and multiple property attributes
+multiple // comment same line as multiple property attribute
+// comment between multiple and VERSION property attributes
+VERSION // comment same line as VERSION property attribute
+// comment between VERSION and queryops property attributes
+queryops '=, <>, <, <=, >, >=, LIKE' // comment same line as queryops property attribute
+// comment between queryops and nofulltext property attributes
+nofulltext // comment same line as nofulltext property attribute
+// comment between nofulltext and noqueryorder property attributes
+noqueryorder // comment same line as noqueryorder property attribute
+
+// comment above value constraints
+< 'constraint1', // comment same line as first value constraint
+
+// comment between value constraints
+'constraint2' // comment same line as last value constraint
+
+// comment above child node
++ ex:node // comment same line as child node name
+
+// comment above required types
+(ex:reqType1, ex:reqType2) // comment same line as required types
+
+// comment above default type
+= ex:defaultType // comment same line as default type
+
+// comment above child node attributes
+mandatory // comment same line as mandatory child node attribute
+// comment between mandatory and autocreated child node attributes
+autocreated // comment same line as autocreated child node attribute
+// comment between autocreated and protected child node attributes
+protected // comment same line as protected child node attribute
+// comment between protected and sns child node attributes
+sns // comment same line as sns child node attribute
+// comment between sns and version child node attributes
+version // comment same line as version child node attribute
+ 

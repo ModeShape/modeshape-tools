@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+-->
+<plugin>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jboss.tools.modeshape.rest.actions.PublishHandler"
+            commandId="org.jboss.tools.modeshape.rest.actions.PublishCommand">
+         <enabledWhen>
+            <iterate ifEmpty="false">
+                <or>
+                   <instanceof
+                         value="org.eclipse.core.resources.IFile">
+                   </instanceof>
+                   <instanceof
+                         value="org.eclipse.core.resources.IFolder">
+                   </instanceof>
+                   <and>
+                      <instanceof
+                            value="org.eclipse.core.resources.IProject">
+                      </instanceof>
+                   </and>
+                </or>
+            </iterate>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.jboss.tools.modeshape.rest.actions.UnpublishHandler"
+            commandId="org.jboss.tools.modeshape.rest.actions.UnpublishCommand">
+         <enabledWhen>
+            <iterate ifEmpty="false">
+                <or>
+                   <instanceof
+                         value="org.eclipse.core.resources.IFile">
+                   </instanceof>
+                   <instanceof
+                         value="org.eclipse.core.resources.IFolder">
+                   </instanceof>
+                   <and>
+                      <instanceof
+                            value="org.eclipse.core.resources.IProject">
+                      </instanceof>
+                   </and>
+                </or>
+            </iterate>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.jboss.tools.modeshape.rest.actions.ShowPublishedLocationsHandler"
+            commandId="org.jboss.tools.modeshape.rest.actions.ShowPublishedLocationsCommand">
+         <enabledWhen>
+            <and>
+                <count value="1"/>
+                <iterate ifEmpty="false">
+                    <and>
+                        <instanceof value="org.eclipse.core.resources.IFile"/>
+                        <test
+                              property="org.eclipse.core.resources.persistentProperty"
+                              args="org.jboss.tools.modeshape.rest.publishedLocations">
+                        </test>
+                    </and>
+                </iterate>
+            </and>
+         </enabledWhen>
+      </handler>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.modeshape"
+            name="%modeShapeCategory">
+      </category>
+      <command
+            categoryId="org.modeshape"
+            id="org.jboss.tools.modeshape.rest.actions.PublishCommand"
+            name="%publishCommand.name">
+      </command>
+      <command
+            categoryId="org.modeshape"
+            id="org.jboss.tools.modeshape.rest.actions.UnpublishCommand"
+            name="%unpublishCommand.name">
+      </command>
+      <command
+            categoryId="org.modeshape"
+            id="org.jboss.tools.modeshape.rest.actions.ShowPublishedLocationsCommand"
+            name="%showPublishedLocationsCommand.name">
+      </command>
+   </extension>
+
+<!-- Define the popup menu contributions -->
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               label="%contextMenu.label">
+            <command
+                  commandId="org.jboss.tools.modeshape.rest.actions.PublishCommand"
+                  label="%publishCommand.name"
+                  icon="icons/views/publish.png"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.jboss.tools.modeshape.rest.actions.UnpublishCommand"
+                  label="%unpublishCommand.name"
+                  icon="icons/views/unpublish.png"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.jboss.tools.modeshape.rest.actions.ShowPublishedLocationsCommand"
+                  label="%showPublishedLocationsCommand.name"
+                  icon="icons/views/blank.gif"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                   <systemTest
+                         property="org.jboss.tools.modeshape.rest.serverExists"
+                         value="true">
+                   </systemTest>
+                    <iterate ifEmpty="false">
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.core.resources.IFile">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.core.resources.IFolder">
+                           </instanceof>
+                           <and>
+                              <instanceof
+                                    value="org.eclipse.core.resources.IProject">
+                              </instanceof>
+                           </and>
+                        </or>
+                    </iterate>
+               </and>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+
+<!-- View extensions -->
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.modeshape"
+            name="%modeShapeCategory">
+      </category>
+      
+      <!-- Server view -->
+      <view
+            id="serverView"
+            name="%serverView"
+            category="org.modeshape"
+            class="org.jboss.tools.modeshape.rest.views.ServerView"
+            fastViewWidthRatio="0.25"
+            icon="icons/objects/server.gif">
+      </view>
+   </extension>
+
+<!-- Decorator -->
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            lightweight="true"
+            location="BOTTOM_LEFT"
+            adaptable="true"
+            label="%decorator.label"
+            state="true"
+            class="org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider"
+            id="org.jboss.tools.modeshape.rest.decorator">
+         <description>
+            %decorator.description
+         </description>
+         <enablement>
+         <or>
+            <objectClass
+                  name="org.jboss.tools.modeshape.rest.domain.ModeShapeServer">
+            </objectClass>
+            <objectClass
+                  name="org.modeshape.web.jcr.rest.client.domain.IModeShapeObject">
+            </objectClass>
+            <objectClass
+                  name="org.eclipse.core.resources.IFile">
+            </objectClass>
+         </or>
+         </enablement>
+      </decorator>
+   </extension>
+
+<!-- Main Preference Page -->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%modeShapeCategory"
+            class="org.jboss.tools.modeshape.rest.preferences.ModeShapePreferencePage"
+            id="modeShapePreferencePage">
+      </page>
+   </extension>
+
+<!-- Ignored Resources Preference Page -->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%ignoredResourcesPreferencePage"
+            category="modeShapePreferencePage"
+            class="org.jboss.tools.modeshape.rest.preferences.IgnoredResourcesPreferencePage"
+            id="modeShapeIgnoredResourcesPreferencePage">
+      </page>
+
+<!-- Preference Initializer -->
+   </extension>
+        <extension
+            point="org.eclipse.core.runtime.preferences"
+            id="modeShapeDefaultPreferenceInitializer"
+            name="%preferenceInitializer">
+        <initializer class="org.jboss.tools.modeshape.rest.preferences.PreferenceInitializer" />
+    </extension>
+
+</plugin>

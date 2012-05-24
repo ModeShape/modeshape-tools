@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <!-- Initialize preference to default values. -->
+   <extension
+         id="org.jboss.tools.modeshape.jcr.preferences"
+         point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore">
+         </initializer>
+   </extension>
+
+</plugin>

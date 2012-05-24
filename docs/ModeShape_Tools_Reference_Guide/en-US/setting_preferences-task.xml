@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+   ]>-->
+<section id="sect-ModeShape_Tools_Reference_Guide-Tasks-Setting_preferences">
+   <title>Setting preferences</title>
+	<para>
+	The ModeShape <guilabel>Preferences</guilabel> dialog allows for resource versioning to be set along with specific file types and folders that you never wish to have published to or unpublished from a ModeShape repository. This dialog is accessed by navigating to <menuchoice>
+            <guimenuitem>Window</guimenuitem>
+            <guimenuitem>Preferences</guimenuitem>
+            <guimenuitem>ModeShape</guimenuitem>
+        </menuchoice>.
+	</para>
+	<figure id="Preferences_dialog">
+	   <title>ModeShape preferences dialog</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Preferences_dialog.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+		This dialog allows you to set whether resource versioning will be used for your ModeShape repository or not. Ensure the <guilabel>Enable resource versioning</guilabel> checkbox is ticked for resource versioning to be activated.
+	</para>
+	<para>
+		To manage the resources to be published to the repository, click on the <guimenuitem>Ignored Resources</guimenuitem> menu item under <guimenuitem>ModeShape</guimenuitem> in the main left <guilabel>Preferences</guilabel> menu.
+	</para>
+	<figure id="Preferences_dialog_02">
+		<title>ModeShape: Ignored Resources preferences dialog</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/Preferences_dialog_02.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>
+		At this screen you can manage the resources that will not be published to your ModeShape repository. The current excluded file types and folders is presented in the list of checkbox items that appears under the <guilabel>Ignored Resources</guilabel> heading.
+	</para>
+	<para>
+		To add a new file extension type or folder name to be filtered from publishing, click on the <guibutton>New</guibutton> button, enter the details and click the <guibutton>Apply</guibutton> button so that your preference changes are saved.
+	</para>
+	<figure id="Preferences_dialog_03">
+		<title>ModeShape: Ignored Resources preferences dialog</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/Preferences_dialog_03.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	 <para>
+	    Removing an entry is conducted by selecting an entry from the list in the <guilabel>Preferences</guilabel> dialog and clicking on the <guibutton>Remove</guibutton> button. Ensure that you click the <guibutton>Apply</guibutton> button so that your preference changes are saved.
+	 </para>
+	 <para>
+	    As the <guilabel>Preferences</guilabel> dialog lists file types and folders that will never be published to a repository, it follows that those listed will never be unpublished. If you decide to never have a certain file type or folder publishable, though it has been in the past, ensure that all instances of these are unpublished before setting any preferences for the file type or folder.
+	 </para>
+	 <note>
+	    <para>
+	       Publishing folders or files of a certain file type before setting any preferences inhibiting the publishing of these file types, can be a way of ensuring that you will never remove these files (unpublish) from your ModeShape repositories by accident. However since preference settings are only local to your working environment, in a multi-user ModeShape repository someone else could still remove these files.
+	    </para>
+	 </note>
+</section>
+

@@ -1,0 +1,20 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<toc label="ModeShape Publishing">
+   <topic label="Publishing Operations Dialog" href="PublishDialog.html"/>
+   <topic label="ModeShape View" href="ServerView.html"/>
+   <topic label="Server Dialog" href="ServerDialog.html"/>
+   <topic label="ModeShape Message Console" href="ModeShapeMessageConsole.html"/>
+   <topic label="Published Locations Dialog" href="PublishedLocationsDialog.html"/>
+   <topic label="ModeShape Context Menu" href="ResourceContextMenu.html"/>
+   <topic label="ModeShape Preferences Dialog" href="ModeShapePreferencesDialog.html"/>
+</toc>

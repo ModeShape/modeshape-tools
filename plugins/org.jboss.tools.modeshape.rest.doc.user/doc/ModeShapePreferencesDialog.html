@@ -1,0 +1,56 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<h2>ModeShape Preference Pages</h2>
+
+<p>The <i>ModeShape Preference Pages</i> provide settings that allow you to personalize how ModeShape Tools' publishing operations 
+are done. A publishing operation occurs when selected files in your local workspace are either uploaded (published) to, or deleted 
+(unpublished) from, a specific ModeShape repository workspace. Here's a list of the ModeShape Tools preference pages:</p>
+
+<ul>
+<li><a href="#generalSettingsPrefPage">General Settings</a> - these settings control if published files should be put under 
+version control by the ModeShape server.
+</li>
+<li><a href="#ignoredResourcesPrefPage">Ignored Resources</a> - these settings control which files are filtered out of your
+publishing operations.
+</li>
+</ul>
+
+<h3><a name="generalSettingsPrefPage">General Settings Preference Page</a></h3>
+
+<p>The <i>General Settings Preference Page</i> currently only has a setting to control if published resources should be versioned
+by the ModeShape server. This versioning preference is used by the <a href="PublishDialog.html">Publishing Operations Dialog</a>.</p>
+
+<p>Here is what the <i>ModeShape General Settings Preference Page</i> looks like:</p>
+
+<img src="images/GeneralPreferencePage.png" border="0" alt="">
+
+<h3><a name="ignoredResourcesPrefPage">Ignored Resources Preference Page</a></h3>
+
+<p>The <i>Ignored Resources Preference Page</i> is where you identify the name patterns of files and folders that you 
+<strong>do not</strong> want involved in your publishing operations.</p>
+
+<p>Here is what the <i>Ignored Resources Preference Page</i> looks like:</p>
+
+<img src="images/IgnoredResourcesPreferencePage.png" border="0" alt="">
+
+<p>If a file name matches one of these patterns, or is found in a folder whose name matches one of those patterns, it will not be 
+involved in either a publishing or unpublishing operation. To add new pattern click on the <code>New...</code> button to display 
+the following dialog:</p>
+
+<p><img src="images/NewPattern.png" border="0" alt=""></p>
+
+<h3>Related Topics</h3>
+
+<ul>
+<li><a href="ResourceContextMenu.html">ModeShape Context Menu</a></li>
+<li><a href="PublishDialog.html">Publishing Operations Dialog</a></li>
+</ul>
