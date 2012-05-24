@@ -1,4 +1,4 @@
 modeshape-tools
 ===============
 
-Eclipse plugins for working with JCR and ModeShpae
+JBoss Tools Eclipse plugins for working with JCR and ModeShape.
