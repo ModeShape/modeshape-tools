@@ -163,6 +163,11 @@ public final class Messages extends NLS {
     public static String emptyValue;
 
     /**
+     * A message indicating a property definition's value constraint is empty.
+     */
+    public static String emptyValueConstraint;
+
+    /**
      * A message indicating a property definition is missing value constraints. One parameter, the property definition name, is
      * required.
      */

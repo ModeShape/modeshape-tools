@@ -1629,7 +1629,11 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus validateValueConstraint( final String constraint ) {
-        Utils.verifyIsNotEmpty(constraint, "constraint"); //$NON-NLS-1$
+        try {
+            Utils.verifyIsNotEmpty(constraint, "constraint"); //$NON-NLS-1$
+        } catch (IllegalArgumentException e) {
+            return ValidationStatus.createErrorMessage(StatusCodes.EMPTY_VALUE_CONSTRAINT, Messages.emptyValueConstraint);
+        }
 
         // TODO implement validateValueConstraint to make sure constraint is property syntax
         return ValidationStatus.OK_STATUS;
@@ -1789,6 +1793,7 @@ public final class CndValidator {
         int EMPTY_VALUE_CONSTRAINTS = 285;
         int DUPLICATE_VALUE_CONSTRAINT = 290;
         int VALUE_CONSTRAINTS_EXIST_BUT_MARKED_AS_VARIANT = 295;
+        int EMPTY_VALUE_CONSTRAINT = 300;
     }
 
 }
