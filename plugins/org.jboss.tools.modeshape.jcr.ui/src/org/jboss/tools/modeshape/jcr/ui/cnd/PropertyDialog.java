@@ -57,6 +57,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.modeshape.jcr.ItemOwnerProvider;
 import org.jboss.tools.modeshape.jcr.Messages;
+import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
@@ -1134,8 +1135,12 @@ final class PropertyDialog extends FormDialog {
 
                         // check for duplicate
                         currentDefaultValues.add(newValue);
-                        return CndValidator.validateDefaultValues(propDefn.getName(), propDefn.getType(), currentDefaultValues,
-                                                                  accessExistingNamespacePrefixes());
+                        MultiValidationStatus validationStatus = CndValidator.validateDefaultValues(propDefn.getName(),
+                                                                                                    propDefn.getType(),
+                                                                                                    currentDefaultValues,
+                                                                                                    accessExistingNamespacePrefixes());
+                        currentDefaultValues.remove(newValue);
+                        return validationStatus;
                     }
                 };
 
@@ -1158,7 +1163,7 @@ final class PropertyDialog extends FormDialog {
 
     void handleAddValueConstraint() {
         final PropertyDefinition propDefn = getPropertyDefinition();
-        final Collection<String> currentConstraints = Arrays.asList(propDefn.getValueConstraints());
+        final Collection<String> currentConstraints = new ArrayList<String>(Arrays.asList(propDefn.getValueConstraints()));
         final StringValueEditorDialog dialog = new StringValueEditorDialog(getShell()) {
 
             /**
@@ -1191,7 +1196,10 @@ final class PropertyDialog extends FormDialog {
 
                         // check for duplicate
                         currentConstraints.add(newValue);
-                        return CndValidator.validateValueConstraints(propDefn.getName(), currentConstraints);
+                        MultiValidationStatus validationStatus = CndValidator.validateValueConstraints(propDefn.getName(),
+                                                                                                       currentConstraints);
+                        currentConstraints.remove(newValue);
+                        return validationStatus;
                     }
                 };
 
@@ -1301,8 +1309,12 @@ final class PropertyDialog extends FormDialog {
 
                         // check for duplicate
                         currentDefaultValues.add(newValue);
-                        return CndValidator.validateDefaultValues(propDefn.getName(), propDefn.getType(), currentDefaultValues,
-                                                                  accessExistingNamespacePrefixes());
+                        MultiValidationStatus validationStatus = CndValidator.validateDefaultValues(propDefn.getName(),
+                                                                                                    propDefn.getType(),
+                                                                                                    currentDefaultValues,
+                                                                                                    accessExistingNamespacePrefixes());
+                        currentDefaultValues.remove(newValue);
+                        return validationStatus;
                     }
                 };
 
@@ -1378,7 +1390,10 @@ final class PropertyDialog extends FormDialog {
 
                         // check for duplicate
                         currentConstraints.add(newValue);
-                        return CndValidator.validateValueConstraints(propDefn.getName(), currentConstraints);
+                        MultiValidationStatus validationStatus = CndValidator.validateValueConstraints(propDefn.getName(),
+                                                                                                       currentConstraints);
+                        currentConstraints.remove(newValue);
+                        return validationStatus;
                     }
                 };
 

@@ -205,6 +205,16 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void emptyValueConstraintShouldBeAnError() {
+        // setup
+        final ValidationStatus status = CndValidator.validateValueConstraint(Utils.EMPTY_STRING);
+
+        // tests
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.EMPTY_VALUE_CONSTRAINT)); //$NON-NLS-1$
+    }
+
+    @Test
     public void invalidQualifiedNameQualifierShouldBeAnError() {
         // setup
         final QualifiedName qname = new QualifiedName(Constants.QUALIFIER1 + "Changed", Constants.UNQUALIFIED_NAME1); //$NON-NLS-1$
@@ -407,6 +417,16 @@ public class CndValidatorTest {
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.EMPTY_QUERY_OPERATOR)); //$NON-NLS-1$
+    }
+
+    @Test
+    public void nullValueConstraintShouldBeAnError() {
+        // setup
+        final ValidationStatus status = CndValidator.validateValueConstraint(null);
+
+        // tests
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.EMPTY_VALUE_CONSTRAINT)); //$NON-NLS-1$
     }
 
     @Test
