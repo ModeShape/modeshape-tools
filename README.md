@@ -72,7 +72,7 @@ If the pull grabbed a lot of changes, you should rerun your build to make sure y
 
 and upload them to the JIRA issue, or you can push your topic branch and its changes into your public fork repository
 
-	$ git push origin mode-1234         # pushes your topic branch into your public fork of ModeShape
+	$ git push origin mode-1234         # pushes your topic branch into your public fork of ModeShape Tools
 
 and [generate a pull-request](http://help.github.com/pull-requests/) for your changes. 
 
