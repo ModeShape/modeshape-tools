@@ -14,19 +14,17 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.jcr.Binary;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.ValueFormatException;
-
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.Utils;
 
 /**
- * 
+ *
  */
 public class PropertyValue implements Value {
 
@@ -52,7 +50,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -71,7 +69,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getBinary()
      */
     @Override
@@ -80,7 +78,7 @@ public class PropertyValue implements Value {
         return new Binary() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.jcr.Binary#dispose()
              */
             @Override
@@ -90,7 +88,7 @@ public class PropertyValue implements Value {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.jcr.Binary#getSize()
              */
             @Override
@@ -100,7 +98,7 @@ public class PropertyValue implements Value {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.jcr.Binary#getStream()
              */
             @Override
@@ -110,7 +108,7 @@ public class PropertyValue implements Value {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.jcr.Binary#read(byte[], long)
              */
             @Override
@@ -165,7 +163,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getBoolean()
      */
     @Override
@@ -185,7 +183,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getDate()
      */
     @Override
@@ -206,7 +204,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getDecimal()
      */
     @Override
@@ -222,7 +220,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getDouble()
      */
     @Override
@@ -238,7 +236,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getLong()
      */
     @Override
@@ -254,10 +252,9 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getStream()
      */
-    @SuppressWarnings("deprecation")
     @Deprecated
     @Override
     public InputStream getStream() throws RepositoryException {
@@ -266,7 +263,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getString()
      */
     @Override
@@ -276,7 +273,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.Value#getType()
      */
     @Override
@@ -286,7 +283,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override

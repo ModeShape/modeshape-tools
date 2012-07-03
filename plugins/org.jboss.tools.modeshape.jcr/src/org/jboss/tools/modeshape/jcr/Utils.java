@@ -1,10 +1,14 @@
 package org.jboss.tools.modeshape.jcr;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.eclipse.osgi.util.NLS;
-import org.modeshape.common.util.HashCode;
 
 /*
  * JBoss, Home of Professional Open Source.
@@ -22,7 +26,7 @@ public final class Utils {
     /**
      * A double quote character string.
      */
-    public static final String DOUBLE_QUOTE = "\""; //$NON-NLS-1$ 
+    public static final String DOUBLE_QUOTE = "\""; //$NON-NLS-1$
 
     /**
      * And empty object array.
@@ -40,14 +44,21 @@ public final class Utils {
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
+     * Used when calculating hashcodes.
+     *
+     * @see #hashCode(Object...)
+     */
+    private static final int PRIME = 103;
+
+    /**
      * A single quote character string.
      */
-    public static final String SINGLE_QUOTE = "'"; //$NON-NLS-1$ 
+    public static final String SINGLE_QUOTE = "'"; //$NON-NLS-1$
 
     /**
      * A string with one space character.
      */
-    public static final String SPACE_STRING = " "; //$NON-NLS-1$ 
+    public static final String SPACE_STRING = " "; //$NON-NLS-1$
 
     /**
      * @param builder the builder where the text will be appended (cannot be <code>null</code>)
@@ -153,11 +164,46 @@ public final class Utils {
     }
 
     /**
-     * @param x the objects used to construct the hashcode (can contain <code>null</code> objects)
+     * Compute a combined hash code from the supplied objects. This method always returns 0 if no objects are supplied.
+     *
+     * @param objects the objects used to construct the hashcode (can contain <code>null</code> objects)
      * @return the hashcode
      */
-    public static final int hashCode( final Object... x ) {
-        return HashCode.compute(x);
+    public static final int hashCode( final Object... objects ) {
+        if ((objects == null) || (objects.length == 0)) {
+            return 0;
+        }
+
+        // Compute the hash code for all of the objects ...
+        int hc = 0;
+
+        for (Object object : objects) {
+            hc = PRIME * hc;
+
+            if (object instanceof byte[]) {
+                hc += Arrays.hashCode((byte[])object);
+            } else if (object instanceof boolean[]) {
+                hc += Arrays.hashCode((boolean[])object);
+            } else if (object instanceof short[]) {
+                hc += Arrays.hashCode((short[])object);
+            } else if (object instanceof int[]) {
+                hc += Arrays.hashCode((int[])object);
+            } else if (object instanceof long[]) {
+                hc += Arrays.hashCode((long[])object);
+            } else if (object instanceof float[]) {
+                hc += Arrays.hashCode((float[])object);
+            } else if (object instanceof double[]) {
+                hc += Arrays.hashCode((double[])object);
+            } else if (object instanceof char[]) {
+                hc += Arrays.hashCode((char[])object);
+            } else if (object instanceof Object[]) {
+                hc += Arrays.hashCode((Object[])object);
+            } else if (object != null) {
+                hc += object.hashCode();
+            }
+        }
+
+        return hc;
     }
 
     /**
@@ -182,6 +228,86 @@ public final class Utils {
      */
     public static boolean isEmpty( final String text ) {
         return ((text == null) || text.isEmpty());
+    }
+
+    /**
+     * Read and return the entire contents of the supplied {@link Reader}. This method always closes the reader when finished
+     * reading.
+     *
+     * @param reader the reader of the contents; may be null
+     * @return the contents, or an empty string if the supplied reader is null
+     * @throws IOException if there is an error reading the content
+     */
+    public static String read( Reader reader ) throws IOException {
+        if (reader == null) return "";
+        StringBuilder sb = new StringBuilder();
+        boolean error = false;
+        try {
+            int numRead = 0;
+            char[] buffer = new char[1024];
+            while ((numRead = reader.read(buffer)) > -1) {
+                sb.append(buffer, 0, numRead);
+            }
+        } catch (IOException e) {
+            error = true; // this error should be thrown, even if there is an error closing reader
+            throw e;
+        } catch (RuntimeException e) {
+            error = true; // this error should be thrown, even if there is an error closing reader
+            throw e;
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                if (!error) throw e;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Read and return the entire contents of the supplied {@link InputStream}. This method always closes the stream when finished
+     * reading.
+     *
+     * @param stream the streamed contents; may be null
+     * @return the contents, or an empty string if the supplied stream is null
+     * @throws IOException if there is an error reading the content
+     */
+    public static String read( InputStream stream ) throws IOException {
+        return stream == null ? "" : read(new InputStreamReader(stream));
+    }
+
+    /**
+     * Read and return the entire contents of the supplied {@link File}.
+     *
+     * @param file the file containing the information to be read; may be null
+     * @return the contents, or an empty string if the supplied reader is null
+     * @throws IOException if there is an error reading the content
+     */
+    public static String read( File file ) throws IOException {
+        if (file == null) return "";
+        StringBuilder sb = new StringBuilder();
+        boolean error = false;
+        Reader reader = new FileReader(file);
+        try {
+            int numRead = 0;
+            char[] buffer = new char[1024];
+            while ((numRead = reader.read(buffer)) > -1) {
+                sb.append(buffer, 0, numRead);
+            }
+        } catch (IOException e) {
+            error = true; // this error should be thrown, even if there is an error closing reader
+            throw e;
+        } catch (RuntimeException e) {
+            error = true; // this error should be thrown, even if there is an error closing reader
+            throw e;
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                if (!error) throw e;
+            }
+        }
+        return sb.toString();
     }
 
     /**

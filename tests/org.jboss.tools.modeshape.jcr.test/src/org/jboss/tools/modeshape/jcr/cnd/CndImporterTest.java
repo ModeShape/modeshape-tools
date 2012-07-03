@@ -12,7 +12,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,23 +19,21 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.nodetype.NodeDefinition;
 import javax.jcr.version.OnParentVersionAction;
-
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.text.ParsingException;
 import org.junit.Before;
 import org.junit.Test;
-import org.modeshape.common.text.ParsingException;
 
 /**
- * 
+ *
  */
 public class CndImporterTest {
 
