@@ -174,16 +174,39 @@ public final class Messages extends NLS {
     public static String emptyValueConstraints;
 
     /**
+     * A message indicating a positions of requested content is invalid. The parameters end index and start index are required.
+     */
+    public static String endPositionMustBeGreaterThanStartingPosition;
+
+    /**
      * A message indicating an invalid value was found. The parameters of property value, property type, and property definition are
      * required.
      */
     public static String errorValidatingPropertyValueForType;
 
     /**
-     * A message indicating the parser could not parse the current toke as it was not a namespace mapping or node type definition.
+     * A message indicating the parser could not parse the current token as it was not a namespace mapping or node type definition.
      * The parameters of parser token value, CND line number, and CND column number are required.
      */
     public static String expectedNamespaceOrNodeDefinition;
+
+    /**
+     * A message indicating the parser could not parse the current token as a boolean. The parameters of parser token value, CND
+     * value, line number, and column number are required.
+     */
+    public static String expectingValidBooleanAtLineAndColumn;
+
+    /**
+     * A message indicating the parser could not parse the current token as an integer. The parameters of parser token value, CND
+     * value, line number, and column number are required.
+     */
+    public static String expectingValidIntegerAtLineAndColumn;
+
+    /**
+     * A message indicating the parser could not parse the current token as a long. The parameters of parser token value, CND
+     * value, line number, and column number are required.
+     */
+    public static String expectingValidLongAtLineAndColumn;
 
     /**
      * A message indicating a <code>find</code> method was called with an invalid value. One parameter, the invalid value, is
@@ -318,6 +341,29 @@ public final class Messages extends NLS {
     public static String noMatchingSingleQuoteFound;
 
     /**
+     * Indicates the parser has no more content to parse.
+     */
+    public static String noMoreContent;
+
+    /**
+     * Indicates the parser has no more content to parse but was expecting more content. One parameter, the expected character, is
+     * required.
+     */
+    public static String noMoreContentButWasExpectingCharacter;
+
+    /**
+     * Indicates the parser has no more content to parse but was expecting more content. One parameter, the expected token, is
+     * required.
+     */
+    public static String noMoreContentButWasExpectingToken;
+
+    /**
+     * Indicates the parser has no more content to parse but was expecting more content. One parameter, the expected token type,
+     * is required.
+     */
+    public static String noMoreContentButWasExpectingTokenType;
+
+    /**
      * A message indicating a <code>null</code> was found. One parameter, a string identifying the object, is required.
      */
     public static String objectIsNull;
@@ -367,6 +413,16 @@ public final class Messages extends NLS {
     public static String requiredTypesExistButMarkedAsVariant;
 
     /**
+     * A message to indicate <code>TokenStream start</code> method has not been called yet.
+     */
+    public static String startMethodMustBeCalledBeforeConsumingOrMatching;
+
+    /**
+     * A message to indicate <code>TokenStream start</code> method has not been called yet.
+     */
+    public static String startMethodMustBeCalledBeforeNext;
+
+    /**
      * A message indicating a <code>null</code> or empty string was found. One parameter, a name identifying the string, is
      * required.
      */
@@ -388,6 +444,24 @@ public final class Messages extends NLS {
      * property value, the from data type, and the to data type, are required.
      */
     public static String unableToConvertValue;
+
+    /**
+     * Message for when a unexpected token is found by the parser. These 4 parameters, the expected token, actual token, line
+     * number, column number, and fragment, are required.
+     */
+    public static String unexpectedCharacter;
+
+    /**
+     * Message for when a unexpected token is found by the parser. These 4 parameters, the expected token, actual token, line
+     * number, column number, and fragment, are required.
+     */
+    public static String unexpectedToken;
+
+    /**
+     * Message for when a unexpected token type is found by the parser. These 4 parameters, the expected token type, actual token
+     * type, line number, column number, and fragment, are required.
+     */
+    public static String unexpectedTokenType;
 
     /**
      * A message indicating a property definition has identified value constraints but has been marked as a variant. One parameter,

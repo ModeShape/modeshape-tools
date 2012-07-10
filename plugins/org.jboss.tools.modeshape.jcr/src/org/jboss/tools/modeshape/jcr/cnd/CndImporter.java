@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
-
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.Messages;
@@ -48,18 +47,15 @@ import org.jboss.tools.modeshape.jcr.attributes.SameNameSiblings;
 import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
 import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
-import org.modeshape.common.annotation.NotThreadSafe;
-import org.modeshape.common.text.ParsingException;
-import org.modeshape.common.text.Position;
-import org.modeshape.common.text.TokenStream;
-import org.modeshape.common.text.TokenStream.Tokenizer;
-import org.modeshape.common.util.IoUtil;
+import org.jboss.tools.modeshape.jcr.text.ParsingException;
+import org.jboss.tools.modeshape.jcr.text.Position;
+import org.jboss.tools.modeshape.jcr.text.TokenStream;
+import org.jboss.tools.modeshape.jcr.text.TokenStream.Tokenizer;
 
 /**
  * A class that imports the node types contained in a JCR Compact Node Definition (CND) file into {@link NodeTypeDefinition}
  * instances.
  */
-@NotThreadSafe
 public final class CndImporter {
 
     private final boolean jcr170 = true;
@@ -72,7 +68,7 @@ public final class CndImporter {
 
     /**
      * Import the CND content from the supplied stream, placing the content into the importer's destination.
-     * 
+     *
      * @param file the file containing the CND content
      * @param problems where any problems encountered during import should be reported
      * @return the CND (never <code>null</code>)
@@ -80,32 +76,32 @@ public final class CndImporter {
      */
     public CompactNodeTypeDefinition importFrom( final File file,
                                                  final Collection<Throwable> problems ) throws IOException {
-        return importFrom(IoUtil.read(file), problems, file.getCanonicalPath());
+        return importFrom(Utils.read(file), problems, file.getCanonicalPath());
     }
 
     /**
      * Import the CND content from the supplied stream, placing the content into the importer's destination.
-     * 
+     *
      * @param stream the stream containing the CND content
      * @param problems where any problems encountered during import should be reported
      * @param resourceName a logical name for the resource name to be used when reporting problems; may be null if there is no
-     *            useful name
+     *        useful name
      * @return the CND (never <code>null</code>)
      * @throws IOException if there is a problem reading from the supplied stream
      */
     public CompactNodeTypeDefinition importFrom( final InputStream stream,
                                                  final Collection<Throwable> problems,
                                                  final String resourceName ) throws IOException {
-        return importFrom(IoUtil.read(stream), problems, resourceName);
+        return importFrom(Utils.read(stream), problems, resourceName);
     }
 
     /**
      * Import the CND content from the supplied stream, placing the content into the importer's destination.
-     * 
+     *
      * @param content the string containing the CND content
      * @param problems where any problems encountered during import should be reported
      * @param resourceName a logical name for the resource name to be used when reporting problems; may be null if there is no
-     *            useful name
+     *        useful name
      * @return the CND (never <code>null</code>)
      */
     public CompactNodeTypeDefinition importFrom( final String content,
@@ -122,7 +118,7 @@ public final class CndImporter {
 
     /**
      * Parse the CND content.
-     * 
+     *
      * @param content the content (cannot be <code>null</code>)
      * @return the CND (never <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -138,10 +134,14 @@ public final class CndImporter {
 
         while (tokens.hasNext()) {
             // Keep reading while we can recognize one of the two types of statements ...
-            if (tokens.matches(NamespaceMapping.NOTATION_PREFIX, TokenStream.ANY_VALUE, NamespaceMapping.NOTATION_DELIMITER,
-                               TokenStream.ANY_VALUE, NamespaceMapping.NOTATION_SUFFIX)) {
+            if (tokens.matches(NamespaceMapping.NOTATION_PREFIX,
+                               TokenStream.ANY_VALUE,
+                               NamespaceMapping.NOTATION_DELIMITER,
+                               TokenStream.ANY_VALUE,
+                               NamespaceMapping.NOTATION_SUFFIX)) {
                 parseNamespaceMapping(tokens, cnd);
-            } else if (tokens.matches(NodeTypeDefinition.NAME_NOTATION_PREFIX, TokenStream.ANY_VALUE,
+            } else if (tokens.matches(NodeTypeDefinition.NAME_NOTATION_PREFIX,
+                                      TokenStream.ANY_VALUE,
                                       NodeTypeDefinition.NAME_NOTATION_SUFFIX)) {
                 parseNodeTypeDefinition(tokens, cnd);
             } else if (tokens.matches(NodeTypeDefinition.NAME_NOTATION_PREFIX, NodeTypeDefinition.NAME_NOTATION_SUFFIX)) {
@@ -151,7 +151,7 @@ public final class CndImporter {
                 parseComment(tokens);
             } else {
                 final Position position = tokens.previousPosition();
-                final Object[] args = new Object[] { tokens.consume(), position.getLine(), position.getColumn() };
+                final Object[] args = new Object[] {tokens.consume(), position.getLine(), position.getColumn()};
                 throw new ParsingException(position, NLS.bind(Messages.expectedNamespaceOrNodeDefinition, args));
             }
         }
@@ -161,7 +161,7 @@ public final class CndImporter {
 
     /**
      * Parse a node type's child node definition from the next tokens on the stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param nodeTypeDefn the node type being created (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -232,7 +232,7 @@ public final class CndImporter {
                     this.currentComment += newComment;
 
                     CommentedCndElement cndElement = null;
-                    
+
                     if (this.cndElements.isEmpty()) {
                         cndElement = this.previousElement;
                     } else {
@@ -272,7 +272,7 @@ public final class CndImporter {
 
     /**
      * Parse the child node definition's default type, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param defaultType the default type (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -297,7 +297,7 @@ public final class CndImporter {
 
     /**
      * Parse the property definition's default values, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param propDefn the property definition whose default values are being parsed (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -326,7 +326,7 @@ public final class CndImporter {
 
     /**
      * Parse the name that is expected to be next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the name (cannot be <code>null</code>)
      * @return the name (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -338,7 +338,7 @@ public final class CndImporter {
 
     /**
      * Parse a list of names, separated by commas. Any quotes surrounding the names are removed.
-     * 
+     *
      * @param tokens the tokens containing the comma-separated strings (cannot be <code>null</code>)
      * @return the list of string values (cannot be <code>null</code> but can be empty)
      * @throws ParsingException if there is a problem parsing the content
@@ -375,7 +375,7 @@ public final class CndImporter {
 
     /**
      * Parse the namespace mapping statement that is next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the namespace statement (cannot be <code>null</code>)
      * @param cnd the CND object representing the CND file being parsed (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -408,7 +408,7 @@ public final class CndImporter {
 
     /**
      * Parse the child node definition's attributes, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the attributes (cannot be <code>null</code>)
      * @param nodeTypeDefn the node type being created (cannot be <code>null</code>)
      * @param childNodeDefn the child node definition (cannot be <code>null</code>)
@@ -460,8 +460,8 @@ public final class CndImporter {
                     final Position pos = tokens.previousPosition();
                     final int line = pos.getLine();
                     final int column = pos.getColumn();
-                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.multipleKeywordNotValidInJcr2CndFormat,
-                                                                                   line, column));
+                    throw new ParsingException(tokens.previousPosition(),
+                                               NLS.bind(Messages.multipleKeywordNotValidInJcr2CndFormat, line, column));
                 }
 
                 if (tokens.canConsume(AttributeState.VARIANT_CHAR)) {
@@ -479,8 +479,8 @@ public final class CndImporter {
                     final Position pos = tokens.previousPosition();
                     final int line = pos.getLine();
                     final int column = pos.getColumn();
-                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.primaryKeywordNotValidInJcr2CndFormat,
-                                                                                   line, column));
+                    throw new ParsingException(tokens.previousPosition(),
+                                               NLS.bind(Messages.primaryKeywordNotValidInJcr2CndFormat, line, column));
                 }
 
                 // Then this child node is considered the primary item ...
@@ -499,7 +499,7 @@ public final class CndImporter {
     /**
      * Parse the options for the node types, including whether the node type is orderable, a mixin, abstract, whether it supports
      * querying, and which property/child node (if any) is the primary item for the node type.
-     * 
+     *
      * @param tokens the tokens containing the comma-separated strings (cannot be <code>null</code>)
      * @param nodeTypeDefn the node type being created; may not be null
      * @throws ParsingException if there is a problem parsing the content
@@ -563,7 +563,7 @@ public final class CndImporter {
 
     /**
      * Parse the node type definition that is next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the node type definition (cannot be <code>null</code>)
      * @param cnd the CND object representing the CND file being parsed (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -615,7 +615,7 @@ public final class CndImporter {
 
     /**
      * Parse a node type name that appears next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the node type name (cannot be <code>null</code>)
      * @return the node type name
      * @throws ParsingException if there is a problem parsing the content
@@ -637,7 +637,7 @@ public final class CndImporter {
 
     /**
      * Parse the property definition's attributes, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the attributes (cannot be <code>null</code>)
      * @param nodeTypeDefn the node type definition of the property definition (cannot be <code>null</code>)
      * @param propDefn the property definition whose attributes are being parsed (cannot be <code>null</code>)
@@ -713,8 +713,8 @@ public final class CndImporter {
                     final Position pos = tokens.previousPosition();
                     final int line = pos.getLine();
                     final int column = pos.getColumn();
-                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.primaryKeywordNotValidInJcr2CndFormat,
-                                                                                   line, column));
+                    throw new ParsingException(tokens.previousPosition(),
+                                               NLS.bind(Messages.primaryKeywordNotValidInJcr2CndFormat, line, column));
                 }
 
                 // JCR 170: this child node is considered the primary item ...
@@ -727,7 +727,7 @@ public final class CndImporter {
 
     /**
      * Parse a node type's property definition from the next tokens on the stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param nodeTypeDefn the node type definition (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -779,7 +779,7 @@ public final class CndImporter {
 
     /**
      * Parse a node type's property or child node definitions that appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definitions (cannot be <code>null</code>)
      * @param nodeTypeDefn the node type being created (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -817,7 +817,7 @@ public final class CndImporter {
 
     /**
      * Parse the property type, if a valid one appears next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param propDefn the property definition (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -842,7 +842,7 @@ public final class CndImporter {
 
     /**
      * Parse the property definition's query operators, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param propDefn the property definition whose query operators are being set (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -868,7 +868,8 @@ public final class CndImporter {
                 if (operator != null) {
                     operators.add(operatorValue);
                 } else {
-                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.invalidQueryOperator, operator,
+                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.invalidQueryOperator,
+                                                                                   operator,
                                                                                    propDefn.getName()));
                 }
             }
@@ -881,7 +882,7 @@ public final class CndImporter {
 
     /**
      * Parse the child node definition's list of required primary types, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param childNodeDefn the child node definition (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content
@@ -912,7 +913,7 @@ public final class CndImporter {
 
     /**
      * Parse a list of strings, separated by commas. Any quotes surrounding the strings are removed.
-     * 
+     *
      * @param tokens the tokens containing the comma-separated strings (cannot be <code>null</code>)
      * @return the list of string values (cannot be <code>null</code> but can be empty)
      * @throws ParsingException if there is a problem parsing the content
@@ -943,7 +944,7 @@ public final class CndImporter {
                 if (!saveComma) {
                     foundComma = tokens.matches(',');
                 }
-                
+
                 firstTime = false;
             } while (tokens.canConsume(',') || parseComment(tokens) || foundComma);
         }
@@ -953,7 +954,7 @@ public final class CndImporter {
 
     /**
      * Parse an optional list of supertypes if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the supertype names (cannot be <code>null</code>)
      * @return the list of supertype names (cannot be <code>null</code> but can be empty)
      * @throws ParsingException if there is a problem parsing the content
@@ -973,7 +974,7 @@ public final class CndImporter {
 
     /**
      * Parse the property definition's value constraints, if they appear next on the token stream.
-     * 
+     *
      * @param tokens the tokens containing the definition (cannot be <code>null</code>)
      * @param propDefn the property definition whose value constraints are being parsed (cannot be <code>null</code>)
      * @throws ParsingException if there is a problem parsing the content

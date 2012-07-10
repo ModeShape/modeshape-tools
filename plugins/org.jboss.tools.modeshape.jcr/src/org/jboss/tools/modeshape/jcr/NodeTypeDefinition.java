@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.jcr.nodetype.NodeDefinition;
 import javax.jcr.nodetype.NodeDefinitionTemplate;
 import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
-
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
@@ -32,7 +30,7 @@ import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 /**
  * Represents a CND node type definition.
  */
-public class NodeTypeDefinition implements CommentedCndElement, Comparable, ItemOwnerProvider, NodeTypeTemplate {
+public class NodeTypeDefinition implements CommentedCndElement, Comparable<NodeTypeDefinition>, ItemOwnerProvider, NodeTypeTemplate {
 
     /**
      * Then node type name prefix used in the CND notation.
@@ -129,7 +127,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * If added, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param childNodeDefinitionBeingAdded the child node definition being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
@@ -159,7 +157,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * If added, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param properyDefinitionBeingAdded the property definition being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
@@ -180,7 +178,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * If added, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param superTypeBeingAdded the super type name being added (cannot be <code>null</code> or empty)
      * @return <code>true</code> if successfully added
      */
@@ -198,7 +196,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
     /**
      * Changes the attribute state of the specified property. Can be used to change the state of the abstract, mixin, orderable,
      * primary item, queryable, and super types properties.
-     * 
+     *
      * @param propertyName the property whose state is being changed (cannot be <code>null</code>)
      * @param newState the new state (cannot be <code>null</code>)
      * @return <code>true</code> if the attribute state was changed
@@ -242,12 +240,11 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo( final Object object ) {
-        final NodeTypeDefinition that = (NodeTypeDefinition)object;
+    public int compareTo( final NodeTypeDefinition that ) {
         final String thisName = getName();
         final String thatName = that.getName();
 
@@ -271,7 +268,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -346,7 +343,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
      */
     @Override
@@ -356,7 +353,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#getDeclaredChildNodeDefinitions()
      */
     @Override
@@ -367,7 +364,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#getDeclaredPropertyDefinitions()
      */
     @Override
@@ -378,7 +375,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#getDeclaredSupertypeNames()
      */
     @Override
@@ -416,7 +413,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#getName()
      */
     @Override
@@ -426,9 +423,10 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#getNodeDefinitionTemplates()
      */
+    @SuppressWarnings( "rawtypes" )
     @Override
     public List getNodeDefinitionTemplates() {
         return new ArrayList<NodeDefinitionTemplate>(getChildNodeDefinitions());
@@ -436,7 +434,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.ItemOwnerProvider#getOwnerQualifiedName()
      */
     @Override
@@ -453,7 +451,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#getPrimaryItemName()
      */
     @Override
@@ -489,9 +487,10 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#getPropertyDefinitionTemplates()
      */
+    @SuppressWarnings( "rawtypes" )
     @Override
     public List getPropertyDefinitionTemplates() {
         return new ArrayList<PropertyDefinitionTemplate>(getPropertyDefinitions());
@@ -507,7 +506,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
     /**
      * Can be used to find the attribute state of the abstract, mixin, orderable, primary item, queryable, and super types
      * properties.
-     * 
+     *
      * @param propertyName the property whose attribute state is being requested (cannot be <code>null</code>)
      * @return the attribute state (never <code>null</code>)
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
@@ -551,7 +550,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * Inherited child node definitions are not checked.
-     * 
+     *
      * @param name the child node definition name being searched for (cannot be <code>null</code> or empty)
      * @return <code>true</code> if a child node definition with the specified name was found
      */
@@ -569,7 +568,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * Inherited property definitions are not checked.
-     * 
+     *
      * @param name the property definition name being searched for (cannot be <code>null</code> or empty)
      * @return <code>true</code> if a property definition with the specified name was found
      */
@@ -587,7 +586,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -599,7 +598,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#hasOrderableChildNodes()
      */
     @Override
@@ -609,7 +608,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#isAbstract()
      */
     @Override
@@ -619,7 +618,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#isMixin()
      */
     @Override
@@ -629,7 +628,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeDefinition#isQueryable()
      */
     @Override
@@ -668,7 +667,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * If removed, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param childNodeDefinitionBeingRemoved the child node definition being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
@@ -704,7 +703,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * If removed, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param propertyDefinitionBeingRemoved the property definition being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
@@ -731,7 +730,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * If removed, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param superTypeBeingRemoved the super type name being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
@@ -746,7 +745,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setAbstract(boolean)
      */
     @Override
@@ -757,7 +756,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
      */
     @Override
@@ -779,7 +778,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setDeclaredSuperTypeNames(java.lang.String[])
      */
     @Override
@@ -802,7 +801,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setMixin(boolean)
      */
     @Override
@@ -813,7 +812,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setName(java.lang.String)
      */
     @Override
@@ -827,7 +826,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setOrderableChildNodes(boolean)
      */
     @Override
@@ -838,7 +837,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setPrimaryItemName(java.lang.String)
      */
     @Override
@@ -852,7 +851,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeTypeTemplate#setQueryable(boolean)
      */
     @Override
@@ -863,7 +862,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
@@ -994,7 +993,7 @@ public class NodeTypeDefinition implements CommentedCndElement, Comparable, Item
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.lang.Enum#toString()
          */
         @Override
