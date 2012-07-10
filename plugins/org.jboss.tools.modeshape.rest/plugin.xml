@@ -206,9 +206,10 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            name="%modeShapeCategory"
+            name="%publishingPreferencePage.name"
+            category="org.jboss.tools.modeshape.ui.rootModeShapeToolsPreferencePage"
             class="org.jboss.tools.modeshape.rest.preferences.ModeShapePreferencePage"
-            id="modeShapePreferencePage">
+            id="org.jboss.tools.modeshape.rest.publishingPreferencePage">
       </page>
    </extension>
 
@@ -217,9 +218,9 @@
          point="org.eclipse.ui.preferencePages">
       <page
             name="%ignoredResourcesPreferencePage"
-            category="modeShapePreferencePage"
+            category="org.jboss.tools.modeshape.rest.publishingPreferencePage"
             class="org.jboss.tools.modeshape.rest.preferences.IgnoredResourcesPreferencePage"
-            id="modeShapeIgnoredResourcesPreferencePage">
+            id="org.jboss.tools.modeshape.rest.modeShapeIgnoredResourcesPreferencePage">
       </page>
 
 <!-- Preference Initializer -->

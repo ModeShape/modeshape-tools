@@ -133,12 +133,12 @@ public interface IUiConstants {
         /**
          * The ignored resources preference page ID.
          */
-        String IGNORED_RESOURCES_PREFERENCE_PAGE_ID = "modeShapeIgnoredResourcesPreferencePage"; //$NON-NLS-1$
+        String IGNORED_RESOURCES_PREFERENCE_PAGE_ID = "org.jboss.tools.modeshape.rest.modeShapeIgnoredResourcesPreferencePage"; //$NON-NLS-1$
 
         /**
          * The main ModeShape preference page ID.
          */
-        String MAIN_PREFERENCE_PAGE_ID = "modeShapePreferencePage"; //$NON-NLS-1$
+        String PUBLISHING_PREFERENCE_PAGE_ID = "org.jboss.tools.modeshape.rest.publishingPreferencePage"; //$NON-NLS-1$
 
     }
 

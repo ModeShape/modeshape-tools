@@ -60,6 +60,11 @@ public class UiMessages extends NLS {
     public static String questionDialogTitle;
 
     /**
+     * The message displayed at the top of the root preference page.
+     */
+    public static String rootPrefPageMsg;
+
+    /**
      * A message indicating a <code>null</code> or empty string was found. One parameter, a name identifying the string, is
      * required.
      */

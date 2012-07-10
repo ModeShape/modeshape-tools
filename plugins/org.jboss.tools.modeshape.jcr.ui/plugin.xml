@@ -29,7 +29,7 @@
          point="org.eclipse.ui.preferencePages">
       <page
             name="%cndPreferencePage.name"
-            category="modeShapePreferencePage"
+            category="org.jboss.tools.modeshape.ui.rootModeShapeToolsPreferencePage"
             class="org.jboss.tools.modeshape.jcr.ui.preferences.CndPreferencePage"
             id="org.jboss.tools.modeshape.jcr.ui.jcrPreferencePage">
       </page>
