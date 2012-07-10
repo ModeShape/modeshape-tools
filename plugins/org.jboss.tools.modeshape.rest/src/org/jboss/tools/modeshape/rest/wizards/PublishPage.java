@@ -14,7 +14,7 @@ package org.jboss.tools.modeshape.rest.wizards;
 import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.PUBLISH_DIALOG_HELP_CONTEXT;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.ENABLE_RESOURCE_VERSIONING;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.IGNORED_RESOURCES_PREFERENCE;
-import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.MAIN_PREFERENCE_PAGE_ID;
+import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.PUBLISHING_PREFERENCE_PAGE_ID;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -721,7 +721,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     void handleOpenPreferencePage() {
         // open preference page and only allow the pref page where the version
         // setting is
-        PreferencesUtil.createPreferenceDialogOn(getShell(), MAIN_PREFERENCE_PAGE_ID, new String[] { MAIN_PREFERENCE_PAGE_ID },
+        PreferencesUtil.createPreferenceDialogOn(getShell(), PUBLISHING_PREFERENCE_PAGE_ID, new String[] { PUBLISHING_PREFERENCE_PAGE_ID },
                                                  null).open();
     }
 
