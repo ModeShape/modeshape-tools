@@ -9,20 +9,15 @@
  * See the AUTHORS.txt file in the distribution for a full listing of
  * individual contributors.
  */
-package org.jboss.tools.modeshape.rest.log;
+package org.modeshape.common.logging;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.jboss.tools.modeshape.rest.log.EclipseLogger;
+import org.modeshape.common.logging.LogFactory;
+import org.modeshape.common.logging.Logger;
 
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
-
-public final class EclipseLoggerFactory implements ILoggerFactory {
-
-    /**
-     * The shared instance of the factory.
-     */
-    static final EclipseLoggerFactory INSTANCE = new EclipseLoggerFactory();
+public final class CustomLoggerFactory extends LogFactory {
 
     /**
      * Map of loggers keyed by logger name.
@@ -32,14 +27,14 @@ public final class EclipseLoggerFactory implements ILoggerFactory {
     /**
      * Constructs the factory.
      */
-    public EclipseLoggerFactory() {
+    public CustomLoggerFactory() {
         this.loggerMap = new HashMap<String, Logger>();
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.slf4j.ILoggerFactory#getLogger(java.lang.String)
+     *
+     * @see org.modeshape.common.logging.LogFactory#getLogger(java.lang.String)
      */
     @Override
     public Logger getLogger( String name ) {
