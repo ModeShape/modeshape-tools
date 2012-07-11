@@ -9,19 +9,15 @@
  * See the AUTHORS.txt file in the distribution for a full listing of
  * individual contributors.
  */
-package org.jboss.tools.modeshape.rest.log;
+package org.modeshape.common.logging;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.jboss.tools.modeshape.rest.log.EclipseLogger;
 import org.modeshape.common.logging.LogFactory;
 import org.modeshape.common.logging.Logger;
 
-public final class EclipseLoggerFactory extends LogFactory {
-
-    /**
-     * The shared instance of the factory.
-     */
-    static final EclipseLoggerFactory INSTANCE = new EclipseLoggerFactory();
+public final class CustomLoggerFactory extends LogFactory {
 
     /**
      * Map of loggers keyed by logger name.
@@ -31,7 +27,7 @@ public final class EclipseLoggerFactory extends LogFactory {
     /**
      * Constructs the factory.
      */
-    public EclipseLoggerFactory() {
+    public CustomLoggerFactory() {
         this.loggerMap = new HashMap<String, Logger>();
     }
 

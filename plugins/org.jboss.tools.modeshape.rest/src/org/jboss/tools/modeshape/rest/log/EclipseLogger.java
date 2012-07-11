@@ -33,7 +33,7 @@ public final class EclipseLogger extends Logger {
 
     private final String name;
 
-    EclipseLogger( String name ) {
+    public EclipseLogger( String name ) {
         this.name = name;
 
         if (!initialized) {
