@@ -13,11 +13,10 @@ package org.jboss.tools.modeshape.rest.log;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.modeshape.common.logging.LogFactory;
+import org.modeshape.common.logging.Logger;
 
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
-
-public final class EclipseLoggerFactory implements ILoggerFactory {
+public final class EclipseLoggerFactory extends LogFactory {
 
     /**
      * The shared instance of the factory.
@@ -38,8 +37,8 @@ public final class EclipseLoggerFactory implements ILoggerFactory {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.slf4j.ILoggerFactory#getLogger(java.lang.String)
+     *
+     * @see org.modeshape.common.logging.LogFactory#getLogger(java.lang.String)
      */
     @Override
     public Logger getLogger( String name ) {
