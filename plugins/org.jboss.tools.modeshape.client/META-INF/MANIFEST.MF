@@ -142,4 +142,3 @@ Export-Package: javax.jcr,
  org.modeshape.web.jcr.rest.client.domain,
  org.modeshape.web.jcr.rest.client.http,
  org.modeshape.web.jcr.rest.client.json
-Require-Bundle: org.slf4j.api;visibility:=reexport
