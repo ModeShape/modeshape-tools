@@ -25,7 +25,12 @@
 						<goals>
 							<goal>source-feature</goal>
 						</goals>
-					</execution>
+                        <configuration>
+                            <excludes>
+                                <plugin id="org.jboss.tools.modeshape.client" />
+                            </excludes>
+                        </configuration>
+             		</execution>
 				</executions>
 			</plugin>
 			<plugin>
