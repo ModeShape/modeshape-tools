@@ -6,7 +6,6 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.jboss.tools.modeshape.rest,
  org.junit4,
- org.jboss.tools.modeshape.client
-Bundle-ClassPath: hamcrest-core-1.1.jar,
- .,
- junit-4.4.jar
+ org.jboss.tools.modeshape.client,
+ org.hamcrest
+Bundle-ClassPath: .
