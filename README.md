@@ -38,15 +38,14 @@ The general idea is to keep your 'master' branch in-sync with the 'upstream/mast
 
 ## Building ModeShape Tools
 
-To build _ModeShape Tools_ requires specific versions of Java and Maven. Also, there is some Maven and Eclipse target platform setup. The [How to Build JBoss Tools with Maven 3](https://community.jboss.org/wiki/HowToBuildJBossToolsWithMaven3#OR_use_MavenAnt_to_get_it) document will guide you through that setup. Specifically, perform these steps this document identifies:
+To build _ModeShape Tools_ requires specific versions of Java and Maven. Also, there is some Maven setup. The [How to Build JBoss Tools with Maven 3](https://community.jboss.org/wiki/HowToBuildJBossToolsWithMaven3#OR_use_MavenAnt_to_get_it) document will guide you through that setup. Specifically, perform these steps this document identifies:
 
-1. adding the `jboss-default` profile to your Maven `settings.xml` file,
-1. setting your `MAVEN_OPTS` environment variable, and
-1. downloading and unpacking the latest _JBoss Tools_ target platform and using as the `local.site` in your build command.
+1. adding the `jboss-default` profile to your Maven `settings.xml` file, and
+1. setting your `MAVEN_OPTS` environment variable.
 
-Once Maven and the Eclipse target platform are setup, this command will run the build:
+This command will run the build:
 
-`mvn clean install -P local.site -Dlocal.site=file:/path/to/unpacked/target-platform/ -Pjbosstools-staging-aggregate`
+`mvn clean install -Punified.target -Pjbosstools-staging-aggregate`
 
 If you want, your builds can skip the tests by adding this parameter to the above build command: `-Dmaven.test.skip=true`. *But always run the tests before any commits.*
 
