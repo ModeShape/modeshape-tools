@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.ui;
 
 import java.util.Collection;
 import java.util.Iterator;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -37,7 +36,7 @@ public final class UiUtils {
 
     /**
      * The column will be packed using the header text.
-     * 
+     *
      * @param viewerColumn the viewer column (cannot be <code>null</code>)
      * @param labelProvider the column label provider (cannot be <code>null</code>
      * @param headerText the header text (can be <code>null</code> or empty)
@@ -86,6 +85,14 @@ public final class UiUtils {
     }
 
     /**
+     * @param text the text being checked (can be <code>null</code> or empty)
+     * @return the original string if non-<code>null</code>; else an empty string.
+     */
+    public static String ensureNotNull( final String text ) {
+        return ((text == null) ? EMPTY_STRING : text);
+    }
+
+    /**
      * @param stringBeingChecked the string being checked (can be <code>null</code> or empty)
      * @return <code>true</code> if <code>null</code> or empty
      */
@@ -96,7 +103,7 @@ public final class UiUtils {
     /**
      * An item within the items that are <code>null</code> are treated like an empty string. If a delimiter is not passed in the
      * {@link #DEFAULT_JOIN_DELIMITER default delimiter} is used.
-     * 
+     *
      * @param items the items whose string representation are being joined (cannot be <code>null</code>)
      * @param delimiter the delimiter separating the items (can be <code>null</code> or empty)
      * @return the string representation of each item separated by the specified delimiter (never <code>null</code>)

@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.jcr.cnd;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
@@ -25,7 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class CndValidatorTest {
 
@@ -37,32 +36,32 @@ public class CndValidatorTest {
 
     @Before
     public void beforeEach() {
-        cnd = new CompactNodeTypeDefinition();
-        namespaceMapping = new NamespaceMapping();
+        this.cnd = new CompactNodeTypeDefinition();
+        this.namespaceMapping = new NamespaceMapping();
 
-        nodeTypeDefinition = new NodeTypeDefinition();
-        nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.nodeTypeDefinition = new NodeTypeDefinition();
+        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
 
-        childNodeDefinition = new ChildNodeDefinition(nodeTypeDefinition);
-        childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition = new ChildNodeDefinition(this.nodeTypeDefinition);
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
 
-        propertyDefinition = new PropertyDefinition(nodeTypeDefinition);
-        propertyDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.propertyDefinition = new PropertyDefinition(this.nodeTypeDefinition);
+        this.propertyDefinition.setName(Constants.QUALIFIED_NAME1.get());
     }
 
     @Test
     public void childNodeDefinitionWithEmptyNameShouldBeAnError() {
         // setup
-        childNodeDefinition.setName(null);
-        ValidationStatus status = CndValidator.validateChildNodeDefinition(childNodeDefinition, null, null);
+        this.childNodeDefinition.setName(null);
+        ValidationStatus status = CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
         assertTrue(status.containsCode(StatusCodes.EMPTY_UNQUALIFIED_NAME));
 
         // setup
-        childNodeDefinition.setName(Utils.EMPTY_STRING);
-        status = CndValidator.validateChildNodeDefinition(childNodeDefinition, null, null);
+        this.childNodeDefinition.setName(Utils.EMPTY_STRING);
+        status = CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -72,9 +71,9 @@ public class CndValidatorTest {
     @Test
     public void childNodeDefinitionWithInvalidDefaultTypeNameShouldBeAnError() {
         // setup
-        childNodeDefinition.setName("name"); //$NON-NLS-1$
-        childNodeDefinition.setDefaultPrimaryTypeName("missingName:"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateChildNodeDefinition(childNodeDefinition, null, null);
+        this.childNodeDefinition.setName("name"); //$NON-NLS-1$
+        this.childNodeDefinition.setDefaultPrimaryTypeName("missingName:"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -84,8 +83,8 @@ public class CndValidatorTest {
     @Test
     public void childNodeDefinitionWithInvalidNameShouldBeAnError() {
         // setup
-        childNodeDefinition.setName("invalid/name"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateChildNodeDefinition(childNodeDefinition, null, null);
+        this.childNodeDefinition.setName("invalid/name"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -95,9 +94,9 @@ public class CndValidatorTest {
     @Test
     public void childNodeDefinitionWithInvalidRequiredTypeNameShouldBeAnError() {
         // setup
-        childNodeDefinition.setName("name"); //$NON-NLS-1$
-        childNodeDefinition.addRequiredType("missingName:"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateChildNodeDefinition(childNodeDefinition, null, null);
+        this.childNodeDefinition.setName("name"); //$NON-NLS-1$
+        this.childNodeDefinition.addRequiredType("missingName:"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -105,11 +104,23 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void childNodeNameWithQualifierAndNoValidPrefixesShouldBeAnError() {
+        // setup
+        this.childNodeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateName(this.childNodeDefinition, null, null);
+
+        // tests
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.NAME_QUALIFIER_NOT_FOUND)); //$NON-NLS-1$
+    }
+
+    @Test
     public void childNodeNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        childNodeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateName(childNodeDefinition,
-                                                                  Constants.Helper.getDefaultNamespacePrefixes(), null);
+        this.childNodeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateName(this.childNodeDefinition,
+                                                                  Constants.Helper.getDefaultNamespacePrefixes(),
+                                                                  null);
 
         // tests
         assertTrue(status.isError());
@@ -119,7 +130,7 @@ public class CndValidatorTest {
     @Test
     public void cndWithoutNamespaceMappingsAndNodeTypeDefintionsShouldBeAWarning() {
         // setup
-        final ValidationStatus status = CndValidator.validateCnd(cnd);
+        final ValidationStatus status = CndValidator.validateCnd(this.cnd);
 
         // tests
         assertTrue(status.isWarning());
@@ -129,10 +140,10 @@ public class CndValidatorTest {
     @Test
     public void defaultTypeNameShoudMatchRequiredType() {
         // setup
-        childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        childNodeDefinition.addRequiredType(Constants.QUALIFIED_NAME1.get());
-        childNodeDefinition.setDefaultPrimaryTypeName(Constants.QUALIFIED_NAME2.get());
-        final ValidationStatus status = CndValidator.validateDefaultType(childNodeDefinition,
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.addRequiredType(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.QUALIFIED_NAME2.get());
+        final ValidationStatus status = CndValidator.validateDefaultType(this.childNodeDefinition,
                                                                          Constants.Helper.getDefaultNamespacePrefixes());
 
         // tests
@@ -143,9 +154,9 @@ public class CndValidatorTest {
     @Test
     public void defaultTypeNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        childNodeDefinition.setDefaultPrimaryTypeName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateDefaultType(childNodeDefinition,
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateDefaultType(this.childNodeDefinition,
                                                                          Constants.Helper.getDefaultNamespacePrefixes());
 
         // tests
@@ -156,9 +167,9 @@ public class CndValidatorTest {
     @Test
     public void defaultValueWithInvalidQualifierShouldBeAnError() {
         // setup
-        propertyDefinition.setType(PropertyType.NAME);
-        propertyDefinition.addDefaultValue("bogus:value"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateDefaultValues(propertyDefinition,
+        this.propertyDefinition.setType(PropertyType.NAME);
+        this.propertyDefinition.addDefaultValue("bogus:value"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateDefaultValues(this.propertyDefinition,
                                                                            Constants.Helper.getDefaultNamespacePrefixes());
 
         // tests
@@ -169,8 +180,8 @@ public class CndValidatorTest {
     @Test
     public void emptyNamespaceMappingPrefixShouldBeAnError() {
         // setup
-        namespaceMapping.setUri("uri"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateNamespaceMapping(namespaceMapping);
+        this.namespaceMapping.setUri("uri"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateNamespaceMapping(this.namespaceMapping);
 
         // tests
         assertTrue(status.isError());
@@ -180,8 +191,8 @@ public class CndValidatorTest {
     @Test
     public void emptyNamespaceMappingUriShouldBeAnError() {
         // setup
-        namespaceMapping.setPrefix("prefix"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateNamespaceMapping(namespaceMapping);
+        this.namespaceMapping.setPrefix("prefix"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateNamespaceMapping(this.namespaceMapping);
 
         // tests
         assertTrue(status.isError());
@@ -191,7 +202,8 @@ public class CndValidatorTest {
     @Test
     public void emptyQualifiedNameQualifierShouldBeValid() {
         assertTrue(CndValidator.validateQualifiedName(Constants.NAME_WITH_EMPTY_QUALIFIER, "propertyName", //$NON-NLS-1$
-                                                      Constants.Helper.getDefaultQualifiers(), null).isOk());
+                                                      Constants.Helper.getDefaultQualifiers(),
+                                                      null).isOk());
     }
 
     @Test
@@ -219,7 +231,8 @@ public class CndValidatorTest {
         // setup
         final QualifiedName qname = new QualifiedName(Constants.QUALIFIER1 + "Changed", Constants.UNQUALIFIED_NAME1); //$NON-NLS-1$
         final ValidationStatus status = CndValidator.validateQualifiedName(qname, "propertyName", //$NON-NLS-1$
-                                                                           Constants.Helper.getDefaultQualifiers(), null);
+                                                                           Constants.Helper.getDefaultQualifiers(),
+                                                                           null);
 
         // tests
         assertTrue(status.isError());
@@ -239,8 +252,8 @@ public class CndValidatorTest {
     @Test
     public void localNameEqualToParentShouldBeAnError() {
         // setup
-        childNodeDefinition.setName(".."); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName(".."); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
@@ -250,8 +263,8 @@ public class CndValidatorTest {
     @Test
     public void localNameEqualToSelfShouldBeAnError() {
         // setup
-        childNodeDefinition.setName("."); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("."); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
@@ -261,48 +274,48 @@ public class CndValidatorTest {
     @Test
     public void localNameWithInvalidCharactersShouldBeAnError() {
         // setup
-        childNodeDefinition.setName("name/"); //$NON-NLS-1$
-        ValidationStatus status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name/"); //$NON-NLS-1$
+        ValidationStatus status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.LOCAL_NAME_HAS_INVALID_CHARACTERS)); //$NON-NLS-1$
 
         // setup
-        childNodeDefinition.setName("name:"); //$NON-NLS-1$
-        status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name:"); //$NON-NLS-1$
+        status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.LOCAL_NAME_HAS_INVALID_CHARACTERS)); //$NON-NLS-1$
 
         // setup
-        childNodeDefinition.setName("name["); //$NON-NLS-1$
-        status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name["); //$NON-NLS-1$
+        status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.LOCAL_NAME_HAS_INVALID_CHARACTERS)); //$NON-NLS-1$
 
         // setup
-        childNodeDefinition.setName("name]"); //$NON-NLS-1$
-        status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name]"); //$NON-NLS-1$
+        status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.LOCAL_NAME_HAS_INVALID_CHARACTERS)); //$NON-NLS-1$
 
         // setup
-        childNodeDefinition.setName("name|"); //$NON-NLS-1$
-        status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name|"); //$NON-NLS-1$
+        status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.LOCAL_NAME_HAS_INVALID_CHARACTERS)); //$NON-NLS-1$
 
         // setup
-        childNodeDefinition.setName("name*"); //$NON-NLS-1$
-        status = CndValidator.validateLocalName(childNodeDefinition.getName(), "name"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name*"); //$NON-NLS-1$
+        status = CndValidator.validateLocalName(this.childNodeDefinition.getName(), "name"); //$NON-NLS-1$
 
         // tests
         assertTrue(status.isError());
@@ -312,16 +325,16 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeDefinitionWithDuplicateChildNodeNamesShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
-        childNodeDefinition.setName("name"); //$NON-NLS-1$);
-        final ChildNodeDefinition child2 = new ChildNodeDefinition(nodeTypeDefinition);
-        child2.setName(childNodeDefinition.getName());
+        this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name"); //$NON-NLS-1$);
+        final ChildNodeDefinition child2 = new ChildNodeDefinition(this.nodeTypeDefinition);
+        child2.setName(this.childNodeDefinition.getName());
 
-        nodeTypeDefinition.addChildNodeDefinition(childNodeDefinition);
-        nodeTypeDefinition.addChildNodeDefinition(child2);
+        this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
+        this.nodeTypeDefinition.addChildNodeDefinition(child2);
 
         // tests
-        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, true);
+        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, true);
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.DUPLICATE_CHILD_NODE_DEFINITION_NAME)); //$NON-NLS-1$
     }
@@ -329,16 +342,16 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeDefinitionWithDuplicatePropertyNamesShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
-        propertyDefinition.setName("name"); //$NON-NLS-1$
-        final PropertyDefinition prop2 = new PropertyDefinition(nodeTypeDefinition);
-        prop2.setName(propertyDefinition.getName());
+        this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
+        this.propertyDefinition.setName("name"); //$NON-NLS-1$
+        final PropertyDefinition prop2 = new PropertyDefinition(this.nodeTypeDefinition);
+        prop2.setName(this.propertyDefinition.getName());
 
-        nodeTypeDefinition.addPropertyDefinition(propertyDefinition);
-        nodeTypeDefinition.addPropertyDefinition(prop2);
+        this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
+        this.nodeTypeDefinition.addPropertyDefinition(prop2);
 
         // tests
-        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, true);
+        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, true);
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.DUPLICATE_PROPERTY_DEFINITION_NAME)); //$NON-NLS-1$
     }
@@ -346,16 +359,16 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeDefinitionWithEmptyNameShouldAnError() {
         // setup
-        nodeTypeDefinition.setName(null);
-        ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, false);
+        this.nodeTypeDefinition.setName(null);
+        ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, false);
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.EMPTY_UNQUALIFIED_NAME)); //$NON-NLS-1$
 
         // setup
-        nodeTypeDefinition.setName(Utils.EMPTY_STRING);
-        status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, false);
+        this.nodeTypeDefinition.setName(Utils.EMPTY_STRING);
+        status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, false);
 
         // tests
         assertTrue(status.isError());
@@ -365,8 +378,8 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeDefinitionWithInvalidNameShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName("invalid/name"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, false);
+        this.nodeTypeDefinition.setName("invalid/name"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, false);
 
         // tests
         assertTrue(status.isError());
@@ -376,9 +389,9 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeDefinitionWithInvalidPrimaryItemNameShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
-        nodeTypeDefinition.setPrimaryItemName("invalid/name"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, false);
+        this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
+        this.nodeTypeDefinition.setPrimaryItemName("invalid/name"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, false);
 
         // tests
         assertTrue(status.isError());
@@ -388,9 +401,9 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeDefinitionWithInvalidSuperTypeNameShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
-        nodeTypeDefinition.addSuperType("invalid/name"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition, null, null, false);
+        this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
+        this.nodeTypeDefinition.addSuperType("invalid/name"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, false);
 
         // tests
         assertTrue(status.isError());
@@ -400,9 +413,10 @@ public class CndValidatorTest {
     @Test
     public void nodeTypeNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateName(nodeTypeDefinition,
-                                                                  Constants.Helper.getDefaultNamespacePrefixes(), null);
+        this.nodeTypeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateName(this.nodeTypeDefinition,
+                                                                  Constants.Helper.getDefaultNamespacePrefixes(),
+                                                                  null);
 
         // tests
         assertTrue(status.isError());
@@ -432,11 +446,12 @@ public class CndValidatorTest {
     @Test
     public void primaryItemNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        nodeTypeDefinition.setPrimaryItemName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(nodeTypeDefinition,
+        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.nodeTypeDefinition.setPrimaryItemName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition,
                                                                                 Constants.Helper.getDefaultNamespacePrefixes(),
-                                                                                null, false);
+                                                                                null,
+                                                                                false);
 
         // tests
         assertTrue(status.isError());
@@ -446,16 +461,16 @@ public class CndValidatorTest {
     @Test
     public void propertyDefinitionWithEmptyNameShouldNotBeValid() {
         // setup
-        propertyDefinition.setName(null);
-        ValidationStatus status = CndValidator.validatePropertyDefinition(propertyDefinition, null, null);
+        this.propertyDefinition.setName(null);
+        ValidationStatus status = CndValidator.validatePropertyDefinition(this.propertyDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.EMPTY_UNQUALIFIED_NAME)); //$NON-NLS-1$
 
         // setup
-        propertyDefinition.setName(Utils.EMPTY_STRING);
-        status = CndValidator.validatePropertyDefinition(propertyDefinition, null, null);
+        this.propertyDefinition.setName(Utils.EMPTY_STRING);
+        status = CndValidator.validatePropertyDefinition(this.propertyDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -465,10 +480,10 @@ public class CndValidatorTest {
     @Test
     public void propertyDefinitionWithInvalidDefaultValueShouldBeAnError() {
         // setup
-        propertyDefinition.setName("name"); //$NON-NLS-1$
-        propertyDefinition.setType(PropertyType.LONG);
-        propertyDefinition.addDefaultValue("notALongValue"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validatePropertyDefinition(propertyDefinition, null, null);
+        this.propertyDefinition.setName("name"); //$NON-NLS-1$
+        this.propertyDefinition.setType(PropertyType.LONG);
+        this.propertyDefinition.addDefaultValue("notALongValue"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validatePropertyDefinition(this.propertyDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -478,8 +493,8 @@ public class CndValidatorTest {
     @Test
     public void propertyDefinitionWithInvalidNameShouldBeAnError() {
         // setup
-        propertyDefinition.setName("invalid/name"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validatePropertyDefinition(propertyDefinition, null, null);
+        this.propertyDefinition.setName("invalid/name"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validatePropertyDefinition(this.propertyDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -489,10 +504,10 @@ public class CndValidatorTest {
     @Test
     public void propertyDefinitionWithMultipleDefaultValuesButSingleValuedShouldBeAnError() {
         // setup
-        propertyDefinition.setName("name"); //$NON-NLS-1$
-        propertyDefinition.addDefaultValue("defaultValue1"); //$NON-NLS-1$
-        propertyDefinition.addDefaultValue("defaultValue2"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validatePropertyDefinition(propertyDefinition, null, null);
+        this.propertyDefinition.setName("name"); //$NON-NLS-1$
+        this.propertyDefinition.addDefaultValue("defaultValue1"); //$NON-NLS-1$
+        this.propertyDefinition.addDefaultValue("defaultValue2"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validatePropertyDefinition(this.propertyDefinition, null, null);
 
         // tests
         assertTrue(status.isError());
@@ -500,11 +515,23 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void propertyNameWithQualifierAndNoValidPrefixesShouldBeAnError() {
+        // setup
+        this.propertyDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateName(this.propertyDefinition, null, null);
+
+        // tests
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.NAME_QUALIFIER_NOT_FOUND)); //$NON-NLS-1$
+    }
+
+    @Test
     public void propertyNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        propertyDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateName(propertyDefinition,
-                                                                  Constants.Helper.getDefaultNamespacePrefixes(), null);
+        this.propertyDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateName(this.propertyDefinition,
+                                                                  Constants.Helper.getDefaultNamespacePrefixes(),
+                                                                  null);
 
         // tests
         assertTrue(status.isError());
@@ -514,9 +541,9 @@ public class CndValidatorTest {
     @Test
     public void requiredTypeNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        childNodeDefinition.addRequiredType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateRequiredTypes(childNodeDefinition,
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.addRequiredType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateRequiredTypes(this.childNodeDefinition,
                                                                            Constants.Helper.getDefaultNamespacePrefixes());
 
         // tests
@@ -527,9 +554,9 @@ public class CndValidatorTest {
     @Test
     public void residualChildNodeDoesNotNeedDefaultType() {
         // setup
-        childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        childNodeDefinition.addRequiredType(Constants.QUALIFIED_NAME1.get());
-        final ValidationStatus status = CndValidator.validateDefaultType(childNodeDefinition,
+        this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        this.childNodeDefinition.addRequiredType(Constants.QUALIFIED_NAME1.get());
+        final ValidationStatus status = CndValidator.validateDefaultType(this.childNodeDefinition,
                                                                          Constants.Helper.getDefaultNamespacePrefixes());
 
         // tests
@@ -539,8 +566,8 @@ public class CndValidatorTest {
     @Test
     public void shouldAllowChildNodeDefinitionsWithResidualNames() {
         // setup
-        childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        final ValidationStatus status = CndValidator.validateName(childNodeDefinition, null, null);
+        this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        final ValidationStatus status = CndValidator.validateName(this.childNodeDefinition, null, null);
 
         // tests
         assertTrue(status.isOk());
@@ -549,14 +576,15 @@ public class CndValidatorTest {
     @Test
     public void shouldAllowMultipleChildNodeDefinitionsWithResidualNames() {
         // setup
-        nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
-        childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        final ChildNodeDefinition childNode2 = new ChildNodeDefinition(nodeTypeDefinition);
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        final ChildNodeDefinition childNode2 = new ChildNodeDefinition(this.nodeTypeDefinition);
         childNode2.setName(ItemDefinition.RESIDUAL_NAME);
-        nodeTypeDefinition.addChildNodeDefinition(childNodeDefinition);
-        nodeTypeDefinition.addChildNodeDefinition(childNode2);
-        final ValidationStatus status = CndValidator.validateChildNodeDefinitions(nodeTypeDefinition.getName(), null,
-                                                                                  nodeTypeDefinition.getChildNodeDefinitions());
+        this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
+        this.nodeTypeDefinition.addChildNodeDefinition(childNode2);
+        final ValidationStatus status = CndValidator.validateChildNodeDefinitions(this.nodeTypeDefinition.getName(),
+                                                                                  null,
+                                                                                  this.nodeTypeDefinition.getChildNodeDefinitions());
 
         // tests
         assertTrue(status.isOk());
@@ -565,14 +593,15 @@ public class CndValidatorTest {
     @Test
     public void shouldAllowMultiplePropertyDefinitionsWithResidualNames() {
         // setup
-        nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
-        propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        final PropertyDefinition propDefn2 = new PropertyDefinition(nodeTypeDefinition);
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        final PropertyDefinition propDefn2 = new PropertyDefinition(this.nodeTypeDefinition);
         propDefn2.setName(ItemDefinition.RESIDUAL_NAME);
-        nodeTypeDefinition.addPropertyDefinition(propertyDefinition);
-        nodeTypeDefinition.addPropertyDefinition(propDefn2);
-        final ValidationStatus status = CndValidator.validatePropertyDefinitions(nodeTypeDefinition.getName(), null,
-                                                                                 nodeTypeDefinition.getPropertyDefinitions());
+        this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
+        this.nodeTypeDefinition.addPropertyDefinition(propDefn2);
+        final ValidationStatus status = CndValidator.validatePropertyDefinitions(this.nodeTypeDefinition.getName(),
+                                                                                 null,
+                                                                                 this.nodeTypeDefinition.getPropertyDefinitions());
 
         // tests
         assertTrue(status.isOk());
@@ -581,8 +610,8 @@ public class CndValidatorTest {
     @Test
     public void shouldAllowPropertyDefinitionsWithResidualNames() {
         // setup
-        propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        final ValidationStatus status = CndValidator.validateName(propertyDefinition, null, null);
+        this.propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        final ValidationStatus status = CndValidator.validateName(this.propertyDefinition, null, null);
 
         // tests
         assertTrue(status.isOk());
@@ -591,9 +620,9 @@ public class CndValidatorTest {
     @Test
     public void shouldNotAllowBuiltInPrefixWithIncorrectUri() {
         // setup
-        namespaceMapping.setPrefix(Constants.BuiltInNamespaces.JCR.getPrefix());
-        namespaceMapping.setUri("foo"); //$NON-NLS-1$
-        final ValidationStatus status = CndValidator.validateNamespaceMapping(namespaceMapping);
+        this.namespaceMapping.setPrefix(Constants.BuiltInNamespaces.JCR.getPrefix());
+        this.namespaceMapping.setUri("foo"); //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateNamespaceMapping(this.namespaceMapping);
 
         // tests
         assertTrue(status.isError());
@@ -603,9 +632,9 @@ public class CndValidatorTest {
     @Test
     public void shouldNotAllowBuiltInUriWithIncorrectPrefix() {
         // setup
-        namespaceMapping.setPrefix("foo"); //$NON-NLS-1$
-        namespaceMapping.setUri(Constants.BuiltInNamespaces.JCR.getUri());
-        final ValidationStatus status = CndValidator.validateNamespaceMapping(namespaceMapping);
+        this.namespaceMapping.setPrefix("foo"); //$NON-NLS-1$
+        this.namespaceMapping.setUri(Constants.BuiltInNamespaces.JCR.getUri());
+        final ValidationStatus status = CndValidator.validateNamespaceMapping(this.namespaceMapping);
 
         // tests
         assertTrue(status.isError());
@@ -615,14 +644,15 @@ public class CndValidatorTest {
     @Test
     public void shouldNotAllowChildNodeDefinitionsWithSameName() {
         // setup
-        nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
-        childNodeDefinition.setName("name"); //$NON-NLS-1$
-        final ChildNodeDefinition childNode2 = new ChildNodeDefinition(nodeTypeDefinition);
-        childNode2.setName(childNodeDefinition.getName());
-        nodeTypeDefinition.addChildNodeDefinition(childNodeDefinition);
-        nodeTypeDefinition.addChildNodeDefinition(childNode2);
-        final ValidationStatus status = CndValidator.validateChildNodeDefinitions(nodeTypeDefinition.getName(), null,
-                                                                                  nodeTypeDefinition.getChildNodeDefinitions());
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name"); //$NON-NLS-1$
+        final ChildNodeDefinition childNode2 = new ChildNodeDefinition(this.nodeTypeDefinition);
+        childNode2.setName(this.childNodeDefinition.getName());
+        this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
+        this.nodeTypeDefinition.addChildNodeDefinition(childNode2);
+        final ValidationStatus status = CndValidator.validateChildNodeDefinitions(this.nodeTypeDefinition.getName(),
+                                                                                  null,
+                                                                                  this.nodeTypeDefinition.getChildNodeDefinitions());
 
         // tests
         assertTrue(status.isError());
@@ -658,8 +688,7 @@ public class CndValidatorTest {
     @Test
     public void shouldNotAllowDuplicateQualifiedNames() {
         // setup
-        final ValidationStatus status = CndValidator.validateQualifiedName(Constants.QUALIFIED_NAME1,
-                                                                           "propertyName", //$NON-NLS-1$
+        final ValidationStatus status = CndValidator.validateQualifiedName(Constants.QUALIFIED_NAME1, "propertyName", //$NON-NLS-1$
                                                                            Constants.Helper.getDefaultQualifiers(),
                                                                            Constants.Helper.getDefaultQualifiedNames());
 
@@ -671,14 +700,15 @@ public class CndValidatorTest {
     @Test
     public void shouldNotAllowPropertyDefinitionsWithSameName() {
         // setup
-        nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
-        propertyDefinition.setName("name"); //$NON-NLS-1$
-        final PropertyDefinition propDefn2 = new PropertyDefinition(nodeTypeDefinition);
-        propDefn2.setName(propertyDefinition.getName());
-        nodeTypeDefinition.addPropertyDefinition(propertyDefinition);
-        nodeTypeDefinition.addPropertyDefinition(propDefn2);
-        final ValidationStatus status = CndValidator.validatePropertyDefinitions(nodeTypeDefinition.getName(), null,
-                                                                                 nodeTypeDefinition.getPropertyDefinitions());
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.propertyDefinition.setName("name"); //$NON-NLS-1$
+        final PropertyDefinition propDefn2 = new PropertyDefinition(this.nodeTypeDefinition);
+        propDefn2.setName(this.propertyDefinition.getName());
+        this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
+        this.nodeTypeDefinition.addPropertyDefinition(propDefn2);
+        final ValidationStatus status = CndValidator.validatePropertyDefinitions(this.nodeTypeDefinition.getName(),
+                                                                                 null,
+                                                                                 this.nodeTypeDefinition.getPropertyDefinitions());
 
         // tests
         assertTrue(status.isError());
@@ -715,12 +745,12 @@ public class CndValidatorTest {
     @Test
     public void superTypeNameWithNonMatchingQualifierShouldBeAnError() {
         // setup
-        nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        nodeTypeDefinition.addSuperType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        final ValidationStatus status = CndValidator.validateSuperTypes(nodeTypeDefinition.getName(),
+        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.nodeTypeDefinition.addSuperType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        final ValidationStatus status = CndValidator.validateSuperTypes(this.nodeTypeDefinition.getName(),
                                                                         Constants.Helper.getDefaultNamespacePrefixes(),
-                                                                        nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
-                                                                        nodeTypeDefinition.getSupertypes());
+                                                                        this.nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
+                                                                        this.nodeTypeDefinition.getSupertypes());
 
         // tests
         assertTrue(status.isError());

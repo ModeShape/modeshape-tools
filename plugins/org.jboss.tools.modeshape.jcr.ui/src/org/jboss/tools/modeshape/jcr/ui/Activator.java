@@ -9,7 +9,10 @@ package org.jboss.tools.modeshape.jcr.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jboss.tools.modeshape.jcr.ui.dnd.JcrClipboard;
 import org.jboss.tools.modeshape.ui.graphics.GraphicsUtils;
 import org.osgi.framework.BundleContext;
 
@@ -25,6 +28,19 @@ public class Activator extends AbstractUIPlugin {
      */
     public static Activator getSharedInstance() {
         return _sharedInstance;
+    }
+
+    private JcrClipboard clipboard;
+
+    /**
+     * @return the JCR clipboard (never <code>null</code>)
+     */
+    public JcrClipboard getClipboard() {
+        if (this.clipboard == null) {
+            this.clipboard = new JcrClipboard(getWorkbench().getDisplay());
+        }
+
+        return this.clipboard;
     }
 
     /**
@@ -52,12 +68,50 @@ public class Activator extends AbstractUIPlugin {
 
     /**
      * {@inheritDoc}
-     *
+     * 
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     */
+    /**
+     * {@inheritDoc}
+     * 
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      */
     @Override
-    public void start( BundleContext context ) throws Exception {
+    public void start( final BundleContext context ) throws Exception {
         super.start(context);
         _sharedInstance = this;
+
+        // clear and dispose JCR model object clipboard
+        getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.eclipse.ui.IWorkbenchListener#postShutdown(org.eclipse.ui.IWorkbench)
+             */
+            @Override
+            public void postShutdown( final IWorkbench workbench ) {
+                // nothing to do
+            }
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.eclipse.ui.IWorkbenchListener#preShutdown(org.eclipse.ui.IWorkbench, boolean)
+             */
+            @Override
+            public boolean preShutdown( final IWorkbench workbench,
+                                        final boolean forced ) {
+                final JcrClipboard clipboard = getClipboard();
+
+                if (clipboard != null) {
+                    clipboard.clearContents();
+                    clipboard.dispose();
+                }
+
+                workbench.removeWorkbenchListener(this);
+                return true;
+            }
+        });
     }
 }

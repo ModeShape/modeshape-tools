@@ -18,7 +18,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 /**
  * The <code>NamespaceMapping</code> class represents a namespace. Each namespace mapping includes a prefix and a URI.
  */
-public class NamespaceMapping implements CommentedCndElement, Comparable<NamespaceMapping> {
+public class NamespaceMapping implements CommentedCndElement, Comparable<NamespaceMapping>, JcrModelObject {
 
     /**
      * The delimeter used to separate the prefix from the URI.
@@ -76,7 +76,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * Constructs an instance with the specified prefix and URI.
-     *
+     * 
      * @param initialPrefix the initial prefix (can be <code>null</code> or empty)
      * @param initialUri the initial URI (can be <code>null</code> or empty)
      */
@@ -98,7 +98,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -126,7 +126,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -144,7 +144,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
      */
     @Override
@@ -168,7 +168,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -214,7 +214,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
      */
     @Override
@@ -266,7 +266,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
@@ -311,7 +311,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -346,7 +346,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
 
         /**
          * {@inheritDoc}
-         *
+         * 
          * @see java.lang.Enum#toString()
          */
         @Override

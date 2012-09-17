@@ -60,7 +60,7 @@ public class NodeTypeAttributes implements CndElement {
             this.mixin = initialMixin;
         }
 
-        if (!this.notConcrete.equals(initialOrderable)) {
+        if (!this.notConcrete.equals(initialAbstract)) {
             this.notConcrete = initialAbstract;
         }
 
@@ -75,7 +75,7 @@ public class NodeTypeAttributes implements CndElement {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -131,7 +131,7 @@ public class NodeTypeAttributes implements CndElement {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -165,7 +165,7 @@ public class NodeTypeAttributes implements CndElement {
 
     /**
      * <strong>Can only be used to set to variant state.</strong>
-     * 
+     *
      * @param newState the proposed new state of the primary item attribute (cannot be <code>null</code>)
      * @return <code>true</code> if the state was changed
      */
@@ -191,7 +191,7 @@ public class NodeTypeAttributes implements CndElement {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
