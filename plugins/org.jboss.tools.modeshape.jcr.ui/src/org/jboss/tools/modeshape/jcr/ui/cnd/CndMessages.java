@@ -9,6 +9,7 @@
 package org.jboss.tools.modeshape.jcr.ui.cnd;
 
 import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.modeshape.jcr.JcrModelObject;
 
 /**
  * Localized messages used by classes in the <code>org.jboss.tools.modeshape.jcr.ui.cnd</code> package.
@@ -353,7 +354,47 @@ public class CndMessages extends NLS {
      * A label for a control that shows a CND comment.
      */
     public static String commentLabel;
-    
+
+    /**
+     * The context menu item text for the copy child node definition action.
+     */
+    public static String copyChildNodeMenuText;
+
+    /**
+     * The tool tip message of the copy child node definition action.
+     */
+    public static String copyChildNodeToolTip;
+
+    /**
+     * The context menu item text for the copy namespace action.
+     */
+    public static String copyNamespaceMenuText;
+
+    /**
+     * The tool tip message of the copy namespace action.
+     */
+    public static String copyNamespaceToolTip;
+
+    /**
+     * The context menu item text for the copy node type definition action.
+     */
+    public static String copyNodeTypeMenuText;
+
+    /**
+     * The tool tip message of the copy node type definition action.
+     */
+    public static String copyNodeTypeToolTip;
+
+    /**
+     * The context menu item text for the copy property action.
+     */
+    public static String copyPropertyMenuText;
+
+    /**
+     * The tool tip message of the copy property definition action.
+     */
+    public static String copyPropertyToolTip;
+
     /**
      * The column header text of the declaring node type of an item definition.
      */
@@ -721,6 +762,12 @@ public class CndMessages extends NLS {
     public static String errorAddingValueConstraint;
 
     /**
+     * An error message indicating copying a {@link JcrModelObject JCR model object} to the clipboard new value constraint was not added to the property definition. One parameter, the value
+     * constraint, is required.
+     */
+    public static String errorCopyingOrReadingJcrModelObjectToFromClipboard;
+
+    /**
      * An error message indicating deleting the child node definition did not get saved. One parameter, the child node definition
      * name, is required.
      */
@@ -1036,6 +1083,46 @@ public class CndMessages extends NLS {
     public static String orderableAttributeToolTip;
 
     /**
+     * The context menu item text for the paste child node definition action.
+     */
+    public static String pasteChildNodeMenuText;
+
+    /**
+     * The tool tip message of the paste child node definition action.
+     */
+    public static String pasteChildNodeToolTip;
+
+    /**
+     * The context menu item text for the paste namespace action.
+     */
+    public static String pasteNamespaceMenuText;
+
+    /**
+     * The tool tip message of the paste namespace action.
+     */
+    public static String pasteNamespaceToolTip;
+
+    /**
+     * The context menu item text for the paste node type definition action.
+     */
+    public static String pasteNodeTypeMenuText;
+
+    /**
+     * The tool tip message of the paste node type definition action.
+     */
+    public static String pasteNodeTypeToolTip;
+
+    /**
+     * The context menu item text for the paste property action.
+     */
+    public static String pastePropertyMenuText;
+
+    /**
+     * The tool tip message of the paste property definition action.
+     */
+    public static String pastePropertyToolTip;
+
+    /**
      * A label suitable for a preview control.
      */
     public static String previewLabel;
@@ -1044,7 +1131,7 @@ public class CndMessages extends NLS {
      * A message stating that preview is not available.
      */
     public static String previewNotAvailableMessage;
-    
+
     /**
      * A label for a primary item control.
      */

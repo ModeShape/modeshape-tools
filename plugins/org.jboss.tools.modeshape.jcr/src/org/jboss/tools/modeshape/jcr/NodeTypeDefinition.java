@@ -30,7 +30,8 @@ import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 /**
  * Represents a CND node type definition.
  */
-public class NodeTypeDefinition implements CommentedCndElement, Comparable<NodeTypeDefinition>, ItemOwnerProvider, NodeTypeTemplate {
+public class NodeTypeDefinition
+    implements CommentedCndElement, Comparable<NodeTypeDefinition>, ItemOwnerProvider, JcrModelObject, NodeTypeTemplate {
 
     /**
      * Then node type name prefix used in the CND notation.

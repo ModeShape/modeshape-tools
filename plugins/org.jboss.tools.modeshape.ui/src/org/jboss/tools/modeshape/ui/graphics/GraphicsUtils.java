@@ -10,11 +10,13 @@ package org.jboss.tools.modeshape.ui.graphics;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jboss.tools.modeshape.ui.UiUtils;
 
 /**
- * 
+ * Utilities for working with images. The Eclipse platform must be running.
  */
 public final class GraphicsUtils {
 
@@ -57,6 +59,40 @@ public final class GraphicsUtils {
         }
 
         return ((image == null) ? ImageDescriptor.getMissingImageDescriptor().createImage() : image);
+    }
+
+    /**
+     * Obtains an image from the {@link org.eclipse.ui.ISharedImages shared workbench images}.
+     *
+     * @param imageId the shared workbench image identifier (never <code>null</code>)
+     * @return the image or an image indicating the requested image could not be found
+     * @throws IllegalArgumentException if the image identifier is <code>null</code> or empty
+     * @see ISharedImages
+     */
+    public static Image getSharedImage( final String imageId ) {
+        UiUtils.verifyIsNotEmpty(imageId, "imageId"); //$NON-NLS-1$
+        final Image result = PlatformUI.getWorkbench().getSharedImages().getImage(imageId);
+        return ((result == null) ? ImageDescriptor.getMissingImageDescriptor().createImage() : result);
+    }
+
+    /**
+     * Obtains a workbench shared image descriptor from the {@link org.eclipse.ui.ISharedImages shared workbench images}.
+     *
+     * @param imageId the shared image identifier (never <code>null</code>)
+     * @return the shared workbench image descriptor or a descriptor indicating the requested descriptor could not be found
+     * @throws IllegalArgumentException if the plugin is <code>null</code>
+     * @throws IllegalArgumentException if the image identifier is <code>null</code> or empty
+     * @see ISharedImages
+     */
+    public static ImageDescriptor getSharedImageDescriptor( final String imageId ) {
+        UiUtils.verifyIsNotEmpty(imageId, "imageId"); //$NON-NLS-1$
+        final ImageDescriptor result = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(imageId);
+
+        if (result != null) {
+            return result;
+        }
+
+        return ImageDescriptor.getMissingImageDescriptor();
     }
 
     /**

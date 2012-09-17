@@ -10,7 +10,6 @@ package org.jboss.tools.modeshape.jcr.ui.cnd;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -38,6 +37,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
+import org.jboss.tools.modeshape.ui.UiUtils;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 
 /**
@@ -72,7 +72,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
     /**
      * Used to construct a new namespace mapping.
-     * 
+     *
      * @param parentShell the parent shell (may be <code>null</code>)
      * @param existingNamespaces the existing namespace mappings (can be <code>null</code> or empty)
      */
@@ -86,7 +86,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
     /**
      * Used to edit an existing namespace mapping.
-     * 
+     *
      * @param parentShell the parent shell (may be <code>null</code>)
      * @param existingNamespaces the existing namespace mappings (can be <code>null</code> or empty)
      * @param namespaceBeingEdited the namespace mapping being edited (cannot be <code>null</code>)
@@ -108,7 +108,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
      */
     @Override
@@ -119,7 +119,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.Dialog#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String, boolean)
      */
     @Override
@@ -140,7 +140,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.FormDialog#createFormContent(org.eclipse.ui.forms.IManagedForm)
      */
     @Override
@@ -175,7 +175,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -206,7 +206,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -236,7 +236,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -249,7 +249,7 @@ final class NamespaceMappingDialog extends FormDialog {
 
     /**
      * <strong>Should only be called after the OK button has been pressed.</strong>
-     * 
+     *
      * @return a namespace mapping representing the dialog changes (never <code>null</code>)
      */
     public NamespaceMapping getNamespaceMapping() {
@@ -273,7 +273,7 @@ final class NamespaceMappingDialog extends FormDialog {
                     this.saveUri = Utils.EMPTY_STRING;
                 } else {
                     this.saveUri = this.txtUri.getText();
-                    this.txtUri.setText(WorkspaceRegistry.get().getUri(this.prefix));
+                    this.txtUri.setText(UiUtils.ensureNotNull(WorkspaceRegistry.get().getUri(this.prefix)));
                 }
             }
         } catch (final Exception e) {
