@@ -13,7 +13,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -76,7 +75,7 @@ import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
 import org.jboss.tools.modeshape.ui.forms.MessageSummaryDialog;
 
 /**
- * 
+ * An editor for JCR compact node type definition files.
  */
 public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IResourceChangeListener,
         PropertyChangeListener {
@@ -106,7 +105,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * Allow inner classes access to this instance.
-     * 
+     *
      * @return this instance
      */
     CndEditor accessThis() {
@@ -115,7 +114,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
      */
     @Override
@@ -127,7 +126,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#isEditable()
                  */
                 @Override
@@ -145,7 +144,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
                  */
                 @Override
@@ -235,7 +234,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.editor.SharedHeaderFormEditor#createHeaderContents(org.eclipse.ui.forms.IManagedForm)
      */
     @Override
@@ -250,7 +249,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.ui.forms.events.HyperlinkAdapter#linkActivated(org.eclipse.ui.forms.events.HyperlinkEvent)
              */
             @Override
@@ -263,7 +262,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
              */
             @Override
@@ -274,7 +273,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.ui.forms.events.HyperlinkAdapter#linkActivated(org.eclipse.ui.forms.events.HyperlinkEvent)
                      */
                     @Override
@@ -290,7 +289,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.editor.SharedHeaderFormEditor#dispose()
      */
     @Override
@@ -301,7 +300,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
      */
     @Override
@@ -311,7 +310,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.part.EditorPart#doSaveAs()
      */
     @Override
@@ -456,7 +455,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.editor.FormEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
      */
     @Override
@@ -505,7 +504,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.editor.SharedHeaderFormEditor#isDirty()
      */
     @Override
@@ -522,7 +521,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
      */
     @Override
@@ -540,7 +539,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     @Override
@@ -604,7 +603,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.resources.IResourceChangeListener#resourceChanged(org.eclipse.core.resources.IResourceChangeEvent)
      */
     @Override
@@ -623,7 +622,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.core.resources.IResourceDeltaVisitor#visit(org.eclipse.core.resources.IResourceDelta)
                      */
                     @Override
@@ -636,7 +635,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                                         /**
                                          * {@inheritDoc}
-                                         * 
+                                         *
                                          * @see java.lang.Runnable#run()
                                          */
                                         @Override
@@ -652,7 +651,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                                         /**
                                          * {@inheritDoc}
-                                         * 
+                                         *
                                          * @see java.lang.Runnable#run()
                                          */
                                         @Override
@@ -677,7 +676,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.IPersistableEditor#restoreState(org.eclipse.ui.IMemento)
      */
     @Override
@@ -697,7 +696,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.IPersistable#saveState(org.eclipse.ui.IMemento)
      */
     @Override
@@ -709,7 +708,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.editor.SharedHeaderFormEditor#setFocus()
      */
     @Override
@@ -720,7 +719,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.part.EditorPart#setInput(org.eclipse.ui.IEditorInput)
      */
     @Override

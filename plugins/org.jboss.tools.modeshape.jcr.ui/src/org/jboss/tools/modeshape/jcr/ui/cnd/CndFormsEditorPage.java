@@ -277,20 +277,22 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             /**
              * {@inheritDoc}
              *
-             * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
+             * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
              */
             @Override
-            public void partOpened( IWorkbenchPart part ) {
-                // nothing to do
+            public void partActivated( final IWorkbenchPart part ) {
+                if (getCndEditor().getPartName().equals(part.getTitle())) {
+                    updateEnabledState();
+                }
             }
 
             /**
              * {@inheritDoc}
              *
-             * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart)
+             * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart)
              */
             @Override
-            public void partDeactivated( IWorkbenchPart part ) {
+            public void partBroughtToTop( final IWorkbenchPart part ) {
                 // nothing to do
             }
 
@@ -300,30 +302,28 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
              * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
              */
             @Override
-            public void partClosed( IWorkbenchPart part ) {
+            public void partClosed( final IWorkbenchPart part ) {
                 // nothing to do
             }
 
             /**
              * {@inheritDoc}
              *
-             * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart)
+             * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart)
              */
             @Override
-            public void partBroughtToTop( IWorkbenchPart part ) {
+            public void partDeactivated( final IWorkbenchPart part ) {
                 // nothing to do
             }
 
             /**
              * {@inheritDoc}
              *
-             * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
+             * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
              */
             @Override
-            public void partActivated( IWorkbenchPart part ) {
-                if (getCndEditor().getPartName().equals(part.getTitle())) {
-                    updateEnabledState();
-                }
+            public void partOpened( final IWorkbenchPart part ) {
+                // nothing to do
             }
         });
     }
@@ -484,17 +484,56 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         final Table table = FormUtils.createTable(toolkit, container);
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
 
-        // table context menu
+        // table and status bar context menus
         final MenuManager menuManager = new MenuManager();
-        menuManager.add(new DelegateAction(CndMessages.addChildNodeMenuText, this.addChildNode));
-        menuManager.add(new DelegateAction(CndMessages.editChildNodeMenuText, this.editChildNode));
-        menuManager.add(new DelegateAction(CndMessages.deleteChildNodeMenuText, this.deleteChildNode));
+        final MenuManager statusBarMenuManager = new MenuManager();
+
+        { // add child node
+            final IAction action = new DelegateAction(CndMessages.addChildNodeMenuText, this.addChildNode);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // edit child node
+            final IAction action = new DelegateAction(CndMessages.editChildNodeMenuText, this.editChildNode);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // delete child node
+            final IAction action = new DelegateAction(CndMessages.deleteChildNodeMenuText, this.deleteChildNode);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         menuManager.add(new Separator());
-        menuManager.add(new DelegateAction(CndMessages.copyChildNodeMenuText, this.copyChildNode));
-        menuManager.add(new DelegateAction(CndMessages.pasteChildNodeMenuText, this.pasteChildNode));
+        statusBarMenuManager.add(new Separator());
+
+        { // copy child node
+            final IAction action = new DelegateAction(CndMessages.copyChildNodeMenuText, this.copyChildNode);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // paste child node
+            final IAction action = new DelegateAction(CndMessages.pasteChildNodeMenuText, this.pasteChildNode);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         menuManager.add(new Separator());
-        menuManager.add(new DelegateAction(CndMessages.openDeclaringNodeTypeMenuText, this.openChildNodeDeclaringNodeType));
+        statusBarMenuManager.add(new Separator());
+
+        { // open child node declaring node type
+            final IAction action = new DelegateAction(CndMessages.openDeclaringNodeTypeMenuText,
+                                                      this.openChildNodeDeclaringNodeType);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         table.setMenu(menuManager.createContextMenu(table));
+        getActionContributor().setChildNodeStatusMenuManager(statusBarMenuManager);
+        getActionContributor().setChildNodeStatusDoubleClickAction(this.editChildNode);
 
         createChildNodeViewer(table);
     }
@@ -1450,18 +1489,52 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             createChildNodeSection(managedForm, toolkit, container);
         }
 
-        // table context menu (uses actions created by other sections)
+        // table and status bar context menus (uses actions created by other sections)
         final MenuManager menuManager = new MenuManager();
-        menuManager.add(new DelegateAction(CndMessages.addNodeTypeMenuText, this.addNodeType));
-        menuManager.add(new DelegateAction(CndMessages.deleteNodeTypeMenuText, this.deleteNodeType));
+        final MenuManager statusBarMenuManager = new MenuManager();
+
+        { // add node type
+            final IAction action = new DelegateAction(CndMessages.addNodeTypeMenuText, this.addNodeType);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // delete node type
+            final IAction action = new DelegateAction(CndMessages.deleteNodeTypeMenuText, this.deleteNodeType);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         menuManager.add(new Separator());
-        menuManager.add(new DelegateAction(CndMessages.copyNodeTypeMenuText, this.copyNodeType));
-        menuManager.add(new DelegateAction(CndMessages.pasteNodeTypeMenuText, this.pasteNodeType));
-        menuManager.add(new DelegateAction(CndMessages.pastePropertyMenuText, this.pasteProperty));
-        menuManager.add(new DelegateAction(CndMessages.pasteChildNodeMenuText, this.pasteChildNode));
+        statusBarMenuManager.add(new Separator());
+
+        { // copy node type
+            final IAction action = new DelegateAction(CndMessages.copyNodeTypeMenuText, this.copyNodeType);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // paste node type
+            final IAction action = new DelegateAction(CndMessages.pasteNodeTypeMenuText, this.pasteNodeType);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // paste property
+            final IAction action = new DelegateAction(CndMessages.pastePropertyMenuText, this.pasteProperty);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // paste child node
+            final IAction action = new DelegateAction(CndMessages.pasteChildNodeMenuText, this.pasteChildNode);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
 
         final Table table = this.nodeTypeViewer.getTable();
         table.setMenu(menuManager.createContextMenu(table));
+        getActionContributor().setNodeTypeStatusMenuManager(statusBarMenuManager);
 
         splitter.setWeights(new int[] {20, 80});
     }
@@ -1765,17 +1838,56 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         final Table table = FormUtils.createTable(toolkit, container);
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
 
-        // table context menu
+        // table and status bar context menus
         final MenuManager menuManager = new MenuManager();
-        menuManager.add(new DelegateAction(CndMessages.addPropertyMenuText, this.addProperty));
-        menuManager.add(new DelegateAction(CndMessages.editPropertyMenuText, this.editProperty));
-        menuManager.add(new DelegateAction(CndMessages.deletePropertyMenuText, this.deleteProperty));
+        final MenuManager statusBarMenuManager = new MenuManager();
+
+        { // add property
+            final IAction action = new DelegateAction(CndMessages.addPropertyMenuText, this.addProperty);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // edit property
+            final IAction action = new DelegateAction(CndMessages.editPropertyMenuText, this.editProperty);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // delete property
+            final IAction action = new DelegateAction(CndMessages.deletePropertyMenuText, this.deleteProperty);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         menuManager.add(new Separator());
-        menuManager.add(new DelegateAction(CndMessages.copyPropertyMenuText, this.copyProperty));
-        menuManager.add(new DelegateAction(CndMessages.pastePropertyMenuText, this.pasteProperty));
+        statusBarMenuManager.add(new Separator());
+
+        { // copy property
+            final IAction action = new DelegateAction(CndMessages.copyPropertyMenuText, this.copyProperty);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
+        { // paste property
+            final IAction action = new DelegateAction(CndMessages.pastePropertyMenuText, this.pasteProperty);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         menuManager.add(new Separator());
-        menuManager.add(new DelegateAction(CndMessages.openDeclaringNodeTypeMenuText, this.openPropertyDeclaringNodeType));
+        statusBarMenuManager.add(new Separator());
+
+        { // open declaring node type
+            final IAction action = new DelegateAction(CndMessages.openDeclaringNodeTypeMenuText,
+                                                      this.openPropertyDeclaringNodeType);
+            menuManager.add(action);
+            statusBarMenuManager.add(action);
+        }
+
         table.setMenu(menuManager.createContextMenu(table));
+        getActionContributor().setPropertyStatusMenuManager(statusBarMenuManager);
+        getActionContributor().setPropertyStatusDoubleClickAction(this.editProperty);
 
         createPropertyViewer(table);
     }
@@ -2192,6 +2304,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         });
     }
 
+    CndEditorActionBarContributor getActionContributor() {
+        return (CndEditorActionBarContributor)getEditor().getEditorSite().getActionBarContributor();
+    }
+
     Collection<QualifiedName> getChildNodeNames() {
         assert (getSelectedNodeType() != null) : "getChildNodeNames called but no selected node type"; //$NON-NLS-1$
         final Collection<ChildNodeDefinition> childNodes = getSelectedNodeType().getChildNodeDefinitions();
@@ -2463,7 +2579,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             this.addChildNode.setEnabled(enable);
         }
 
-        final boolean enableWithChildNodeSelected = (enable && (getSelectedChildNode() != null));
+        final ChildNodeDefinition selectedChildNode = getSelectedChildNode();
+        getActionContributor().setChildNode(selectedChildNode);
+
+        final boolean enableWithChildNodeSelected = (enable && (selectedChildNode != null));
         final boolean enableInheritedChildNode = enableWithChildNodeSelected
                                                  && !getSelectedNodeType().hasDeclaredChildNodeDefinition(getSelectedChildNode().getName());
         final boolean enableDeclaredChildNode = enableWithChildNodeSelected
@@ -2860,6 +2979,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     void handleNodeTypeSelected() {
         final NodeTypeDefinition prevNodeType = this.selectedNodeType;
         this.selectedNodeType = getSelectedNodeType();
+        getActionContributor().setNodeType(this.selectedNodeType);
 
         // unhook property change listening from previously selected node type
         if (prevNodeType != null) {
@@ -3033,7 +3153,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             this.addProperty.setEnabled(enable);
         }
 
-        final boolean enableWithPropertySelected = (enable && (getSelectedProperty() != null));
+        final PropertyDefinition selectedProperty = getSelectedProperty();
+        getActionContributor().setProperty(selectedProperty);
+
+        final boolean enableWithPropertySelected = (enable && (selectedProperty != null));
         final boolean enableInheritedProperty = enableWithPropertySelected
                                                 && !getSelectedNodeType().hasDeclaredPropertyDefinition(getSelectedProperty().getName());
         final boolean enableDeclaredProperty = enableWithPropertySelected
@@ -3148,7 +3271,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 processStatus(msgMgr, embeddedStatus, c);
             }
         } else {
-            ErrorMessage em = new ErrorMessage();
+            final ErrorMessage em = new ErrorMessage();
             em.setControl(c);
             JcrUiUtils.setMessage(status, em);
             updateMessage(em);
@@ -3370,6 +3493,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
      */
     @Override
     protected void setResourceReadOnly( final boolean readOnly ) {
+        getActionContributor().setEditableStatus(!readOnly);
         updateEnabledState();
     }
 
@@ -3394,7 +3518,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             return;
         }
 
-        this.nodeTypeViewer.getTable().getDisplay().asyncExec(new Runnable(){
+        this.nodeTypeViewer.getTable().getDisplay().asyncExec(new Runnable() {
 
             /**
              * {@inheritDoc}
@@ -3405,7 +3529,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             public void run() {
                 validateNamespaces();
                 validateNodeTypes();
-            }});
+            }
+        });
     }
 
     void updateEnabledState() {

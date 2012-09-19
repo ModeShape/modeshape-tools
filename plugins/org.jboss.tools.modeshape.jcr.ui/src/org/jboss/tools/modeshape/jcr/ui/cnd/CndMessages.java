@@ -1284,6 +1284,31 @@ public class CndMessages extends NLS {
     public static String showInheritedPropertiesToolTip;
 
     /**
+     * A tool tip message of a status bar field displaying the selected child node definition's name.
+     */
+    public static String statusBarChildNodeToolTip;
+
+    /**
+     * A tool tip message of a status bar field displaying the read-only status of a CND.
+     */
+    public static String statusBarCndEditableTip;
+
+    /**
+     * A tool tip message of a status bar field displaying the selected node type definition's name.
+     */
+    public static String statusBarNodeTypeToolTip;
+
+    /**
+     * A status bar message for when there is no selection.
+     */
+    public static String statusBarNoSelection;
+
+    /**
+     * A tool tip message of a status bar field displaying the selected property definition's name.
+     */
+    public static String statusBarPropertyToolTip;
+
+    /**
      * A label for a supertypes control.
      */
     public static String supertypesLabel;

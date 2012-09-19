@@ -20,6 +20,7 @@
             extensions="cnd"
             id="org.jboss.tools.modeshape.jcr.ui.cndEditor"
             icon="icons/cnd-editor-16x.png"
+            contributorClass="org.jboss.tools.modeshape.jcr.ui.cnd.CndEditorActionBarContributor"
             name="%cndEditor.name">
       </editor>
    </extension>
