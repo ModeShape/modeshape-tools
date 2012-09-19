@@ -62,13 +62,13 @@ public final class JcrClipboard {
 
     /**
      * Reads a single JCR model object from the system clipboard.
-     * 
+     *
      * @param jcrTransfer the object converting a native representation to a JCR model object (cannot be <code>null</code>)
      * @return the JCR model object being read from the clipboard (can be <code>null</code>)
      */
     public JcrModelObject getContents( final JcrTransfer jcrTransfer ) {
         UiUtils.verifyIsNotNull(jcrTransfer, "jcrTransfer");
-        final Object contents = this.delegate.getContents(jcrTransfer);
+        final Object contents = (this.delegate.isDisposed() ? null : this.delegate.getContents(jcrTransfer));
 
         if (contents == null) {
             return null;
@@ -82,12 +82,12 @@ public final class JcrClipboard {
      * @return <code>true</code> if system clipboard contains contents with the specified type
      */
     public boolean hasContents( final JcrTransfer jcrTransfer ) {
-        return (getContents(jcrTransfer) != null);
+        return (!this.delegate.isDisposed() && (getContents(jcrTransfer) != null));
     }
 
     /**
      * Copies a single JCR model object to the system clipboard.
-     * 
+     *
      * @param jcrModelObject the JCR model object being copied to the clipboard (cannot be <code>null</code>)
      * @param jcrTransfer the object converting the model object to a native representation (cannot be <code>null</code>)
      */
