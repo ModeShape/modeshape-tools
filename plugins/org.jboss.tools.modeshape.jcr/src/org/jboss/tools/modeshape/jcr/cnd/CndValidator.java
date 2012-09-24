@@ -53,11 +53,13 @@ public final class CndValidator {
      * @param value the value being checked (can be <code>null</code> or empty)
      * @param propertyType the property type of the property definition the value is for (cannot be <code>null</code>)
      * @param propertyName the name to use to identify the property definition (cannot be <code>null</code> empty)
+     * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus isValid( final String value,
                                             final PropertyType propertyType,
-                                            String propertyName ) {
+                                            String propertyName,
+                                            final Collection<String> validNamespacePrefixes ) {
         Utils.verifyIsNotNull(propertyType, "propertyType"); //$NON-NLS-1$
 
         if (Utils.isEmpty(propertyName)) {
@@ -117,7 +119,7 @@ public final class CndValidator {
                                                                         PropertyType.LONG));
                 }
             } else if (PropertyType.NAME == propertyType) {
-                return validateQualifiedName(QualifiedName.parse(value), propertyName, null, null);
+                return validateQualifiedName(QualifiedName.parse(value), propertyName, validNamespacePrefixes, null);
             } else if (PropertyType.PATH == propertyType) {
                 return validatePath(value, propertyName);
             } else if (PropertyType.REFERENCE == propertyType) {
@@ -142,13 +144,15 @@ public final class CndValidator {
      * @param value the value being checked (can be <code>null</code> or empty)
      * @param propertyType the property type of the property definition the value is for (cannot be <code>null</code>)
      * @param propertyName the name to use to identify the property definition (cannot be <code>null</code> empty)
+     * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
      * @param status the status to add the new status to (cannot be <code>null</code>)
      */
     public static void isValid( final String value,
                                 final PropertyType propertyType,
                                 final String propertyName,
+                                final Collection<String> validNamespacePrefixes,
                                 final MultiValidationStatus status ) {
-        final ValidationStatus newStatus = isValid(value, propertyType, propertyName);
+        final ValidationStatus newStatus = isValid(value, propertyType, propertyName, validNamespacePrefixes);
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
@@ -512,7 +516,7 @@ public final class CndValidator {
 
             for (final String defaultValue : defaultValues) {
                 // ERROR - Default value is not valid for the property definition type
-                isValid(defaultValue, propertyType, Messages.defaultValue, status);
+                isValid(defaultValue, propertyType, Messages.defaultValue, validNamespacePrefixes, status);
 
                 // make sure if NAME type the qualifier is valid
                 final Collection<String> qualifiers = (Utils.isEmpty(validNamespacePrefixes) ? Collections.<String>emptyList() : validNamespacePrefixes);

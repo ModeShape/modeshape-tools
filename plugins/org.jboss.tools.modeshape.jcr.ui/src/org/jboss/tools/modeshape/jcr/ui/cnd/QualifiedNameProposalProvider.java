@@ -7,8 +7,8 @@
  */
 package org.jboss.tools.modeshape.jcr.ui.cnd;
 
+import java.util.Collections;
 import java.util.List;
-
 import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
@@ -19,6 +19,21 @@ import org.jboss.tools.modeshape.jcr.Utils;
  * Provides proposals based on the qualifier part of a qualified name.
  */
 abstract class QualifiedNameProposalProvider implements IContentProposalProvider {
+
+    public static final QualifiedNameProposalProvider NO_PROPOSALS_PROVIDER = new QualifiedNameProposalProvider() {
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see org.jboss.tools.modeshape.jcr.ui.cnd.QualifiedNameProposalProvider#qnameStartsWith(java.lang.String,
+         *      java.lang.String)
+         */
+        @Override
+        protected List<QualifiedName> qnameStartsWith( final String qualifier,
+                                                       final String namePattern ) {
+            return Collections.emptyList();
+        }
+    };
 
     private String qualifier;
 

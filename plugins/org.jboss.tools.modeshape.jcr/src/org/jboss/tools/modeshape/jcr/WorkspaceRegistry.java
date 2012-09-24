@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
@@ -130,17 +129,23 @@ public class WorkspaceRegistry {
 
     /**
      * Obtains the node type definitions registered to the specified namespace.
-     * 
-     * @param namespacePrefix the namespace prefix of the node type definitions being requested (cannot be <code>null</code> or
+     *
+     * @param namespacePrefix the namespace prefix of the node type definitions being requested (can be <code>null</code> or
      *            empty)
      * @return the requested node type definitions (never <code>null</code> but can be empty)
      */
     public List<NodeTypeDefinition> getMatchingNodeTypeDefinitions( final String namespacePrefix ) {
-        Utils.verifyIsNotEmpty(namespacePrefix, "namespacePrefix"); //$NON-NLS-1$
+        final boolean matchEmptyPrefix = Utils.isEmpty(namespacePrefix);
         final List<NodeTypeDefinition> matches = new ArrayList<NodeTypeDefinition>();
 
         for (final NodeTypeDefinition nodeType : getNodeTypeDefinitions()) {
-            if (namespacePrefix.equals(nodeType.getQualifiedName().getQualifier())) {
+            final String qualifier = nodeType.getQualifiedName().getQualifier();
+
+            if (matchEmptyPrefix) {
+                if (Utils.isEmpty(qualifier)) {
+                    matches.add(nodeType);
+                }
+            } else if (namespacePrefix.equals(qualifier)) {
                 matches.add(nodeType);
             }
         }

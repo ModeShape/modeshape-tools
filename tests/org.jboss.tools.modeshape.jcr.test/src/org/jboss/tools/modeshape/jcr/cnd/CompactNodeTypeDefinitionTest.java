@@ -11,28 +11,82 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.jboss.tools.modeshape.jcr.Listener;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition.PropertyName;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class CompactNodeTypeDefinitionTest {
+
+    private static List<NodeTypeDefinition> _nodeTypeDefinitions;
+
+    private static final int EMPTY_PREFIX_NODE_TYPE_MATCHES = 2;
+    private static final int NT_NODE_TYPE_MATCHES = 3;
+    private static final int JCR_NODE_TYPE_MATCHES = 4;
 
     private CompactNodeTypeDefinition cnd;
     private NamespaceMapping namespaceMapping;
     private NodeTypeDefinition nodeTypeDefinition;
+
+    private void addNodeTypeDefinitions() {
+        for (NodeTypeDefinition ntd : _nodeTypeDefinitions) {
+            this.cnd.addNodeTypeDefinition(ntd);
+        }
+    }
 
     @Before
     public void beforeEach() {
         this.cnd = new CompactNodeTypeDefinition();
         this.namespaceMapping = new NamespaceMapping();
         this.nodeTypeDefinition = new NodeTypeDefinition();
+
+        if (_nodeTypeDefinitions == null) {
+            _nodeTypeDefinitions = new ArrayList<NodeTypeDefinition>();
+
+            NodeTypeDefinition nodeType = new NodeTypeDefinition();
+            nodeType.setName("unqualified1");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("unqualified2");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("nt:nt1");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("nt:nt2");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("nt:nt3");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("jcr:jcr1");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("jcr:jcr2");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("jcr:jcr3");
+            _nodeTypeDefinitions.add(nodeType);
+
+            nodeType = new NodeTypeDefinition();
+            nodeType.setName("jcr:jcr4");
+            _nodeTypeDefinitions.add(nodeType);
+        }
     }
 
     @Test
@@ -52,12 +106,12 @@ public class CompactNodeTypeDefinitionTest {
         assertEquals(this.nodeTypeDefinition, this.cnd.getNodeTypeDefinitions().iterator().next());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullNamespaceToBeAdded() {
         this.cnd.addNamespaceMapping(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullNodeTypeDefinitionToBeAdded() {
         this.cnd.addNodeTypeDefinition(null);
     }
@@ -148,5 +202,37 @@ public class CompactNodeTypeDefinitionTest {
         assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
         assertTrue(this.cnd.removeNodeTypeDefinition(this.nodeTypeDefinition));
         assertEquals(0, this.cnd.getNodeTypeDefinitions().size());
+    }
+
+    @Test
+    public void shouldMatchEmptyPrefixNodeTypeDefinitions() {
+        addNodeTypeDefinitions();
+
+        { // NT matches
+            final String prefix = "nt";
+            List<NodeTypeDefinition> matches = this.cnd.getMatchingNodeTypeDefinitions(prefix, false);
+            assertEquals(NT_NODE_TYPE_MATCHES, matches.size());
+        }
+
+        { // JCR matches
+            final String prefix = "jcr";
+            List<NodeTypeDefinition> matches = this.cnd.getMatchingNodeTypeDefinitions(prefix, false);
+            assertEquals(JCR_NODE_TYPE_MATCHES, matches.size());
+        }
+    }
+
+    @Test
+    public void shouldMatchPrefixNodeTypeDefinitions() {
+        addNodeTypeDefinitions();
+
+        { // null matches
+            List<NodeTypeDefinition> matches = this.cnd.getMatchingNodeTypeDefinitions(null, false);
+            assertEquals(EMPTY_PREFIX_NODE_TYPE_MATCHES, matches.size());
+        }
+
+        { // empty matches
+            List<NodeTypeDefinition> matches = this.cnd.getMatchingNodeTypeDefinitions(Utils.EMPTY_STRING, false);
+            assertEquals(EMPTY_PREFIX_NODE_TYPE_MATCHES, matches.size());
+        }
     }
 }

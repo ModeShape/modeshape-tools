@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -112,7 +111,7 @@ final class PropertyDialog extends FormDialog {
 
     /**
      * Used to create a new property definition.
-     * 
+     *
      * @param parentShell the parent shell (can be <code>null</code>)
      * @param ownerProvider an item owner provider for the new property (cannot be <code>null</code>)
      * @param existingPropertyNames the existing property names (can be <code>null</code> or empty)
@@ -125,10 +124,10 @@ final class PropertyDialog extends FormDialog {
                            final Collection<String> existingNamespacePrefixes,
                            final boolean nodeTypeQueryable ) {
         super(parentShell);
-        this.existingPropertyNames = ((existingPropertyNames == null) ? Collections.<QualifiedName> emptyList()
-                                                                     : new ArrayList<QualifiedName>(existingPropertyNames));
-        this.existingNamespacePrefixes = ((existingNamespacePrefixes == null) ? Collections.<String> emptyList()
-                                                                             : new ArrayList<String>(existingNamespacePrefixes));
+        this.existingPropertyNames = ((existingPropertyNames == null) ? Collections.<QualifiedName>emptyList()
+                                                                      : new ArrayList<QualifiedName>(existingPropertyNames));
+        this.existingNamespacePrefixes = ((existingNamespacePrefixes == null) ? Collections.<String>emptyList()
+                                                                              : new ArrayList<String>(existingNamespacePrefixes));
         this.nodeTypeQueryable = nodeTypeQueryable;
         this.defaultValuesError = new ErrorMessage();
         this.nameError = new ErrorMessage();
@@ -138,7 +137,7 @@ final class PropertyDialog extends FormDialog {
 
     /**
      * Used to edit a property definition.
-     * 
+     *
      * @param parentShell the parent shell (can be <code>null</code>)
      * @param ownerProvider an item owner provider for the new property (cannot be <code>null</code>)
      * @param existingPropertyNames the existing property names (can be <code>null</code> or empty)
@@ -176,7 +175,7 @@ final class PropertyDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
      */
     @Override
@@ -187,7 +186,7 @@ final class PropertyDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.Dialog#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String, boolean)
      */
     @Override
@@ -211,7 +210,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -226,7 +225,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -242,7 +241,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -262,7 +261,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IContentProvider#dispose()
              */
             @Override
@@ -272,7 +271,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
              */
             @Override
@@ -283,7 +282,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
              *      java.lang.Object)
              */
@@ -299,7 +298,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
              */
             @Override
@@ -312,7 +311,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
              */
             @Override
@@ -324,7 +323,7 @@ final class PropertyDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.FormDialog#createFormContent(org.eclipse.ui.forms.IManagedForm)
      */
     @Override
@@ -348,10 +347,7 @@ final class PropertyDialog extends FormDialog {
             toolkit.paintBordersFor(topContainer);
 
             { // name
-                this.nameEditor = new QualifiedNameEditor(topContainer,
-                                                          SWT.NONE,
-                                                          toolkit,
-                                                          Messages.propertyDefinitionName,
+                this.nameEditor = new QualifiedNameEditor(topContainer, SWT.NONE, toolkit, Messages.propertyDefinitionName,
                                                           this.existingNamespacePrefixes,
                                                           this.propertyBeingEdited.getQualifiedName());
                 ((GridData)this.nameEditor.getLayoutData()).horizontalSpan = 2;
@@ -360,7 +356,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
                      */
                     @Override
@@ -409,7 +405,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -432,7 +428,9 @@ final class PropertyDialog extends FormDialog {
             toolkit.paintBordersFor(attributesContainer);
 
             { // autocreated
-                final Button btnAutocreated = toolkit.createButton(attributesContainer, CndMessages.autocreatedAttribute, SWT.CHECK);
+                final Button btnAutocreated = toolkit.createButton(attributesContainer,
+                                                                   CndMessages.autocreatedAttribute,
+                                                                   SWT.CHECK);
                 btnAutocreated.setBackground(attributesContainer.getBackground());
 
                 if (isEditMode() && this.propertyBeingEdited.isAutoCreated()) {
@@ -443,7 +441,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -466,7 +464,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -489,7 +487,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -512,7 +510,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -535,7 +533,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -547,7 +545,8 @@ final class PropertyDialog extends FormDialog {
             }
 
             { // noQueryOrder
-                final Button btnNoQueryOrder = toolkit.createButton(attributesContainer, CndMessages.noQueryOrderAttribute,
+                final Button btnNoQueryOrder = toolkit.createButton(attributesContainer,
+                                                                    CndMessages.noQueryOrderAttribute,
                                                                     SWT.CHECK);
                 btnNoQueryOrder.setBackground(attributesContainer.getBackground());
 
@@ -559,7 +558,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -597,8 +596,7 @@ final class PropertyDialog extends FormDialog {
 
                 // select the current qualifier
                 if (isEditMode()) {
-                    final String currentOpv = OnParentVersion.findUsingJcrValue(this.propertyBeingEdited.getOnParentVersion())
-                                                             .toString();
+                    final String currentOpv = OnParentVersion.findUsingJcrValue(this.propertyBeingEdited.getOnParentVersion()).toString();
                     final int index = cbxOpvs.indexOf(currentOpv);
 
                     if (index != -1) {
@@ -610,7 +608,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -633,7 +631,9 @@ final class PropertyDialog extends FormDialog {
                     toolkit.createLabel(queryOpsContainer, CndMessages.queryOperatorsLabel);
 
                     { // equals query operator
-                        final Button btnEquals = toolkit.createButton(queryOpsContainer, QueryOperator.EQUALS.toString(), SWT.CHECK);
+                        final Button btnEquals = toolkit.createButton(queryOpsContainer,
+                                                                      QueryOperator.EQUALS.toString(),
+                                                                      SWT.CHECK);
                         btnEquals.setBackground(attributesContainer.getBackground());
 
                         if (supportedQueryOps.contains(btnEquals.getText())) {
@@ -644,7 +644,7 @@ final class PropertyDialog extends FormDialog {
 
                             /**
                              * {@inheritDoc}
-                             * 
+                             *
                              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                              */
                             @Override
@@ -657,7 +657,8 @@ final class PropertyDialog extends FormDialog {
                     }
 
                     { // not equals query operator
-                        final Button btnNotEquals = toolkit.createButton(queryOpsContainer, QueryOperator.NOT_EQUALS.toString(),
+                        final Button btnNotEquals = toolkit.createButton(queryOpsContainer,
+                                                                         QueryOperator.NOT_EQUALS.toString(),
                                                                          SWT.CHECK);
                         btnNotEquals.setBackground(attributesContainer.getBackground());
 
@@ -669,7 +670,7 @@ final class PropertyDialog extends FormDialog {
 
                             /**
                              * {@inheritDoc}
-                             * 
+                             *
                              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                              */
                             @Override
@@ -683,7 +684,8 @@ final class PropertyDialog extends FormDialog {
 
                     { // greater than query operator
                         final Button btnGreaterThan = toolkit.createButton(queryOpsContainer,
-                                                                           QueryOperator.GREATER_THAN.toString(), SWT.CHECK);
+                                                                           QueryOperator.GREATER_THAN.toString(),
+                                                                           SWT.CHECK);
                         btnGreaterThan.setBackground(attributesContainer.getBackground());
 
                         if (supportedQueryOps.contains(btnGreaterThan.getText())) {
@@ -694,7 +696,7 @@ final class PropertyDialog extends FormDialog {
 
                             /**
                              * {@inheritDoc}
-                             * 
+                             *
                              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                              */
                             @Override
@@ -707,7 +709,8 @@ final class PropertyDialog extends FormDialog {
                     }
 
                     { // less than query operator
-                        final Button btnLessThan = toolkit.createButton(queryOpsContainer, QueryOperator.LESS_THAN.toString(),
+                        final Button btnLessThan = toolkit.createButton(queryOpsContainer,
+                                                                        QueryOperator.LESS_THAN.toString(),
                                                                         SWT.CHECK);
                         btnLessThan.setBackground(attributesContainer.getBackground());
 
@@ -719,7 +722,7 @@ final class PropertyDialog extends FormDialog {
 
                             /**
                              * {@inheritDoc}
-                             * 
+                             *
                              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                              */
                             @Override
@@ -745,7 +748,7 @@ final class PropertyDialog extends FormDialog {
 
                             /**
                              * {@inheritDoc}
-                             * 
+                             *
                              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                              */
                             @Override
@@ -759,7 +762,8 @@ final class PropertyDialog extends FormDialog {
 
                     { // less than or equals query operator
                         final Button btnLessThanEquals = toolkit.createButton(queryOpsContainer,
-                                                                              QueryOperator.LESS_THAN_EQUALS.toString(), SWT.CHECK);
+                                                                              QueryOperator.LESS_THAN_EQUALS.toString(),
+                                                                              SWT.CHECK);
                         btnLessThanEquals.setBackground(attributesContainer.getBackground());
 
                         if (supportedQueryOps.contains(btnLessThanEquals.getText())) {
@@ -770,7 +774,7 @@ final class PropertyDialog extends FormDialog {
 
                             /**
                              * {@inheritDoc}
-                             * 
+                             *
                              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                              */
                             @Override
@@ -896,7 +900,7 @@ final class PropertyDialog extends FormDialog {
                 lblComment.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
                 Text txtComment = toolkit.createText(commentsContainer, null, Styles.TEXT_STYLE | SWT.MULTI | SWT.H_SCROLL
-                        | SWT.V_SCROLL);
+                                                                              | SWT.V_SCROLL);
                 txtComment.setToolTipText(CndMessages.commentedToolTip);
 
                 final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -913,7 +917,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                      */
                     @Override
@@ -929,7 +933,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
              */
             @Override
@@ -951,7 +955,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -966,7 +970,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -982,7 +986,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -1002,7 +1006,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IContentProvider#dispose()
              */
             @Override
@@ -1012,7 +1016,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
              */
             @Override
@@ -1029,7 +1033,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
              *      java.lang.Object)
              */
@@ -1045,7 +1049,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
              */
             @Override
@@ -1058,7 +1062,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
              */
             @Override
@@ -1070,7 +1074,7 @@ final class PropertyDialog extends FormDialog {
 
     /**
      * <strong>Should only be called after the dialog's <code>OK</code> button has been selected.</strong>
-     * 
+     *
      * @return the property definition represented by the dialog UI controls (never <code>null</code>)
      */
     public PropertyDefinition getPropertyDefinition() {
@@ -1107,7 +1111,7 @@ final class PropertyDialog extends FormDialog {
         final StringValueEditorDialog dialog = new StringValueEditorDialog(getShell()) {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog#getSettings()
              */
             @Override
@@ -1122,12 +1126,15 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog.Validator#validate(java.lang.String)
                      */
                     @Override
                     public ValidationStatus validate( final String newValue ) {
-                        final ValidationStatus status = CndValidator.isValid(newValue, propDefn.getType(), propDefn.getName());
+                        final ValidationStatus status = CndValidator.isValid(newValue,
+                                                                             propDefn.getType(),
+                                                                             propDefn.getName(),
+                                                                             accessExistingNamespacePrefixes());
 
                         if (status.isError()) {
                             return status;
@@ -1155,7 +1162,9 @@ final class PropertyDialog extends FormDialog {
             final String newDefaultValue = dialog.getValue();
 
             if (!this.propertyBeingEdited.addDefaultValue(newDefaultValue)) {
-                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorAddingDefaultValue, newDefaultValue));
             }
         }
@@ -1168,7 +1177,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog#getSettings()
              */
             @Override
@@ -1183,7 +1192,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog.Validator#validate(java.lang.String)
                      */
                     @Override
@@ -1213,7 +1222,9 @@ final class PropertyDialog extends FormDialog {
             final String newValueConstraint = dialog.getValue();
 
             if (!this.propertyBeingEdited.addValueConstraint(newValueConstraint)) {
-                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorAddingValueConstraint, newValueConstraint));
             }
         }
@@ -1245,10 +1256,14 @@ final class PropertyDialog extends FormDialog {
         final String defaultValue = getSelectedDefaultValue();
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteDefaultValueDialogTitle, JcrUiUtils.getCndEditorImage(),
+        if (MessageFormDialog.openQuestion(getShell(),
+                                           CndMessages.deleteDefaultValueDialogTitle,
+                                           JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteDefaultValueDialogMessage, defaultValue))) {
             if (!this.propertyBeingEdited.removeDefaultValue(defaultValue)) {
-                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorDeletingDefaultValue, defaultValue));
             }
         }
@@ -1259,11 +1274,14 @@ final class PropertyDialog extends FormDialog {
         final String valueConstraint = getSelectedValueConstraint();
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteValueConstraintDialogTitle,
+        if (MessageFormDialog.openQuestion(getShell(),
+                                           CndMessages.deleteValueConstraintDialogTitle,
                                            JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteValueConstraintDialogMessage, valueConstraint))) {
             if (!this.propertyBeingEdited.removeValueConstraint(valueConstraint)) {
-                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorDeletingValueConstraint, valueConstraint));
             }
         }
@@ -1280,7 +1298,7 @@ final class PropertyDialog extends FormDialog {
         final StringValueEditorDialog dialog = new StringValueEditorDialog(getShell()) {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog#getSettings()
              */
             @Override
@@ -1296,12 +1314,15 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog.Validator#validate(java.lang.String)
                      */
                     @Override
                     public ValidationStatus validate( final String newValue ) {
-                        final ValidationStatus status = CndValidator.isValid(newValue, propDefn.getType(), propDefn.getName());
+                        final ValidationStatus status = CndValidator.isValid(newValue,
+                                                                             propDefn.getType(),
+                                                                             propDefn.getName(),
+                                                                             accessExistingNamespacePrefixes());
 
                         if (status.isError()) {
                             return status;
@@ -1343,8 +1364,8 @@ final class PropertyDialog extends FormDialog {
                 MessageFormDialog.openError(getShell(),
                                             UiMessages.errorDialogTitle,
                                             JcrUiUtils.getCndEditorImage(),
-                                            NLS.bind(CndMessages.errorEditingDefaultValue, new Object[] { modifiedDefaultValue,
-                                                    removed, added }));
+                                            NLS.bind(CndMessages.errorEditingDefaultValue, new Object[] {modifiedDefaultValue,
+                                                removed, added}));
             }
         }
     }
@@ -1361,7 +1382,7 @@ final class PropertyDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog#getSettings()
              */
             @Override
@@ -1377,7 +1398,7 @@ final class PropertyDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.jboss.tools.modeshape.jcr.ui.cnd.StringValueEditorDialog.Validator#validate(java.lang.String)
                      */
                     @Override
@@ -1422,7 +1443,7 @@ final class PropertyDialog extends FormDialog {
                                             UiMessages.errorDialogTitle,
                                             JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorEditingValueConstraint, new Object[] {
-                                                    modifiedValueConstraint, removed, added }));
+                                                modifiedValueConstraint, removed, added}));
             }
         }
     }
@@ -1455,9 +1476,9 @@ final class PropertyDialog extends FormDialog {
         final String propName = e.getPropertyName();
 
         if (PropertyName.AUTOCREATED.toString().equals(propName) || PropertyName.MANDATORY.toString().equals(propName)
-                || PropertyName.MULTIPLE.toString().equals(propName) || PropertyName.NO_FULL_TEXT.toString().equals(propName)
-                || PropertyName.NO_QUERY_ORDER.toString().equals(propName) || PropertyName.PROTECTED.toString().equals(propName)
-                || PropertyName.ON_PARENT_VERSION.toString().equals(propName) || PropertyName.QUERY_OPS.toString().equals(propName)) {
+            || PropertyName.MULTIPLE.toString().equals(propName) || PropertyName.NO_FULL_TEXT.toString().equals(propName)
+            || PropertyName.NO_QUERY_ORDER.toString().equals(propName) || PropertyName.PROTECTED.toString().equals(propName)
+            || PropertyName.ON_PARENT_VERSION.toString().equals(propName) || PropertyName.QUERY_OPS.toString().equals(propName)) {
             validateAttributes();
         } else if (PropertyName.DEFAULT_VALUES.toString().equals(propName)) {
             validateDefaultValues();
@@ -1519,8 +1540,11 @@ final class PropertyDialog extends FormDialog {
         if (errorMsg.isOk()) {
             this.scrolledForm.getMessageManager().removeMessage(errorMsg.getKey(), errorMsg.getControl());
         } else {
-            this.scrolledForm.getMessageManager().addMessage(errorMsg.getKey(), errorMsg.getMessage(), null,
-                                                             errorMsg.getMessageType(), errorMsg.getControl());
+            this.scrolledForm.getMessageManager().addMessage(errorMsg.getKey(),
+                                                             errorMsg.getMessage(),
+                                                             null,
+                                                             errorMsg.getMessageType(),
+                                                             errorMsg.getControl());
         }
     }
 
