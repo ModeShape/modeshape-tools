@@ -2516,6 +2516,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                                                                    Messages.nodeTypeDefinitionName,
                                                                    getCnd().getNamespacePrefixes());
         dialog.setExistingQNames(getNodeTypeNames());
+        dialog.setProposalProvider(QualifiedNameProposalProvider.NO_PROPOSALS_PROVIDER);
         dialog.create();
         dialog.getShell().pack();
 

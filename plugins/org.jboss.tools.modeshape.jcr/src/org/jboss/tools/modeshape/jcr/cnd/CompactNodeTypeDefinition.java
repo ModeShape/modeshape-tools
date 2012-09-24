@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -91,7 +90,7 @@ public class CompactNodeTypeDefinition implements CndElement {
     /**
      * If added, broadcasts a {@link PropertyChangeEvent} with an old value of <code>null</code> and a new value equal to
      * <code>namespaceMappingToAdd</code>.
-     * 
+     *
      * @param namespaceMappingToAdd the namespace mapping being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
@@ -113,7 +112,7 @@ public class CompactNodeTypeDefinition implements CndElement {
     /**
      * If added, broadcasts a {@link PropertyChangeEvent} with an old value of <code>null</code> and a new value of
      * <code>nodeTypeDefinitionToAdd</code>.
-     * 
+     *
      * @param nodeTypeDefinitionToAdd the node type definition being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
@@ -135,7 +134,7 @@ public class CompactNodeTypeDefinition implements CndElement {
     /**
      * If at least one namespace mapping was removed, broadcasts a {@link PropertyChangeEvent} with an old value equal to the old
      * namespace mappings collection and a new value of <code>null</code>.
-     * 
+     *
      * @return <code>true</code> if at least one namespace mapping was removed
      */
     public boolean clearNamespaceMappings() {
@@ -159,7 +158,7 @@ public class CompactNodeTypeDefinition implements CndElement {
     /**
      * If at least one node type definition was removed, broadcasts a {@link PropertyChangeEvent} with an old value equal to the old
      * node type definitions collection and a new value of <code>null</code>.
-     * 
+     *
      * @return <code>true</code> if at least one namespace mapping was removed
      */
     public boolean clearNodeTypeDefinitions() {
@@ -182,7 +181,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -220,7 +219,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     /**
      * The node type definition must exist in this CND for it to return child nodes.
-     * 
+     *
      * @param nodeTypeDefinitionName the name of the node type definition whose child nodes are being requested (cannot be
      *            <code>null</code> or empty)
      * @param includeInherited indicates if inherited child nodes should be included
@@ -258,7 +257,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     /**
      * The node type definition must exist in this CND for it to return child nodes.
-     * 
+     *
      * @param nodeTypeDefinitionName the name of the node type definition whose item definitions are being requested (cannot be
      *            <code>null</code> or empty)
      * @param includeInherited indicates if inherited item definitions should be included
@@ -275,19 +274,25 @@ public class CompactNodeTypeDefinition implements CndElement {
     }
 
     /**
-     * @param namespacePrefix the namespace prefix of the node type definitions being requested (cannot be <code>null</code> or
+     * @param namespacePrefix the namespace prefix of the node type definitions being requested (can be <code>null</code> or
      *            empty)
      * @param includeInherited indicates if inherited node type definitions should be included
      * @return the requested node type definitions (never <code>null</code> but can be empty)
      */
     public List<NodeTypeDefinition> getMatchingNodeTypeDefinitions( final String namespacePrefix,
                                                                     final boolean includeInherited ) {
-        Utils.verifyIsNotEmpty(namespacePrefix, "namespacePrefix"); //$NON-NLS-1$
+        final boolean matchEmptyPrefix = Utils.isEmpty(namespacePrefix);
         final List<NodeTypeDefinition> matches = new ArrayList<NodeTypeDefinition>();
 
         // collect local matches
         for (final NodeTypeDefinition nodeType : getNodeTypeDefinitions()) {
-            if (namespacePrefix.equals(nodeType.getQualifiedName().getQualifier())) {
+            final String qualifier = nodeType.getQualifiedName().getQualifier();
+
+            if (matchEmptyPrefix) {
+                if (Utils.isEmpty(qualifier)) {
+                    matches.add(nodeType);
+                }
+            } else if (namespacePrefix.equals(qualifier)) {
                 matches.add(nodeType);
             }
         }
@@ -367,7 +372,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     /**
      * The node type definition must exist in this CND for it to return properties.
-     * 
+     *
      * @param nodeTypeDefinitionName the name of the node type definition whose properties are being requested (cannot be
      *            <code>null</code> or empty)
      * @param includeInherited indicates if inherited properties should be included
@@ -405,7 +410,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -454,7 +459,7 @@ public class CompactNodeTypeDefinition implements CndElement {
     /**
      * If namespace mapping is removed, broadcasts a {@link PropertyChangeEvent} with an old value of
      * <code>namespaceMappingToRemove</code> and a new value of <code>null</code>.
-     * 
+     *
      * @param namespaceMappingToRemove the namespace mapping being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
@@ -477,7 +482,7 @@ public class CompactNodeTypeDefinition implements CndElement {
     /**
      * If node type definition is removed, broadcasts a {@link PropertyChangeEvent} with an old value of
      * <code>nodeTypeDefinitionToRemove</code> and a new value of <code>null</code>.
-     * 
+     *
      * @param nodeTypeDefinitionToRemove the node type definition being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
@@ -499,7 +504,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
@@ -560,7 +565,7 @@ public class CompactNodeTypeDefinition implements CndElement {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.lang.Enum#toString()
          */
         @Override

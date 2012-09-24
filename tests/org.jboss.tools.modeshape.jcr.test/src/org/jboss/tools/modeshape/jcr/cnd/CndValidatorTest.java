@@ -756,4 +756,61 @@ public class CndValidatorTest {
         assertTrue(status.isError());
         assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.NAME_QUALIFIER_NOT_FOUND)); //$NON-NLS-1$
     }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void isValidShouldNotAllowNullPropertyType() {
+        CndValidator.isValid("value", null, "propertyName", null);
+    }
+
+    @Test
+    public void isValidShouldNotAllowEmptyPropertyValue() {
+        final ValidationStatus status = CndValidator.isValid(null, PropertyType.STRING, "propertyName", null);
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.EMPTY_VALUE)); //$NON-NLS-1$
+    }
+
+    @Test
+    public void validBooleanValuesShouldBeValid() {
+        { // true
+            final ValidationStatus status = CndValidator.isValid(Boolean.TRUE.toString(),
+                                                                 PropertyType.BOOLEAN,
+                                                                 "propertyName",
+                                                                 null);
+            assertTrue(status.isOk());
+        }
+
+        { // false
+            final ValidationStatus status = CndValidator.isValid(Boolean.FALSE.toString(),
+                                                                 PropertyType.BOOLEAN,
+                                                                 "propertyName",
+                                                                 null);
+            assertTrue(status.isOk());
+        }
+    }
+
+    @Test
+    public void invalidBooleanValuesShouldNotBeValid() {
+        final ValidationStatus status = CndValidator.isValid("badValue", PropertyType.BOOLEAN, "propertyName", null);
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE)); //$NON-NLS-1$
+    }
+
+    @Test
+    public void unregisteredQualifierForNamePropertyValueShouldNotBeValid() {
+        final ValidationStatus status = CndValidator.isValid("nt:name",
+                                                             PropertyType.NAME,
+                                                             "propertyName",
+                                                             Constants.Helper.getDefaultNamespacePrefixes());
+        assertTrue(status.isError());
+        assertTrue("Code is " + status.getCode(), status.containsCode(StatusCodes.NAME_QUALIFIER_NOT_FOUND)); //$NON-NLS-1$
+    }
+
+    @Test
+    public void registeredQualifierForNamePropertyValueShouldBeValid() {
+        final ValidationStatus status = CndValidator.isValid(Constants.NAMESPACE_PREFIX1 + ":name",
+                                                             PropertyType.NAME,
+                                                             "propertyName",
+                                                             Constants.Helper.getDefaultNamespacePrefixes());
+        assertTrue(status.isOk());
+    }
 }
