@@ -58,6 +58,11 @@ public class ModeshapePublishDialog extends SWTBotWizard {
 		return getComboBox(LABEL_PUBLISH_AREA).getText();
 	}
 
+	public List<String> getFiles() {
+		String[] files = bot().list().getItems();
+		return Arrays.asList(files);
+	}
+
 	private SWTBotCombo getComboBox(String label) {
 		return bot().comboBoxWithLabel(label);
 	}

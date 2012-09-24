@@ -62,6 +62,21 @@
                             <artifactId>org.jboss.ide.eclipse.as.feature.feature.group</artifactId>
                             <version>0.0.0</version>
                         </dependency>
+                        <dependency>
+                            <type>p2-installable-unit</type>
+                            <artifactId>org.jboss.tools.modeshape.rest</artifactId>
+                            <version>0.0.0</version>
+                        </dependency>
+			<dependency>
+			  <type>p2-installable-unit</type>
+			  <artifactId>org.teiid.designer.runtime.feature.feature.group</artifactId>
+			  <version>0.0.0</version>
+			</dependency>
+			<dependency>
+			  <type>p2-installable-unit</type>
+			  <artifactId>org.teiid.datatools.connectivity.feature.feature.group</artifactId>
+			  <version>0.0.0</version>
+			</dependency>
                     </dependencies>
                 </configuration>
             </plugin>

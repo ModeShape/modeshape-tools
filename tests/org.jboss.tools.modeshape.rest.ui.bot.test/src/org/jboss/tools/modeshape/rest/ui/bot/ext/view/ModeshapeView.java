@@ -41,8 +41,8 @@ public class ModeshapeView extends ViewBase {
 		getToolbarButtonWitTooltip(toolTip).click();
 	}
 
-	public ModeshapeServerDialog addServer() {
-		getToolbarButtonWitTooltip("Create a new server").click();
+	public ModeshapeServerDialog newServer() {
+		getToolbarButtonWitTooltip(TOOLBAR_ADD_SERVER).click();
 		return new ModeshapeServerDialog(bot.shell("New Server"));
 	}
 
@@ -67,6 +67,10 @@ public class ModeshapeView extends ViewBase {
 	public void deleteServer(String serverName) {
 		selectServer(serverName);
 		toolbarButtonClick(TOOLBAR_DELETE_SERVER);
-		bot.shell("Confirm Delete Server").bot().button("OK").click();
+	}
+	
+	public void reconnectServer(String serverName) {
+		selectServer(serverName);
+		toolbarButtonClick(TOOLBAR_RECONNECT_SERVER);
 	}
 }
