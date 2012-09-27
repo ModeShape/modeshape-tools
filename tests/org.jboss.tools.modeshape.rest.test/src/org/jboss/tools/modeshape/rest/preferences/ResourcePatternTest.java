@@ -8,7 +8,10 @@
 package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -31,27 +34,27 @@ public final class ResourcePatternTest {
         final String pattern = "mypattern"; //$NON-NLS-1$
         ResourcePattern rp1 = new ResourcePattern(pattern, true);
         ResourcePattern rp2 = new ResourcePattern(pattern, false);
-        assertThat(rp1.equals(rp2), is(true));
+        assertTrue(rp1.equals(rp2));
     }
 
     @Test
     public void shouldNotBeEqualWhenComparingWithNull() {
         ResourcePattern rp = new ResourcePattern("mypattern", true); //$NON-NLS-1$
-        assertThat(rp.equals(null), is(false));
+        assertFalse(rp.equals(null));
     }
 
     @Test
     public void shouldNotBeEqualWhenPatternsAreNotEqual() {
         ResourcePattern rp1 = new ResourcePattern("mypattern", true); //$NON-NLS-1$
         ResourcePattern rp2 = new ResourcePattern(rp1.getPattern() + "abc", rp1.isEnabled()); //$NON-NLS-1$
-        assertThat(rp1.equals(rp2), is(false));
+        assertFalse(rp1.equals(rp2));
     }
 
     @Test
     public void shouldNotBeEqualWhenComparingWithDifferentClass() {
         final String pattern = "mypattern"; //$NON-NLS-1$
         ResourcePattern rp = new ResourcePattern(pattern, true);
-        assertThat(rp.equals(pattern), is(false));
+        assertFalse(rp.equals(pattern));
     }
 
     @Test
@@ -59,6 +62,7 @@ public final class ResourcePatternTest {
         final String pattern = "mypattern"; //$NON-NLS-1$
         ResourcePattern rp = new ResourcePattern(pattern, true);
         assertThat(pattern, is(rp.getPattern()));
+        assertEquals(pattern, rp.getPattern());
     }
 
     @Test

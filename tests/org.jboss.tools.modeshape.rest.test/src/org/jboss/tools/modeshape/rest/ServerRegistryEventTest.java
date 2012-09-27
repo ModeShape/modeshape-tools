@@ -14,6 +14,7 @@ package org.jboss.tools.modeshape.rest;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public final class ServerRegistryEventTest {
 
     @Test
     public void shouldHaveNewType() {
-        assertThat(ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).isNew(), is(true));
+        assertTrue(ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).isNew());
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -58,7 +59,7 @@ public final class ServerRegistryEventTest {
 
     @Test
     public void shouldHaveRemoveType() {
-        assertThat(ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).isRemove(), is(true));
+        assertTrue(ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).isRemove());
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -83,7 +84,7 @@ public final class ServerRegistryEventTest {
 
     @Test
     public void shouldHaveUpdateType() {
-        assertThat(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).isUpdate(), is(true));
+        assertTrue(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).isUpdate());
     }
 
     @Test( expected = IllegalArgumentException.class )
