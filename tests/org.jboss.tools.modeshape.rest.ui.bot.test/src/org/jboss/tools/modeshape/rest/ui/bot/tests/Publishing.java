@@ -12,7 +12,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.jboss.tools.modeshape.rest.ui.bot.ext.dialog.ModeshapePublishDialog;
 import org.jboss.tools.modeshape.rest.ui.bot.ext.dialog.ModeshapeServerDialog;
-import org.jboss.tools.modeshape.rest.ui.bot.ext.view.ModeshapeProjectExplorer;
+import org.jboss.tools.modeshape.rest.ui.bot.ext.view.ModeshapeExplorer;
 import org.jboss.tools.modeshape.rest.ui.bot.ext.view.ModeshapeView;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.config.Annotations.Require;
@@ -21,6 +21,7 @@ import org.jboss.tools.ui.bot.ext.config.Annotations.ServerState;
 import org.jboss.tools.ui.bot.ext.config.Annotations.ServerType;
 import org.jboss.tools.ui.bot.ext.gen.ActionItem.NewObject.GeneralFile;
 import org.jboss.tools.ui.bot.ext.gen.ActionItem.NewObject.GeneralProject;
+import org.jboss.tools.ui.bot.ext.gen.ActionItem.View;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.wizards.SWTBotNewObjectWizard;
 import org.junit.AfterClass;
@@ -43,10 +44,11 @@ public class Publishing extends SWTTestExt {
 	public static final String FILE_CONTENT = "testcontent";
 	public static final String PUBLISH_URL = SERVER_REST_URL + "/repository/default/items/files/"
 			+ PROJECT_NAME + "/" + FILE_NAME;
-	public static final String PUBLISH_WEB_URL = SERVER_WEBDAV_URL
-			+ "/repository/default/files/" + PROJECT_NAME + "/" + FILE_NAME;
+	public static final String PUBLISH_WEB_URL = SERVER_WEBDAV_URL + "/repository/default/files/"
+			+ PROJECT_NAME + "/" + FILE_NAME;
 
-	private static final ModeshapeProjectExplorer modeshapeExplorer = new ModeshapeProjectExplorer();
+	private static final ModeshapeExplorer modeshapeExplorer = new ModeshapeExplorer(
+			View.GeneralProjectExplorer.LABEL);
 
 	@BeforeClass
 	public static void createTestFile() {
@@ -59,6 +61,7 @@ public class Publishing extends SWTTestExt {
 		SWTBotNewObjectWizard fileWizard = new SWTBotNewObjectWizard();
 		fileWizard.open(GeneralFile.LABEL);
 		fileWizard.bot().textWithLabel(GeneralFile.TEXT_FILE_NAME).setText(FILE_NAME);
+		fileWizard.bot().tree().select(PROJECT_NAME);
 		fileWizard.finishWithWait();
 		// Edit the file
 		SWTBotEclipseEditor fileEditor = projectExplorer.openFile(PROJECT_NAME, FILE_NAME)
@@ -74,7 +77,7 @@ public class Publishing extends SWTTestExt {
 	public void createModeShapeServer() {
 		ModeshapeView modeshapeView = new ModeshapeView();
 		modeshapeView.show();
-		ModeshapeServerDialog dialog = modeshapeView.addServer();
+		ModeshapeServerDialog dialog = modeshapeView.newServer();
 		dialog.setUrl(SERVER_REST_URL);
 		dialog.setUser("admin");
 		dialog.setPassword("admin");
@@ -86,7 +89,7 @@ public class Publishing extends SWTTestExt {
 
 	@Test
 	public void publishFile() {
-		modeshapeExplorer.publish(FILE_NAME, PROJECT_NAME);
+		modeshapeExplorer.publish(PROJECT_NAME, FILE_NAME);
 
 		ModeshapePublishDialog publishDialog = new ModeshapePublishDialog(
 				bot.shell("Publish to ModeShape"));
@@ -101,7 +104,7 @@ public class Publishing extends SWTTestExt {
 
 	@Test
 	public void publishedLocations() {
-		modeshapeExplorer.showPublishedLocations(FILE_NAME, PROJECT_NAME);
+		modeshapeExplorer.showPublishedLocations(PROJECT_NAME, FILE_NAME);
 
 		SWTBotShell shell = bot.shell("Published Locations");
 		shell.activate();
@@ -119,7 +122,7 @@ public class Publishing extends SWTTestExt {
 
 	@Test
 	public void unpublishFile() {
-		modeshapeExplorer.unpublish(FILE_NAME, PROJECT_NAME);
+		modeshapeExplorer.unpublish(PROJECT_NAME, FILE_NAME);
 
 		ModeshapePublishDialog dialog = new ModeshapePublishDialog(
 				bot.shell("Unpublish from ModeShape"));
@@ -139,6 +142,7 @@ public class Publishing extends SWTTestExt {
 	public static void afterClass() {
 		ModeshapeView view = new ModeshapeView();
 		view.deleteServer(SERVER_REST_URL);
+		bot.shell("Confirm Delete Server").bot().button("OK").click();
 	}
 
 	/**
