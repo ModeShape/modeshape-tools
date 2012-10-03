@@ -12,7 +12,6 @@
 package org.jboss.tools.modeshape.rest.views;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.PUBLISHED_OVERLAY_IMAGE;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import net.jcip.annotations.GuardedBy;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -140,7 +137,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILightweightLabelDecorator#decorate(java.lang.Object, org.eclipse.jface.viewers.IDecoration)
      */
     @Override
@@ -181,7 +178,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.IContentProvider#dispose()
      */
     @Override
@@ -191,7 +188,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILabelProvider#getImage(java.lang.Object)
      */
     @Override
@@ -201,7 +198,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILazyTreeContentProvider#getParent(java.lang.Object)
      */
     @Override
@@ -238,7 +235,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
      */
     @Override
@@ -249,7 +246,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipImage(java.lang.Object)
      */
     @Override
@@ -259,7 +256,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
      */
     @Override
@@ -273,7 +270,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipTimeDisplayed(java.lang.Object)
      */
     @Override
@@ -287,7 +284,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
      *      java.lang.Object)
      */
@@ -300,7 +297,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * Determines if a try to connect to a server should be done based on the last time a try was done and failed.
-     * 
+     *
      * @param server the server being checked
      * @return <code>true</code> if it is OK to try and connect
      */
@@ -350,7 +347,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
         display.asyncExec(new Runnable() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see java.lang.Runnable#run()
              */
             @SuppressWarnings("synthetic-access")
@@ -373,7 +370,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                     if (dialog.open() == Window.OK) {
                         getServerManager().updateServer(server,
-                                                        new ModeShapeServer(server.getUrl(),
+                                                        new ModeShapeServer(server.getOriginalUrl(),
                                                                             server.getUser(),
                                                                             dialog.getNewPassword(),
                                                                             server.isPasswordBeingPersisted()));
@@ -393,7 +390,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.jface.dialogs.ProgressMonitorDialog#configureShell(org.eclipse.swt.widgets.Shell)
                  */
                 @Override
@@ -425,7 +422,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.IServerRegistryListener#serverRegistryChanged(org.jboss.tools.modeshape.rest.ServerRegistryEvent)
      */
     @Override
@@ -453,7 +450,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILazyTreeContentProvider#updateChildCount(java.lang.Object, int)
      */
     @Override
@@ -482,7 +479,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                         /**
                          * {@inheritDoc}
-                         * 
+                         *
                          * @see org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider.ServerOperation#doRun(org.eclipse.core.runtime.IProgressMonitor)
                          */
                         @Override
@@ -510,7 +507,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                         /**
                          * {@inheritDoc}
-                         * 
+                         *
                          * @see org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider.ServerOperation#getDisplay()
                          */
                         @Override
@@ -533,7 +530,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                         /**
                          * {@inheritDoc}
-                         * 
+                         *
                          * @see org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider.ServerOperation#doRun(org.eclipse.core.runtime.IProgressMonitor)
                          */
                         @Override
@@ -559,7 +556,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                         /**
                          * {@inheritDoc}
-                         * 
+                         *
                          * @see org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider.ServerOperation#getDisplay()
                          */
                         @Override
@@ -578,7 +575,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.viewers.ILazyTreeContentProvider#updateElement(java.lang.Object, int)
      */
     @Override
@@ -630,7 +627,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.dialogs.MessageDialog#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String,
          *      boolean)
          */
@@ -652,7 +649,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.dialogs.MessageDialog#createCustomArea(org.eclipse.swt.widgets.Composite)
          */
         @Override
@@ -671,7 +668,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -721,7 +718,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.operation.IRunnableWithProgress#run(org.eclipse.core.runtime.IProgressMonitor)
          */
         @Override
@@ -730,7 +727,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see java.lang.Runnable#run()
                  */
                 @Override

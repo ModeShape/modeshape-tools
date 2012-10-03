@@ -12,11 +12,11 @@
 package org.jboss.tools.modeshape.rest.domain;
 
 import net.jcip.annotations.Immutable;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.modeshape.rest.properties.ModeShapePropertySource;
 import org.modeshape.web.jcr.rest.client.domain.Server;
+import org.modeshape.web.jcr.rest.client.json.JsonRestClient;
 
 /**
  * The <code>ModeShapeServer</code> class adds the concept of allowing a server's password to be persisted or not.
@@ -27,7 +27,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
     /**
      * The ModeShape server's server object (never <code>null</code>).
      */
-    private final Server delegate;
+    private Server delegate;
 
     /**
      * Indicates if the password should be stored locally when the server is persisted.
@@ -36,7 +36,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
 
     /**
      * Constructs a new <code>ModeShapeServer</code>.
-     * 
+     *
      * @param url the server URL (never <code>null</code>)
      * @param user the server user (never <code>null</code>)
      * @param password the server password (may be <code>null</code>)
@@ -53,7 +53,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -73,11 +73,11 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @Override
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter( @SuppressWarnings( "rawtypes" ) Class adapter ) {
         if (adapter == IPropertySource.class) {
             return new ModeShapePropertySource(this);
         }
@@ -87,19 +87,27 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
 
     /**
      * @return the ModeShape server's server object (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining a validated server delegate
      */
-    public Server getDelegate() {
-        return this.delegate;
+    public Server getDelegate() throws Exception {
+        return validateDelegate();
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getName()
      */
     @Override
     public String getName() {
-        return this.delegate.getName();
+        return this.delegate.getOriginalUrl();
+    }
+
+    /**
+     * @return the original server URL (never <code>null</code> or empty)
+     */
+    public String getOriginalUrl() {
+        return this.delegate.getOriginalUrl();
     }
 
     /**
@@ -112,7 +120,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getShortDescription()
      */
     @Override
@@ -121,11 +129,14 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
     }
 
     /**
-     * @return the server URL (never <code>null</code>)
+     * Obtains the URL to use to connect to the ModeShape server.
+     *
+     * @return the validated server URL (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining a validated server URL
      * @see Server#getUrl()
      */
-    public String getUrl() {
-        return this.delegate.getUrl();
+    public String getUrl() throws Exception {
+        return validateDelegate().getUrl();
     }
 
     /**
@@ -138,7 +149,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -152,7 +163,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
      * @see Server#hasSameKey(Server)
      */
     public boolean hasSameKey( ModeShapeServer server ) {
-        return this.delegate.hasSameKey(server.getDelegate());
+        return this.delegate.hasSameKey(server.delegate);
     }
 
     /**
@@ -162,4 +173,11 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
         return this.persistPassword;
     }
 
+    public Server validateDelegate() throws Exception {
+        if (!this.delegate.isValidated()) {
+            this.delegate = new JsonRestClient().validate(this.delegate);
+        }
+
+        return this.delegate;
+    }
 }

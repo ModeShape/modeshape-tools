@@ -13,7 +13,6 @@ package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.BLANK_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.SERVER_DIALOG_HELP_CONTEXT;
-
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -95,7 +94,7 @@ public final class ServerPage extends WizardPage {
 
     /**
      * Constructs a wizard page that edits the specified server's properties.
-     * 
+     *
      * @param server the server being edited
      */
     public ServerPage( ModeShapeServer server ) {
@@ -103,7 +102,7 @@ public final class ServerPage extends WizardPage {
         setTitle(RestClientI18n.serverPageTitle);
 
         this.server = server;
-        this.url = server.getUrl();
+        this.url = server.getOriginalUrl();
         this.user = server.getUser();
         this.password = server.getPassword();
         this.savePassword = server.isPasswordBeingPersisted();
@@ -132,7 +131,7 @@ public final class ServerPage extends WizardPage {
             txtUser.addModifyListener(new ModifyListener() {
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -161,7 +160,7 @@ public final class ServerPage extends WizardPage {
             txtPassword.addModifyListener(new ModifyListener() {
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -187,7 +186,7 @@ public final class ServerPage extends WizardPage {
             btn.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                  */
                 @Override
@@ -200,7 +199,7 @@ public final class ServerPage extends WizardPage {
             btn.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                  */
                 @Override
@@ -253,7 +252,7 @@ public final class ServerPage extends WizardPage {
         this.btnTestConnection.addSelectionListener(new SelectionAdapter() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
              */
             @Override
@@ -284,7 +283,7 @@ public final class ServerPage extends WizardPage {
         txtUrl.addModifyListener(new ModifyListener() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
              */
             @Override
@@ -314,7 +313,7 @@ public final class ServerPage extends WizardPage {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     @Override
@@ -355,7 +354,7 @@ public final class ServerPage extends WizardPage {
 
     /**
      * Handler for when the password control value is modified
-     * 
+     *
      * @param newPassword the new password value
      */
     void handlePasswordModified( String newPassword ) {
@@ -381,7 +380,7 @@ public final class ServerPage extends WizardPage {
         BusyIndicator.showWhile(null, new Runnable() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see java.lang.Runnable#run()
              */
             @Override
@@ -403,7 +402,7 @@ public final class ServerPage extends WizardPage {
 
     /**
      * Handler for when the URL control value is modified
-     * 
+     *
      * @param newUrl the new URL value
      */
     void handleUrlModified( String newUrl ) {
@@ -413,7 +412,7 @@ public final class ServerPage extends WizardPage {
 
     /**
      * Handler for when the user control value is modified
-     * 
+     *
      * @param newUser the new user value
      */
     void handleUserModified( String newUser ) {
@@ -432,7 +431,7 @@ public final class ServerPage extends WizardPage {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
      */
     @Override

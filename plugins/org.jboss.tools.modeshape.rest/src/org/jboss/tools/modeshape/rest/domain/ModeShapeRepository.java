@@ -8,7 +8,6 @@
 package org.jboss.tools.modeshape.rest.domain;
 
 import java.util.Map;
-
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.modeshape.rest.properties.ModeShapePropertySource;
@@ -16,7 +15,7 @@ import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.domain.Repository;
 
 /**
- * 
+ *
  */
 public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObject {
 
@@ -45,7 +44,7 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -60,11 +59,11 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @Override
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter( @SuppressWarnings( "rawtypes" ) Class adapter ) {
         if (adapter == IPropertySource.class) {
             return new ModeShapePropertySource(this);
         }
@@ -74,8 +73,10 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * @return the ModeShape server's repository object (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining the repository delegate
      */
-    public Repository getDelegate() {
+    public Repository getDelegate() throws Exception {
+        getServer().validateDelegate(); // make sure repository's server has been validate
         return this.delegate;
     }
 
@@ -88,7 +89,7 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getName()
      */
     @Override
@@ -105,7 +106,7 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getShortDescription()
      */
     @Override
@@ -115,7 +116,7 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -125,7 +126,7 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
