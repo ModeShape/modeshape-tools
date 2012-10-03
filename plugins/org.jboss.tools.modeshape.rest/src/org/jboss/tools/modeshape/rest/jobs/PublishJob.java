@@ -13,12 +13,10 @@ package org.jboss.tools.modeshape.rest.jobs;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.PLUGIN_ID;
 import static org.jboss.tools.modeshape.rest.IUiConstants.PUBLISHING_JOB_FAMILY;
-
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -143,7 +141,7 @@ public final class PublishJob extends Job {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.runtime.jobs.Job#belongsTo(java.lang.Object)
      */
     @Override
@@ -167,7 +165,7 @@ public final class PublishJob extends Job {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
      */
     @Override
@@ -184,7 +182,7 @@ public final class PublishJob extends Job {
             monitor.beginTask(name, fileCount);
             monitor.setTaskName(name);
 
-            String serverUrl = this.workspace.getServer().getUrl();
+            String serverUrl = this.workspace.getServer().getOriginalUrl();
             String repositoryName = this.workspace.getRepository().getName();
             String workspaceName = this.workspace.getName();
 
@@ -296,7 +294,7 @@ public final class PublishJob extends Job {
 
     /**
      * Create a hyperlink in console.
-     * 
+     *
      * @param file the file involved in the publishing operation
      * @param url the destination file URL or <code>null</code>
      * @param status the status of the publishing operation

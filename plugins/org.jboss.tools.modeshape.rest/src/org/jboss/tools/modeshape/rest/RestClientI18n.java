@@ -44,7 +44,7 @@ public final class RestClientI18n extends NLS {
     public static String ignoredResourcesPreferencePageTitle;
 
     public static String missingImage;
-    
+
     public static String missingServerPasswordDialogMsg;
     public static String missingServerPasswordDialogTitle;
 
@@ -202,6 +202,8 @@ public final class RestClientI18n extends NLS {
 
     public static String serverReconnectActionText;
     public static String serverReconnectActionToolTip;
+
+    public static String serverValidationError;
 
     public static String serverViewToolTip;
 

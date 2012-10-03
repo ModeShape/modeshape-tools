@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
@@ -106,7 +105,7 @@ public final class PublishedResourceHelper {
         ModeShapeWorkspace workspace = workspaceLocation.getWorkspace();
 
         StringBuilder result = new StringBuilder();
-        result.append(workspace.getServer().getUrl()).append(ID_DELIM).append(workspace.getServer().getUser()).append(ID_DELIM);
+        result.append(workspace.getServer().getOriginalUrl()).append(ID_DELIM).append(workspace.getServer().getUser()).append(ID_DELIM);
         result.append(workspace.getRepository().getName()).append(ID_DELIM);
         result.append(workspace.getName()).append(ID_DELIM);
         result.append(workspaceLocation.getUrl());
@@ -260,7 +259,7 @@ public final class PublishedResourceHelper {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.lang.Object#equals(java.lang.Object)
          */
         @Override
@@ -311,7 +310,7 @@ public final class PublishedResourceHelper {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.lang.Object#hashCode()
          */
         @Override

@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.rest.properties;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -48,7 +47,7 @@ public final class ModeShapePropertySource implements IPropertySource {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
      */
     @Override
@@ -58,7 +57,7 @@ public final class ModeShapePropertySource implements IPropertySource {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
      */
     @Override
@@ -112,7 +111,7 @@ public final class ModeShapePropertySource implements IPropertySource {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(java.lang.Object)
      */
     @Override
@@ -121,7 +120,7 @@ public final class ModeShapePropertySource implements IPropertySource {
             ModeShapeServer server = (ModeShapeServer)this.modeShapeObject;
 
             if (SERVER_URL.equals(id)) {
-                return server.getUrl();
+                return server.getOriginalUrl();
             }
 
             if (SERVER_USER.equals(id)) {
@@ -171,7 +170,7 @@ public final class ModeShapePropertySource implements IPropertySource {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang.Object)
      */
     @Override
@@ -181,7 +180,7 @@ public final class ModeShapePropertySource implements IPropertySource {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(java.lang.Object)
      */
     @Override
@@ -191,7 +190,7 @@ public final class ModeShapePropertySource implements IPropertySource {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(java.lang.Object, java.lang.Object)
      */
     @Override

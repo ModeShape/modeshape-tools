@@ -14,7 +14,7 @@ import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
- * 
+ *
  */
 public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObject {
 
@@ -43,7 +43,7 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -58,11 +58,11 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @Override
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter( @SuppressWarnings( "rawtypes" ) Class adapter ) {
         if (adapter == IPropertySource.class) {
             return new ModeShapePropertySource(this);
         }
@@ -72,14 +72,16 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
 
     /**
      * @return the ModeShape server's workspace object (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining the workspace delegate
      */
-    public Workspace getDelegate() {
+    public Workspace getDelegate() throws Exception {
+        getServer().validateDelegate(); // make sure repository's server has been validate
         return this.delegate;
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getName()
      */
     @Override
@@ -103,7 +105,7 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getShortDescription()
      */
     @Override
@@ -113,7 +115,7 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -123,7 +125,7 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

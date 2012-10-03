@@ -13,14 +13,13 @@ package org.jboss.tools.modeshape.rest.domain;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
 
 public final class ModeShapeServerTest {
 
     private static final ModeShapeServer PERSISTED = new ModeShapeServer("url", "user", "pswd", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    private static final ModeShapeServer NOT_PERSISTED = new ModeShapeServer(PERSISTED.getUrl(), PERSISTED.getUser(),
+    private static final ModeShapeServer NOT_PERSISTED = new ModeShapeServer(PERSISTED.getOriginalUrl(), PERSISTED.getUser(),
                                                                              PERSISTED.getPassword(), false);
 
     @Test

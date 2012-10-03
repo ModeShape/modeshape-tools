@@ -16,9 +16,7 @@ import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.REPOSITORY_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.WORKSPACE_IMAGE;
-
 import java.util.Collection;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -136,7 +134,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.MessageDialog#createCustomArea(org.eclipse.swt.widgets.Composite)
      */
     @Override
@@ -157,7 +155,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
         this.viewer.addSelectionChangedListener(new ISelectionChangedListener() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
              */
             @Override
@@ -172,7 +170,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
-        
+
         // set height of table
         ((GridData)table.getLayoutData()).minimumHeight = (table.getItemHeight() * 3);
         int locations = this.workspaceLocations.size() + 2;
@@ -220,7 +218,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
         this.btnCopy.addSelectionListener(new SelectionAdapter() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
              */
             @Override
@@ -275,7 +273,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
     class LocationsTableProvider implements IStructuredContentProvider, ITableLabelProvider {
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
          */
         @Override
@@ -285,7 +283,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
          */
         @Override
@@ -295,7 +293,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
          */
         @Override
@@ -306,7 +304,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
          */
         @Override
@@ -315,7 +313,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
             WorkspaceLocation workspaceLocation = (WorkspaceLocation)element;
 
             if (columnIndex == SERVER_URL_COL) {
-                return workspaceLocation.getServer().getUrl();
+                return workspaceLocation.getServer().getOriginalUrl();
             }
 
             if (columnIndex == USER_COL) {
@@ -341,7 +339,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
          */
         @Override
@@ -351,7 +349,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
          *      java.lang.Object)
          */
@@ -364,7 +362,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object, java.lang.String)
          */
         @Override
@@ -375,7 +373,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
          */
         @Override

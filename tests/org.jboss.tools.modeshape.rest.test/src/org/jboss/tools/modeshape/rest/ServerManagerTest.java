@@ -15,7 +15,6 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
-
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.junit.Before;
@@ -38,7 +37,7 @@ public final class ServerManagerTest {
     private static final String PSWD2 = "pwsd2"; //$NON-NLS-1$
 
     private static ModeShapeServer SERVER1 = new ModeShapeServer(URL1, USER1, PSWD1, false);
-    private static ModeShapeServer SERVER1_UPDATE = new ModeShapeServer(SERVER1.getUrl(),
+    private static ModeShapeServer SERVER1_UPDATE = new ModeShapeServer(SERVER1.getOriginalUrl(),
                                                                         SERVER1.getUser(),
                                                                         SERVER1.getPassword(),
                                                                         SERVER1.isPasswordBeingPersisted());
@@ -61,7 +60,7 @@ public final class ServerManagerTest {
     @Test
     public void shouldBeRegisteredIfServerWithSameKeyHasBeenAdded() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.isRegistered(new ModeShapeServer(SERVER1.getUrl(),
+        assertThat(this.serverManager.isRegistered(new ModeShapeServer(SERVER1.getOriginalUrl(),
                                                                        SERVER1.getUser(),
                                                                        PSWD2,
                                                                        SERVER1.isPasswordBeingPersisted())), is(true));
@@ -125,7 +124,7 @@ public final class ServerManagerTest {
     @Test
     public void shouldNotAddServerIfKeysMatch() {
         this.serverManager.addServer(SERVER1);
-        Status status = this.serverManager.addServer(new ModeShapeServer(SERVER1.getUrl(), SERVER1.getUser(), PSWD2, true));
+        Status status = this.serverManager.addServer(new ModeShapeServer(SERVER1.getOriginalUrl(), SERVER1.getUser(), PSWD2, true));
         assertThat(status.isOk(), is(false));
         assertThat(this.serverManager.getServers().size(), is(1));
     }
@@ -172,10 +171,9 @@ public final class ServerManagerTest {
         this.serverManager.getRepositories(SERVER1);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void shouldNotObtainWorkspacesForUnregisteredServer() throws Exception {
-        ModeShapeRepository repository = new ModeShapeRepository(new Repository("repo", SERVER1.getDelegate()), SERVER1);//$NON-NLS-1$
-        this.serverManager.getWorkspaces(repository);
+    @Test(expected = Exception.class)
+    public void shouldNotBeAbleToConstructRepositoryForUnreachableServer() throws Exception {
+        new ModeShapeRepository(new Repository("repo", SERVER1.getDelegate()), SERVER1);//$NON-NLS-1$
     }
 
     @Test
@@ -229,7 +227,7 @@ public final class ServerManagerTest {
         this.serverManager.addRegistryListener(listener);
 
         this.serverManager.updateServer(SERVER1,
-                                        new ModeShapeServer(SERVER1.getUrl(),
+                                        new ModeShapeServer(SERVER1.getOriginalUrl(),
                                                             SERVER1.getUser(),
                                                             PSWD2,
                                                             !SERVER1.isPasswordBeingPersisted()));
@@ -249,6 +247,7 @@ public final class ServerManagerTest {
         boolean[] notified = new boolean[] { false };
         ServerRegistryEvent event = null;
 
+        @Override
         public Exception[] serverRegistryChanged( ServerRegistryEvent event ) {
             notified[0] = !notified[0];
             this.event = event;
