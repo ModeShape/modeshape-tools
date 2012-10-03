@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -30,10 +29,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
-
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.osgi.util.NLS;
@@ -107,6 +104,7 @@ public final class ServerManager {
     /**
      * Executes the commands run on the ModeShape REST server.
      */
+    @SuppressWarnings( "deprecation" )
     private final IRestClient delegate;
 
     /**
@@ -131,7 +129,7 @@ public final class ServerManager {
      * @param restClient the client that will communicate with the REST server (never <code>null</code>)
      */
     public ServerManager( String stateLocationPath,
-                          IRestClient restClient ) {
+                          @SuppressWarnings( "deprecation" ) IRestClient restClient ) {
         CheckArg.isNotNull(restClient, "restClient"); //$NON-NLS-1$
 
         this.servers = new ArrayList<ModeShapeServer>();
@@ -142,7 +140,7 @@ public final class ServerManager {
 
     /**
      * This server manager uses the default REST Client.
-     * 
+     *
      * @param stateLocationPath the directory where the {@link ModeShapeServer} registry is persisted (may be <code>null</code> if
      *            persistence is not desired)
      */
@@ -152,7 +150,7 @@ public final class ServerManager {
 
     /**
      * Listeners already registered will not be added again. The new listener will receive events for all existing servers.
-     * 
+     *
      * @param listener the listener being register to receive events (never <code>null</code>)
      * @return <code>true</code> if listener was added
      */
@@ -170,7 +168,7 @@ public final class ServerManager {
 
     /**
      * Registers the specified <code>ModeShapeServer</code>.
-     * 
+     *
      * @param server the server being added (never <code>null</code>)
      * @return a status indicating if the server was added to the registry
      */
@@ -180,7 +178,7 @@ public final class ServerManager {
     }
 
     /**
-     * @param url the URL of the server being requested (never <code>null</code> )
+     * @param url the original URL of the server being requested (never <code>null</code> )
      * @param user the user ID of the server being requested (never <code>null</code>)
      * @return the requested server or <code>null</code> if not found in the registry
      */
@@ -190,7 +188,7 @@ public final class ServerManager {
         CheckArg.isNotNull(user, "user"); //$NON-NLS-1$
 
         for (ModeShapeServer server : getServers()) {
-            if (url.equals(server.getUrl()) && user.equals(server.getUser())) {
+            if (url.equals(server.getOriginalUrl()) && user.equals(server.getUser())) {
                 return server;
             }
         }
@@ -236,6 +234,7 @@ public final class ServerManager {
 
             if (isRegistered(server)) {
                 // need to wrap each repository
+                @SuppressWarnings( "deprecation" )
                 Collection<Repository> repositories = this.delegate.getRepositories(server.getDelegate());
                 Collection<ModeShapeRepository> result = new ArrayList<ModeShapeRepository>(repositories.size());
 
@@ -260,6 +259,7 @@ public final class ServerManager {
      * @return the URL where the file was published
      * @throws Exception if there is a problem obtaining the URL
      */
+    @SuppressWarnings( "deprecation" )
     public URL getUrl( File file,
                        String path,
                        ModeShapeWorkspace workspace ) throws Exception {
@@ -275,6 +275,7 @@ public final class ServerManager {
         final String path = "jcr:path"; //$NON-NLS-1$
         final String title = "jcr:title"; //$NON-NLS-1$
         final String statement = "SELECT [" + path + "], " + '[' + title + ']' + " FROM [mode:publishArea]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        @SuppressWarnings( "deprecation" )
         List<QueryRow> rows = this.delegate.query(workspace.getDelegate(), IJcrConstants.JCR_SQL2, statement);
         WorkspaceArea[] workspaceAreas = new WorkspaceArea[rows.size()];
 
@@ -299,6 +300,7 @@ public final class ServerManager {
 
             if (isRegistered(repository.getServer())) {
                 // wrap workspaces
+                @SuppressWarnings( "deprecation" )
                 Collection<Workspace> workspaces = this.delegate.getWorkspaces(repository.getDelegate());
                 Collection<ModeShapeWorkspace> result = new ArrayList<ModeShapeWorkspace>(workspaces.size());
 
@@ -319,7 +321,7 @@ public final class ServerManager {
 
     /**
      * Registers the specified <code>Server</code>.
-     * 
+     *
      * @param server the server being added
      * @param notifyListeners indicates if registry listeners should be notified
      * @return a status indicating if the server was added to the registry
@@ -484,11 +486,12 @@ public final class ServerManager {
 
     /**
      * Attempts to connect to the server. The server does <strong>NOT</strong> need to be registered.
-     * 
+     *
      * @param server the server being pinged (never <code>null</code>)
      * @return a status indicating if the server can be connected to
      * @see #isRegistered(ModeShapeServer)
      */
+    @SuppressWarnings( "deprecation" )
     public Status ping( ModeShapeServer server ) {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
@@ -507,6 +510,7 @@ public final class ServerManager {
      * @param version <code>true</code> if the file should be put under version control by ModeShape
      * @return the status of the outcome of this publishing operation
      */
+    @SuppressWarnings( "deprecation" )
     public Status publish( ModeShapeWorkspace workspace,
                            String path,
                            File file,
@@ -518,15 +522,19 @@ public final class ServerManager {
         ModeShapeServer server = workspace.getServer();
 
         if (isRegistered(server)) {
-            if (version) {
-                return this.delegate.publish(workspace.getDelegate(), path, file, true);
-            }
+            try {
+                if (version) {
+                    return this.delegate.publish(workspace.getDelegate(), path, file, true);
+                }
 
-            // If version is false it could mean that versioning is not supported by the repository, or it is not enabled by the
-            // by the repository, or that the user does not want the file versioned. If repository is running on an older server
-            // that did not have versioning, then the only publishing method available on the server was the publish method without
-            // the version parameter.
-            return this.delegate.publish(workspace.getDelegate(), path, file);
+                // If version is false it could mean that versioning is not supported by the repository, or it is not enabled by the
+                // by the repository, or that the user does not want the file versioned. If repository is running on an older server
+                // that did not have versioning, then the only publishing method available on the server was the publish method without
+                // the version parameter.
+                return this.delegate.publish(workspace.getDelegate(), path, file);
+            } catch (Exception error) {
+                return new Status(Severity.ERROR, NLS.bind(RestClientI18n.serverValidationError, server.getOriginalUrl()), error);
+            }
         }
 
         // server must be registered in order to publish
@@ -595,7 +603,7 @@ public final class ServerManager {
 
     /**
      * Saves the {@link ModeShapeServer} registry to the file system.
-     * 
+     *
      * @return a status indicating if the registry was successfully saved
      */
     public Status saveState() {
@@ -613,7 +621,7 @@ public final class ServerManager {
                     Element serverElement = doc.createElement(SERVER_TAG);
                     root.appendChild(serverElement);
 
-                    serverElement.setAttribute(URL_TAG, server.getUrl());
+                    serverElement.setAttribute(URL_TAG, server.getOriginalUrl());
                     serverElement.setAttribute(USER_TAG, server.getUser());
 
                     if (server.isPasswordBeingPersisted()) {
@@ -656,6 +664,7 @@ public final class ServerManager {
      * @param file the file being unpublished (cannot be <code>null</code>)
      * @return the status of the outcome of this unpublishing operation
      */
+    @SuppressWarnings( "deprecation" )
     public Status unpublish( ModeShapeWorkspace workspace,
                              String path,
                              File file ) {
@@ -666,7 +675,11 @@ public final class ServerManager {
         ModeShapeServer server = workspace.getServer();
 
         if (isRegistered(server)) {
-            return this.delegate.unpublish(workspace.getDelegate(), path, file);
+            try {
+                return this.delegate.unpublish(workspace.getDelegate(), path, file);
+            } catch (Exception error) {
+                return new Status(Severity.ERROR, NLS.bind(RestClientI18n.serverValidationError, server.getOriginalUrl()), error);
+            }
         }
 
         // server must be registered in order to unpublish
@@ -675,7 +688,7 @@ public final class ServerManager {
 
     /**
      * Updates the server registry with a new version of a server.
-     * 
+     *
      * @param previousServerVersion the version of the server being replaced (never <code>null</code>)
      * @param newServerVersion the new version of the server being put in the server registry (never <code>null</code>)
      * @return a status indicating if the server was updated in the registry (never <code>null</code>)
