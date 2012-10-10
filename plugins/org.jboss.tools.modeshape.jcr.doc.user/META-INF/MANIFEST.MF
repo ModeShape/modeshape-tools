@@ -1,10 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
-Bundle-SymbolicName: org.jboss.tools.modeshape.rest.doc.user;singleton:=true
+Bundle-SymbolicName: org.jboss.tools.modeshape.jcr.doc.user;singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: %bundleVendor
-Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.help

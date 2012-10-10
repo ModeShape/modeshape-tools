@@ -1,0 +1,73 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<contexts>
+ <context id="cnd-editor-childNodeEditor" title="CND Editor's Child Node Editor">
+    <description>The child node definition editor is used to create and edit child node definitions for the selected node type definition.</description>
+    <topic href="cnd-editor/ChildNodeEditor.html"  label="Child Node Editor Details"/>
+    <topic href="cnd-editor/ChildNodesTable.html"  label="Child Nodes Table Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-childNodesTable" title="CND Editor's Child Nodes Table">
+    <description>The child node definitions table shows all the child nodes for the selected node type definition.</description>
+    <topic href="cnd-editor/ChildNodesTable.html"  label="Child Nodes Table Details"/>
+    <topic href="cnd-editor/ChildNodeEditor.html"  label="Child Node Editor Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-cndFormsEditor" title="CND Editor">
+    <description>
+        The CND editor is used to edit compact node type definitions (<code>*.cnd</code> files). A CND consists of 
+        namespace mappings and node type definitions.
+    </description>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+    <topic href="cnd-editor/NamespacesTable.html"  label="Namespaces Table Details"/>
+    <topic href="cnd-editor/NodeTypesTable.html"  label="Node Types Table Details"/>
+ </context>
+ <context id="cnd-editor-cndPreferencePage" title="CND Preference Page">
+    <description>The CND preference page is used to edit CND notation settings.</description>
+    <topic href="cnd-editor/PreferencePage.html"  label="CND Preference Page Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-namespaceEditor" title="CND Editor's Namespace Editor">
+    <description>The namespace mapping editor is used to create and edit namespace mappings.</description>
+    <topic href="cnd-editor/NamespaceEditor.html"  label="Namespace Editor Details"/>
+    <topic href="cnd-editor/NamespacesTable.html"  label="Namespaces Table Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-namespacesTable" title="CND Editor's Namespace Table">
+    <description>The namespace mappings table shows all the namespaces registered in the CND.</description>
+    <topic href="cnd-editor/NamespacesTable.html"  label="Namespaces Table Details"/>
+    <topic href="cnd-editor/NamespaceEditor.html"  label="Namespace Editor Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-nodeTypesTable" title="CND Editor's Node Types Table">
+    <description>
+        The node type definitions table shows all the node types defined in the CND. A node type definitions may contain
+        property definitions and child node definitions.
+    </description>
+    <topic href="cnd-editor/NodeTypesTable.html"  label="Node Types Table Details"/>
+    <topic href="cnd-editor/PropertiesTable.html"  label="Properties Table Details"/>
+    <topic href="cnd-editor/ChildNodesTable.html"  label="Child Nodes Table Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-propertyEditor" title="CND Editor's Property Editor">
+    <description>The property definition editor is used to create and edit property definitions.</description>
+    <topic href="cnd-editor/PropertyEditor.html"  label="Property Editor Details"/>
+    <topic href="cnd-editor/PropertiesTable.html"  label="Properties Table Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+ <context id="cnd-editor-propertiesTable" title="CND Editor's Properties Table">
+    <description>The property definitions table shows all the properties for the selected node type definition.</description>
+    <topic href="cnd-editor/PropertiesTable.html"  label="Properties Table Details"/>
+    <topic href="cnd-editor/PropertyEditor.html"  label="Property Editor Details"/>
+    <topic href="cnd-editor/Editor.html"  label="CND Editor Details"/>
+ </context>
+</contexts>

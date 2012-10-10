@@ -14,6 +14,7 @@
 	<modules>
 		<module>org.jboss.tools.modeshape.client</module>
 		<module>org.jboss.tools.modeshape.jcr</module>
+        <module>org.jboss.tools.modeshape.jcr.doc.user</module>
 		<module>org.jboss.tools.modeshape.jcr.ui</module>
 		<module>org.jboss.tools.modeshape.rest</module>
 		<module>org.jboss.tools.modeshape.rest.doc.user</module>

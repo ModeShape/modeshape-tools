@@ -1,0 +1,96 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<table cellspacing="10">
+    <tr>
+        <td>
+            <a href="http://www.modeshape.org" title="ModeShape Icon">
+            <img src="../common/images/modeshape_icon_16px.png" border="0" alt=""></td>
+        <td align="left" style="font-size: 16px;"><strong>ModeShape Tools - CND Editor</strong></td>
+    </tr>
+</table>
+
+<h3>Child Node Editor</h3>
+
+<p>
+The <i>Child Node Editor</i> is used to create and modify a node type's child node definitions.
+</p>
+
+<p>Here is what the <i>Child Node Editor</i> looks like:</p>
+
+<img src="images/ChildNodeEditor.png" border="0" alt="">
+
+<p>The editor consists of the following:</p>
+
+<table border="1">
+    <tr>
+        <td align="right"><strong>Header Section</strong>&nbsp;</td>
+        <td>shows information and validation error messages</td>
+    </tr>
+    <tr>
+    	<td align="right"><strong>Namespace</strong>&nbsp;</td>
+    	<td>the prefix of the associated namespace mapping</td>
+    </tr>
+    <tr>
+    	<td align="right"><strong>Name</strong>&nbsp;</td>
+    	<td>the unqualified JCR name or '*' to indicate the definition is residual</td>
+    </tr>
+    <tr>
+    	<td align="right"><strong>Default Type</strong>&nbsp;</td>
+    	<td>defining the node type that child nodes of this type will be given if it is auto-created or created without an explicitly specified node type</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Autocreated Attribute</strong>&nbsp;</td>
+        <td>indicates if a child node of this type will be automatically created</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Mandatory Attribute</strong>&nbsp;</td>
+        <td>indicates if a child node of this type must be present in the declaring node type</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>On-Parent-Version Attribute</strong>&nbsp;</td>
+        <td>indicates what happens to child nodes of this type when a new version of the parent is created</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Protected Attribute</strong>&nbsp;</td>
+        <td>indicates if child nodes of this type are protected from being deleted</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Same-Name-Siblings Attribute</strong>&nbsp;</td>
+        <td>indicates if child nodes of this type can have the same name</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Required Types</strong>&nbsp;</td>
+        <td>an optional list of types that child nodes of this type are restricted to</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Comments</strong>&nbsp;</td>
+        <td>additional information about this child node definition that is saved to the file</td>
+    </tr>
+</table>
+
+<p>
+Once all required information is filled in and validated, the 'Finish' button will be enabled and the new child node definition
+can be created or changed. The new or changed child node definition will appear in the CND editor's
+<a href="ChildNodesTable.html">child definitions table</a>. The <i>Child Node Definition Editor</i> can be opened from the 
+child node definitions table by either:
+    <ul>
+        <li>clicking the <code>Add Child Node</code> toolbar button, or</li>
+        <li>selecting a child node definition and clicking the <code>Edit Child Node</code> toolbar button</li>
+    </ul>
+</p>
+
+<h3>Related Topics</h3>
+
+<ul>
+    <li><a href="Editor.html">CND Editor</a></li>
+    <li><a href="ChildNodesTable.html">CND Child Nodes Table</a></li>
+</ul>

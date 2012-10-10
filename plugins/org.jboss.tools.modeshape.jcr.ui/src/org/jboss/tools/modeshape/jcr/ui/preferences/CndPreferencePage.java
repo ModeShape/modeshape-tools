@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.jcr.ui.preferences;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -27,6 +26,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
@@ -91,7 +91,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
      */
     @Override
@@ -124,7 +124,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                  */
                 @Override
@@ -150,12 +150,16 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
             refreshPreview();
         }
 
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(panel, JcrUiConstants.HelpContexts.CND_PREFERENCE_PAGE_HELP_CONTEXT);
+
         return panel;
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.DialogPage#getDescription()
      */
     @Override
@@ -165,7 +169,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.DialogPage#getImage()
      */
     @Override
@@ -175,7 +179,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.DialogPage#getMessage()
      */
     @Override
@@ -185,7 +189,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.preference.PreferencePage#getPreferenceStore()
      */
     @Override
@@ -195,7 +199,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.DialogPage#getTitle()
      */
     @Override
@@ -210,7 +214,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
     @Override
@@ -220,7 +224,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.preference.PreferencePage#performDefaults()
      */
     @Override
@@ -243,7 +247,7 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.preference.PreferencePage#performOk()
      */
     @Override
