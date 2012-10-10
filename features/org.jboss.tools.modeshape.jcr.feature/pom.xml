@@ -30,6 +30,7 @@
 				<configuration>
                     <excludes>
                         <plugin id="org.jboss.tools.modeshape.client"/>
+                        <plugin id="org.jboss.tools.modeshape.jcr.doc.user"/>
                         <!-- <feature id="sourcefeature.feature.nosource"/> -->
                     </excludes>
                 </configuration>

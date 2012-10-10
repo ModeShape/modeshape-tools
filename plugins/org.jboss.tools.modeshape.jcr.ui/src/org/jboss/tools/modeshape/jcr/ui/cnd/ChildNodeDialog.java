@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -55,6 +54,7 @@ import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.ItemOwnerProvider;
@@ -114,7 +114,7 @@ final class ChildNodeDialog extends FormDialog {
 
     /**
      * Used to create a new child node definition.
-     * 
+     *
      * @param parentShell the parent shell (can be <code>null</code>)
      * @param ownerProvider an item owner provider for the new child node (cannot be <code>null</code>)
      * @param existingChildNodeNames the existing child node names (can be <code>null</code> or empty)
@@ -139,7 +139,7 @@ final class ChildNodeDialog extends FormDialog {
 
     /**
      * Used to edit a child node definition.
-     * 
+     *
      * @param parentShell the parent shell (can be <code>null</code>)
      * @param ownerProvider an item owner provider for the new child node (cannot be <code>null</code>)
      * @param existingChildNodeNames the existing child node names (can be <code>null</code> or empty)
@@ -171,7 +171,7 @@ final class ChildNodeDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
      */
     @Override
@@ -182,7 +182,7 @@ final class ChildNodeDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.jface.dialogs.Dialog#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String, boolean)
      */
     @Override
@@ -203,7 +203,7 @@ final class ChildNodeDialog extends FormDialog {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.ui.forms.FormDialog#createFormContent(org.eclipse.ui.forms.IManagedForm)
      */
     @Override
@@ -238,7 +238,7 @@ final class ChildNodeDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
                      */
                     @Override
@@ -271,7 +271,7 @@ final class ChildNodeDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -311,7 +311,7 @@ final class ChildNodeDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -332,7 +332,7 @@ final class ChildNodeDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -353,7 +353,7 @@ final class ChildNodeDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -375,7 +375,7 @@ final class ChildNodeDialog extends FormDialog {
 
                     /**
                      * {@inheritDoc}
-                     * 
+                     *
                      * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
@@ -424,7 +424,7 @@ final class ChildNodeDialog extends FormDialog {
 
                         /**
                          * {@inheritDoc}
-                         * 
+                         *
                          * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                          */
                         @Override
@@ -510,7 +510,7 @@ final class ChildNodeDialog extends FormDialog {
 
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
                  */
                 @Override
@@ -525,7 +525,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
              */
             @Override
@@ -539,6 +539,10 @@ final class ChildNodeDialog extends FormDialog {
         validateDefaultType();
         validateName();
         validateRequiredTypes();
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(this.scrolledForm, JcrUiConstants.HelpContexts.CHILD_NODE_EDITOR_HELP_CONTEXT);
     }
 
     void createRequiredTypesActions() {
@@ -546,7 +550,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -561,7 +565,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -577,7 +581,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -597,7 +601,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IContentProvider#dispose()
              */
             @Override
@@ -607,7 +611,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
              */
             @Override
@@ -624,7 +628,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
              *      java.lang.Object)
              */
@@ -640,7 +644,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
              */
             @Override
@@ -653,7 +657,7 @@ final class ChildNodeDialog extends FormDialog {
 
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
              */
             @Override
@@ -665,7 +669,7 @@ final class ChildNodeDialog extends FormDialog {
 
     /**
      * <strong>Should only be called after the dialog's <code>OK</code> button has been selected.</strong>
-     * 
+     *
      * @return the child node definition represented by the dialog UI controls (never <code>null</code>)
      */
     public ChildNodeDefinition getChildNodeDefinition() {

@@ -55,6 +55,59 @@ public interface JcrUiConstants {
     }
 
     /**
+     * Constants associated with help contexts.
+     */
+    interface HelpContexts {
+
+        String HELP_CONTEXT_PREFIX = PLUGIN_ID + ".cnd-editor-"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's child node definition editor help context.
+         */
+        String CHILD_NODE_EDITOR_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "childNodeEditor"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's child node definitions help context.
+         */
+        String CHILD_NODES_TABLE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "childNodesTable"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's form editor's help context.
+         */
+        String CND_FORMS_EDITOR_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "cndFormsEditor"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's preference page help context.
+         */
+        String CND_PREFERENCE_PAGE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "cndPreferencePage"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's namespace mapping editor help context.
+         */
+        String NAMESPACE_EDITOR_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "namespaceEditor"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's namespace mappings help context.
+         */
+        String NAMESPACES_TABLE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "namespacesTable"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's node types table help context.
+         */
+        String NODE_TYPES_TABLE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "nodeTypesTable"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's property definitions help context.
+         */
+        String PROPERTIES_TABLE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "propertiesTable"; //$NON-NLS-1$
+
+        /**
+         * The CND editor's property definition's editor help context.
+         */
+        String PROPERTY_EDITOR_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "propertyEditor"; //$NON-NLS-1$
+    }
+
+    /**
      * The image paths.
      */
     interface Images {

@@ -77,8 +77,8 @@ import org.jboss.tools.modeshape.ui.forms.MessageSummaryDialog;
 /**
  * An editor for JCR compact node type definition files.
  */
-public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IResourceChangeListener,
-        PropertyChangeListener {
+public final class CndEditor extends SharedHeaderFormEditor
+    implements IPersistableEditor, IResourceChangeListener, PropertyChangeListener {
 
     private CompactNodeTypeDefinition cndBeingEdited;
 
@@ -267,7 +267,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
              */
             @Override
             protected Control createControl( final Composite parent ) {
-                final Hyperlink hlink = getToolkit().createHyperlink(parent, CndMessages.openCndEditorPreferencesHyperlink,
+                final Hyperlink hlink = getToolkit().createHyperlink(parent,
+                                                                     CndMessages.openCndEditorPreferencesHyperlink,
                                                                      SWT.NULL);
                 hlink.addHyperlinkListener(new HyperlinkAdapter() {
 
@@ -426,15 +427,12 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
             }
         }
 
-        final String message = NLS.bind(CndMessages.cndMessageDialogMessageAreaMessage, new Object[] { getFile().getName(),
-                numErrors, numWarnings, numInfos });
+        final String message = NLS.bind(CndMessages.cndMessageDialogMessageAreaMessage, new Object[] {getFile().getName(),
+            numErrors, numWarnings, numInfos});
 
         // show dialog
-        final FormDialog dialog = new MessageSummaryDialog(getShell(),
-                                                           CndMessages.cndMessageDialogTitle,
-                                                           CndMessages.cndMessageDialogMessageAreaTitle,
-                                                           message,
-                                                           messageType,
+        final FormDialog dialog = new MessageSummaryDialog(getShell(), CndMessages.cndMessageDialogTitle,
+                                                           CndMessages.cndMessageDialogMessageAreaTitle, message, messageType,
                                                            data);
         dialog.create();
         dialog.getShell().pack();
@@ -442,8 +440,10 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     }
 
     void handleOpenCndPreferencesPage() {
-        PreferencesUtil.createPreferenceDialogOn(getShell(), JcrUiConstants.PreferenceIds.CND_PREFERENCE_PAGE,
-                                                 new String[] { JcrUiConstants.PreferenceIds.CND_PREFERENCE_PAGE }, null).open();
+        PreferencesUtil.createPreferenceDialogOn(getShell(),
+                                                 JcrUiConstants.PreferenceIds.CND_PREFERENCE_PAGE,
+                                                 new String[] {JcrUiConstants.PreferenceIds.CND_PREFERENCE_PAGE},
+                                                 null).open();
     }
 
     /**
@@ -552,7 +552,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         if (!isSynchronized()) {
             unhookRefreshListener();
 
-            if (MessageFormDialog.openQuestion(getShell(), CndMessages.cndChangedOnFileSystemDialogTitle,
+            if (MessageFormDialog.openQuestion(getShell(),
+                                               CndMessages.cndChangedOnFileSystemDialogTitle,
                                                Activator.getSharedInstance().getImage(Images.CND_EDITOR),
                                                NLS.bind(CndMessages.cndChangedOnFileSystemDialogMsg, getFile().getName()))) {
                 try {
@@ -562,7 +563,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
                     createCnd();
                 } catch (final Exception e) {
                     Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
-                    MessageFormDialog.openError(getShell(), CndMessages.cndEditorRefreshErrorTitle,
+                    MessageFormDialog.openError(getShell(),
+                                                CndMessages.cndEditorRefreshErrorTitle,
                                                 Activator.getSharedInstance().getImage(Images.CND_EDITOR),
                                                 CndMessages.cndEditorRefreshErrorMsg);
                 }
@@ -645,7 +647,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
                                     });
                                 }
                             } else if ((delta.getKind() == IResourceDelta.CHANGED)
-                                    && ((delta.getFlags() & org.eclipse.core.resources.IResourceDelta.CONTENT) != 0)) {
+                                       && ((delta.getFlags() & org.eclipse.core.resources.IResourceDelta.CONTENT) != 0)) {
                                 if (!getShell().isDisposed()) {
                                     getShell().getDisplay().asyncExec(new Runnable() {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
+<?eclipse version="3.4"?>
 <!-- 
   - See the COPYRIGHT.txt file distributed with this work for information
   - regarding copyright ownership.
@@ -15,17 +15,19 @@
 <plugin>
 
 <!-- Context Help -->
-    <extension point="org.eclipse.help.contexts">
-        <contexts
-            file="ModeShapeHelpContexts.xml"
-            plugin="org.jboss.tools.modeshape.rest">
-        </contexts>
-    </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="JcrHelpContexts.xml"
+            plugin="org.jboss.tools.modeshape.jcr.ui">
+      </contexts>
+   </extension>
     
 <!-- Help Table of Contents -->
-    <extension point="org.eclipse.help.toc">
-        <toc file="toc.xml" primary="true" />
-    </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc file="toc.xml" primary="true" />
+   </extension>
     
 <!-- Help Indexes -->
    <extension
@@ -34,4 +36,5 @@
                file="index.xml">
          </index>
    </extension>
+
 </plugin>

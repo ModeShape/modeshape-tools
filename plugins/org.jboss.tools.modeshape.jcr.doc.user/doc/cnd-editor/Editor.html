@@ -1,0 +1,110 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<table cellspacing="10">
+    <tr>
+        <td>
+            <a href="http://www.modeshape.org" title="ModeShape Icon">
+            <img src="../common/images/modeshape_icon_16px.png" border="0" alt=""></td>
+        <td align="left" style="font-size: 16px;"><strong>ModeShape Tools - CND Editor</strong></td>
+    </tr>
+</table>
+
+<h3>Compact Node Type Definition (CND) Editor</h3>
+
+<p>
+The <i>CND Editor</i> is used to create and modify a JCR compact node type definition. The CND editor opens and saves <code>*.cnd</code>
+files. A CND contains zero or more namespace mappings and/or zero or more node type definitions. The CND editor is a multi-page
+editor with a form-based page and a read-only text page.
+</p>
+
+<p>Here is what the <i>CND Editor</i>'s form page looks like:</p>
+
+<img src="images/Editor.png" border="0" alt="">
+
+<p>The editor consists of the following:</p>
+
+<table border="1">
+    <tr>
+        <td align="right"><strong>Header Section</strong>&nbsp;</td>
+        <td>shows validation error messages and a link to the <a href="PreferencePage.html">CND preference page</a></td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Namespaces</strong>&nbsp;</td>
+        <td>a table with all the <a href="NamespacesTable.html">namespace mappings</a> contained in the CND</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Node Types</strong>&nbsp;</td>
+        <td>a table with all the <a href="NodeTypesTable.html">node type definitions</a> contained in the CND</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Properties</strong>&nbsp;</td>
+        <td>a table with all the <a href="PropertiesTable.html">property definitions</a> for the selected node type definition</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Child Nodes</strong>&nbsp;</td>
+        <td>a table with all the <a href="ChildNodesTable.html">child node definitions</a> for the selected node type definition</td>
+    </tr>
+    <tr>
+        <td align="center" colspan="2"><strong>Details Section</strong>&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Namespace</strong>&nbsp;</td>
+        <td>the namespace prefix of the selected node type definition</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Name</strong>&nbsp;</td>
+        <td>the JCR name of the selected node type definition</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Abstract Attribute</strong>&nbsp;</td>
+        <td>indicates if the selected node type definition cannot be instantiated</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Mixin Attribute</strong>&nbsp;</td>
+        <td>indicates if the selected node type definition is a mixin</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Orderable Attribute</strong>&nbsp;</td>
+        <td>indicates if nodes of the selected node type definition can be ordered</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Queryable Attribute</strong>&nbsp;</td>
+        <td>indicates if nodes of the selected node type definition can be queried</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Primary Item Attribute</strong>&nbsp;</td>
+        <td>the primary item of the selected node type definition (either a property definition, child node definition, or empty)</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Supertypes</strong>&nbsp;</td>
+        <td>zero or more supertypes of the selected node type definition (defaults to <code>nt:base</code> if empty)</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Comments</strong>&nbsp;</td>
+        <td>additional information about the selected node type definition that is saved to the file</td>
+    </tr>
+</table>
+
+<p>
+The CND editor only allows saving when information has changed. The settings in the <a href="PreferencePage.html">preference page</a>
+determine the verbosity of the CND notation that is saved to the file.
+</p>
+
+<h3>Related Topics</h3>
+
+<ul>
+    <li><a href="PreferencePage.html">CND Preference Page</a></li>
+    <li><a href="NamespacesTable.html">CND Namespaces</a></li>
+    <li><a href="NodeTypesTable.html">CND Node Types</a></li>
+    <li><a href="PropertiesTable.html">CND Properties</a></li>
+    <li><a href="ChildNodesTable.html">CND Child Nodes</a></li>
+</ul>

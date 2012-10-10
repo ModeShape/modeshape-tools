@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<toc label="JCR Tools">
+    <topic label="CND Editor" href="cnd-editor/Editor.html">
+        <topic label="CND Namespaces" href="cnd-editor/NamespacesTable.html"/>
+        <topic label="Namespace Editor" href="cnd-editor/NamespaceEditor.html"/>
+        <topic label="CND Node Types" href="cnd-editor/NodeTypesTable.html"/>
+        <topic label="CND Properties" href="cnd-editor/PropertiesTable.html"/>
+        <topic label="Property Editor" href="cnd-editor/PropertyEditor.html"/>
+        <topic label="CND Child Nodes" href="cnd-editor/ChildNodesTable.html"/>
+        <topic label="Child Node Editor" href="cnd-editor/ChildNodeEditor.html"/>
+        <topic label="CND Preference Page" href="cnd-editor/PreferencePage.html"/>
+    </topic>
+</toc>
