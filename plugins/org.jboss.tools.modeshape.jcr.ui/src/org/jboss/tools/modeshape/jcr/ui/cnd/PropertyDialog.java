@@ -54,6 +54,7 @@ import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.jcr.ItemOwnerProvider;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
@@ -948,6 +949,10 @@ final class PropertyDialog extends FormDialog {
         validateDefaultValues();
         validateValueConstraints();
         validateType();
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(this.scrolledForm, JcrUiConstants.HelpContexts.PROPERTY_EDITOR_HELP_CONTEXT);
     }
 
     void createValueConstraintsActions() {

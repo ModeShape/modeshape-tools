@@ -74,6 +74,7 @@ import org.eclipse.ui.forms.IMessageManager;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.Messages;
@@ -109,7 +110,7 @@ import org.jboss.tools.modeshape.ui.viewers.CheckBoxLabelProvider;
 /**
  * The GUI part of the CND editor.
  */
-class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener {
+public class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener {
 
     private IAction addChildNode;
     private IAction addNamespace;
@@ -326,6 +327,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 // nothing to do
             }
         });
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(body, JcrUiConstants.HelpContexts.CND_FORMS_EDITOR_HELP_CONTEXT);
     }
 
     private void createChildNodeActions() {
@@ -536,6 +541,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         getActionContributor().setChildNodeStatusDoubleClickAction(this.editChildNode);
 
         createChildNodeViewer(table);
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(this.childNodeSection, JcrUiConstants.HelpContexts.CHILD_NODES_TABLE_HELP_CONTEXT);
     }
 
     private void createChildNodeViewer( final Table childNodeTable ) {
@@ -1185,6 +1194,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         table.setMenu(menuManager.createContextMenu(table));
 
         createNamespaceViewer(table);
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(this.namespaceSection, JcrUiConstants.HelpContexts.NAMESPACES_TABLE_HELP_CONTEXT);
     }
 
     private void createNamespaceViewer( final Table namespaceTable ) {
@@ -1537,6 +1550,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         getActionContributor().setNodeTypeStatusMenuManager(statusBarMenuManager);
 
         splitter.setWeights(new int[] {20, 80});
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(this.nodeTypeSection, JcrUiConstants.HelpContexts.NODE_TYPES_TABLE_HELP_CONTEXT);
     }
 
     private void createNodeTypeViewer( final Table nodeTypeTable ) {
@@ -1890,6 +1907,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         getActionContributor().setPropertyStatusDoubleClickAction(this.editProperty);
 
         createPropertyViewer(table);
+
+        // register with the help system
+        IWorkbenchHelpSystem helpSystem = Activator.getSharedInstance().getWorkbench().getHelpSystem();
+        helpSystem.setHelp(this.propertiesSection, JcrUiConstants.HelpContexts.PROPERTIES_TABLE_HELP_CONTEXT);
     }
 
     private void createPropertyViewer( final Table propertyTable ) {

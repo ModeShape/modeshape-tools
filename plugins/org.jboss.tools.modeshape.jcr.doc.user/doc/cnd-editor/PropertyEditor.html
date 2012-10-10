@@ -1,0 +1,108 @@
+<!-- 
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - This software is made available by Red Hat, Inc. under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<table cellspacing="10">
+    <tr>
+        <td>
+            <a href="http://www.modeshape.org" title="ModeShape Icon">
+            <img src="../common/images/modeshape_icon_16px.png" border="0" alt=""></td>
+        <td align="left" style="font-size: 16px;"><strong>ModeShape Tools - CND Editor</strong></td>
+    </tr>
+</table>
+
+<h3>Property Editor</h3>
+
+<p>
+The <i>Property Editor</i> is used to create and modify property definitions.
+</p>
+
+<p>Here is what the <i>Property Editor</i> looks like:</p>
+
+<img src="images/PropertyEditor.png" border="0" alt="">
+
+<p>The editor consists of the following:</p>
+
+<table border="1">
+    <tr>
+        <td align="right"><strong>Header Section</strong>&nbsp;</td>
+        <td>shows information and validation error messages</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Namespace</strong>&nbsp;</td>
+        <td>the prefix of the associated namespace mapping</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Name</strong>&nbsp;</td>
+        <td>the unqualified JCR name or '*' to indicate the definition is residual</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Type</strong>&nbsp;</td>
+        <td>the property type</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Autocreated Attribute</strong>&nbsp;</td>
+        <td>indicates if a property of this type will be automatically created</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Mandatory Attribute</strong>&nbsp;</td>
+        <td>indicates if a property of this type must be present in the declaring node type</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Multiple Attribute</strong>&nbsp;</td>
+        <td>indicates if properties of this type can have multiple values</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Not Full Text Searchable</strong>&nbsp;</td>
+        <td>indicates if properties of this type are not full text searchable</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Not Query Orderable</strong>&nbsp;</td>
+        <td>indicates if query results cannot be ordered by this property</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>On-Parent-Version Attribute</strong>&nbsp;</td>
+        <td>indicates what happens to properties of this type when a new version of the parent is created</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Protected Attribute</strong>&nbsp;</td>
+        <td>indicates if properties of this type are protected from being deleted</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Default Values</strong>&nbsp;</td>
+        <td>zero or more values used as default values for multi-valued properties</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Value Constraints</strong>&nbsp;</td>
+        <td>zero or more constraints used to validate property values</td>
+    </tr>
+    <tr>
+        <td align="right"><strong>Comments</strong>&nbsp;</td>
+        <td>additional information about this property definition that is saved to the file</td>
+    </tr>
+</table>
+
+<p>
+Once all required information is filled in and validated, the 'Finish' button will be enabled and the new property definition
+can be created or changed. The new or changed property definition will appear in the CND editor's
+<a href="PropertiesTable.html">property definitions table</a>. The <i>Property Definition Editor</i> can be opened from the 
+property definitions table by either:
+    <ul>
+        <li>clicking the <code>Add Property</code> toolbar button, or</li>
+        <li>selecting a property definition and clicking the <code>Edit Property</code> toolbar button</li>
+    </ul>
+</p>
+
+<h3>Related Topics</h3>
+
+<ul>
+    <li><a href="Editor.html">CND Editor</a></li>
+    <li><a href="PropertiesTable.html">CND Properties Table</a></li>
+</ul>
