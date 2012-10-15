@@ -59,7 +59,7 @@
 <!--                            <artifactId>modeshape-client</artifactId> -->
                             <artifactId>modeshape-jdbc</artifactId>
                             <version>3.0.0.CR1</version>
-                            <destination>plugins/org.jboss.tools.modeshape.client/modeshape-client.jar</destination>
+                            <destination> ${basedir}/my-modeshape-client.jar</destination>
                         </configuration>
                     </execution>
                 </executions>
