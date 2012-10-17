@@ -10,9 +10,6 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
@@ -22,17 +19,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class RequiredTypesTest implements Constants {
 
     private RequiredTypes attribute;
-
-    private void add( final QualifiedName item ) {
-        if (!this.attribute.add(item)) {
-            fail();
-        }
-    }
 
     @Before
     public void beforeEach() {
@@ -46,16 +37,10 @@ public class RequiredTypesTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
     }
 
-    private void remove( final QualifiedName item ) {
-        if (!this.attribute.remove(item)) {
-            fail();
-        }
-    }
-
     @Test
     public void verifyAddedItem() {
         // setup
-        add(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME1);
 
         // tests
         assertEquals(1, this.attribute.getSupportedItems().size());
@@ -75,9 +60,9 @@ public class RequiredTypesTest implements Constants {
     @Test
     public void verifyMultipleElementsCndNotation() {
         // setup
-        add(QUALIFIED_NAME1);
-        add(QUALIFIED_NAME2);
-        add(QUALIFIED_NAME3);
+        this.attribute.add(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME2);
+        this.attribute.add(QUALIFIED_NAME3);
 
         // tests
         assertEquals(REQUIRED_TYPES_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -88,7 +73,7 @@ public class RequiredTypesTest implements Constants {
     @Test
     public void verifyOneElementCndNotation() {
         // setup
-        add(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME1);
 
         // tests
         assertEquals(REQUIRED_TYPES_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -99,9 +84,9 @@ public class RequiredTypesTest implements Constants {
     @Test
     public void verifyRemoveItem() {
         // setup
-        add(QUALIFIED_NAME1);
-        add(QUALIFIED_NAME2);
-        remove(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME2);
+        this.attribute.remove(QUALIFIED_NAME1);
 
         // tests
         assertFalse(this.attribute.getSupportedItems().contains(QUALIFIED_NAME1));
@@ -110,20 +95,17 @@ public class RequiredTypesTest implements Constants {
     @Test
     public void verifySameElementIsNotAdded() {
         // setup
-        add(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME1);
 
         // tests
-        if (this.attribute.add(QUALIFIED_NAME1)) {
-            fail();
-        }
-
+        assertFalse(this.attribute.add(QUALIFIED_NAME1));
         assertEquals(1, this.attribute.getSupportedItems().size());
     }
 
     @Test
     public void verifyStateShouldBeIsAfterAdd() {
         // setup
-        add(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME1);
 
         // tests
         assertEquals(AttributeState.Value.IS, this.attribute.get());
@@ -132,8 +114,8 @@ public class RequiredTypesTest implements Constants {
     @Test
     public void verifyStateShouldBeIsNotWhenEmpty() {
         // setup
-        add(QUALIFIED_NAME1);
-        remove(QUALIFIED_NAME1);
+        this.attribute.add(QUALIFIED_NAME1);
+        this.attribute.remove(QUALIFIED_NAME1);
 
         // tests
         assertEquals(0, this.attribute.getSupportedItems().size());

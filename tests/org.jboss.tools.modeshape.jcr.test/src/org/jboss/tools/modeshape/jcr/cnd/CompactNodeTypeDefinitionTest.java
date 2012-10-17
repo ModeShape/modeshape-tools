@@ -124,6 +124,12 @@ public class CompactNodeTypeDefinitionTest {
 
         assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
         assertEquals(0, l.getCount());
+
+        // these needed so Listener class can get max code coverage
+        assertNull(l.getEvent());
+        assertNull(l.getNewValue());
+        assertNull(l.getOldValue());
+        assertNull(l.getPropertyName());
     }
 
     @Test

@@ -10,11 +10,8 @@ package org.jboss.tools.modeshape.jcr.cnd;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
@@ -22,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class WorkspaceRegistryTest {
 
@@ -76,11 +73,7 @@ public class WorkspaceRegistryTest {
         names.add("jcr:data"); //$NON-NLS-1$
 
         for (final PropertyDefinition propDefn : properties) {
-            if (names.contains(propDefn.getName())) {
-                names.remove(propDefn.getName());
-            } else {
-                fail();
-            }
+            names.remove(propDefn.getName());
         }
 
         assertTrue(names.isEmpty());

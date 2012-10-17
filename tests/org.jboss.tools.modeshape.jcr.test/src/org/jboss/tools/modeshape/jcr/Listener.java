@@ -13,18 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  */
-public final class Listener implements PropertyChangeListener {
+public class Listener implements PropertyChangeListener {
 
     private List<PropertyChangeEvent> events = new ArrayList<PropertyChangeEvent>();
-
-    /**
-     * Clears the stored events.
-     */
-    public void clear() {
-        this.events.clear();
-    }
 
     /**
      * @return the number of events received
@@ -54,7 +47,7 @@ public final class Listener implements PropertyChangeListener {
 
     public Object getOldValue() {
         if (this.events.isEmpty()) {
-            return false;
+            return null;
         }
 
         return getEvent().getOldValue();
@@ -70,7 +63,7 @@ public final class Listener implements PropertyChangeListener {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     @Override

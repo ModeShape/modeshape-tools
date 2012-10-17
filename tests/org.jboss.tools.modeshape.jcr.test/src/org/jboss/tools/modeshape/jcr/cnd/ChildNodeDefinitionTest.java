@@ -7,11 +7,9 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.Listener;
@@ -24,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class ChildNodeDefinitionTest {
 
@@ -43,117 +41,153 @@ public class ChildNodeDefinitionTest {
     @Test
     public void copiesShouldBeEqualAndHaveSameHashCode() {
         ChildNodeDefinition thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
         this.childNodeDefinition.setComment("comment goes here"); //$NON-NLS-1$
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
         this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.DEFAULT_TYPE);
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
-        this.childNodeDefinition.setAutoCreated(!this.childNodeDefinition.isAutoCreated());
+        this.childNodeDefinition.setAutoCreated(true);
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
-        this.childNodeDefinition.setMandatory(!this.childNodeDefinition.isMandatory());
+        this.childNodeDefinition.setAutoCreated(false);
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
-        this.childNodeDefinition.setProtected(!this.childNodeDefinition.isProtected());
+        this.childNodeDefinition.setMandatory(true);
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
-        this.childNodeDefinition.setSameNameSiblings(!this.childNodeDefinition.allowsSameNameSiblings());
+        this.childNodeDefinition.setMandatory(false);
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
+
+        this.childNodeDefinition.setProtected(true);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
+
+        this.childNodeDefinition.setProtected(false);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
+
+        this.childNodeDefinition.setSameNameSiblings(true);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
+
+        this.childNodeDefinition.setSameNameSiblings(false);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
         this.childNodeDefinition.setOnParentVersion(OnParentVersion.ABORT.asJcrValue());
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
 
         this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsStringArray());
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
-        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
-        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+        assertThat(this.childNodeDefinition, is(thatChildNodeDefinition));
+        assertThat(this.childNodeDefinition.hashCode(), is(thatChildNodeDefinition.hashCode()));
     }
 
     @Test
     public void differentInstancesWithSameValuesShouldBeEqual() {
         final ChildNodeDefinition that = new ChildNodeDefinition(this.owner);
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
         that.setName(this.childNodeDefinition.getName());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
         this.childNodeDefinition.setComment("comment goes here"); //$NON-NLS-1$
         that.setComment(this.childNodeDefinition.getComment());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
         this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.DEFAULT_TYPE);
         that.setDefaultPrimaryTypeName(this.childNodeDefinition.getDefaultPrimaryTypeName());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
-        this.childNodeDefinition.setAutoCreated(!this.childNodeDefinition.isAutoCreated());
+        this.childNodeDefinition.setAutoCreated(true);
         that.setAutoCreated(this.childNodeDefinition.isAutoCreated());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
-        this.childNodeDefinition.setMandatory(!this.childNodeDefinition.isMandatory());
+        this.childNodeDefinition.setAutoCreated(false);
+        that.setAutoCreated(this.childNodeDefinition.isAutoCreated());
+        assertThat(this.childNodeDefinition, is(that));
+
+        this.childNodeDefinition.setMandatory(true);
         that.setMandatory(this.childNodeDefinition.isMandatory());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
-        this.childNodeDefinition.setProtected(!this.childNodeDefinition.isProtected());
+        this.childNodeDefinition.setMandatory(false);
+        that.setMandatory(this.childNodeDefinition.isMandatory());
+        assertThat(this.childNodeDefinition, is(that));
+
+        this.childNodeDefinition.setProtected(true);
         that.setProtected(this.childNodeDefinition.isProtected());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
-        this.childNodeDefinition.setSameNameSiblings(!this.childNodeDefinition.allowsSameNameSiblings());
+        this.childNodeDefinition.setProtected(false);
+        that.setProtected(this.childNodeDefinition.isProtected());
+        assertThat(this.childNodeDefinition, is(that));
+
+        this.childNodeDefinition.setSameNameSiblings(true);
         that.setSameNameSiblings(this.childNodeDefinition.allowsSameNameSiblings());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
+
+        this.childNodeDefinition.setSameNameSiblings(false);
+        that.setSameNameSiblings(this.childNodeDefinition.allowsSameNameSiblings());
+        assertThat(this.childNodeDefinition, is(that));
 
         this.childNodeDefinition.setOnParentVersion(OnParentVersion.ABORT.asJcrValue());
         that.setOnParentVersion(this.childNodeDefinition.getOnParentVersion());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
 
         this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsStringArray());
         that.setRequiredPrimaryTypeNames(this.childNodeDefinition.getRequiredPrimaryTypeNames());
-        assertEquals(this.childNodeDefinition, that);
+        assertThat(this.childNodeDefinition, is(that));
     }
 
     @Test
     public void differentInstancesWithSameValuesShouldHaveSameHashCode() {
-        assertEquals(this.childNodeDefinition.hashCode(), new ChildNodeDefinition(this.owner).hashCode());
+        assertThat(this.childNodeDefinition.hashCode(), is(new ChildNodeDefinition(this.owner).hashCode()));
     }
 
     @Test
     public void onParentVersionDefaultValueShouldBeCopy() {
-        assertEquals(OnParentVersion.COPY, OnParentVersion.DEFAULT_VALUE);
+        assertThat(OnParentVersion.COPY, is(OnParentVersion.DEFAULT_VALUE));
     }
 
     @Test
     public void onParentVersionShouldBeSetToDefaultAfterConstruction() {
-        assertTrue(this.childNodeDefinition.getOnParentVersion() == OnParentVersion.DEFAULT_VALUE.asJcrValue());
+        assertThat(OnParentVersion.DEFAULT_VALUE.asJcrValue(), is(this.childNodeDefinition.getOnParentVersion()));
     }
 
     @Test
     public void shouldAddRequiredType() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
-        assertEquals(REQUIRED_TYPE, this.childNodeDefinition.getRequiredPrimaryTypeNames()[0]);
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(true));
+        assertThat(REQUIRED_TYPE, is(this.childNodeDefinition.getRequiredPrimaryTypeNames()[0]));
     }
 
     @Test
@@ -165,298 +199,298 @@ public class ChildNodeDefinitionTest {
 
     @Test
     public void shouldChangeAutocreatedPropertyState() {
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.AUTOCREATED, Value.IS));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), Value.IS);
-        assertTrue(this.childNodeDefinition.isAutoCreated());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.AUTOCREATED, Value.IS), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), is(Value.IS));
+        assertThat(this.childNodeDefinition.isAutoCreated(), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.AUTOCREATED, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.AUTOCREATED));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.AUTOCREATED, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.AUTOCREATED), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.AUTOCREATED, Value.IS_NOT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), Value.IS_NOT);
-        assertFalse(this.childNodeDefinition.isAutoCreated());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.AUTOCREATED, Value.IS_NOT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), is(Value.IS_NOT));
+        assertThat(this.childNodeDefinition.isAutoCreated(), is(false));
     }
 
     @Test
     public void shouldChangeDefaultTypePropertyStateToVariantOnly() {
-        assertFalse(this.childNodeDefinition.changeState(PropertyName.DEFAULT_TYPE, Value.IS));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.DEFAULT_TYPE, Value.IS), is(false));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.DEFAULT_TYPE, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.DEFAULT_TYPE), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.DEFAULT_TYPE));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.DEFAULT_TYPE, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.DEFAULT_TYPE), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.DEFAULT_TYPE), is(true));
 
-        assertFalse(this.childNodeDefinition.changeState(PropertyName.DEFAULT_TYPE, Value.IS_NOT));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.DEFAULT_TYPE, Value.IS_NOT), is(false));
     }
 
     @Test
     public void shouldChangeMandatoryPropertyState() {
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.MANDATORY, Value.IS));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.MANDATORY), Value.IS);
-        assertTrue(this.childNodeDefinition.isMandatory());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.MANDATORY, Value.IS), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.MANDATORY), is(Value.IS));
+        assertThat(this.childNodeDefinition.isMandatory(), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.MANDATORY, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.MANDATORY), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.MANDATORY));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.MANDATORY, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.MANDATORY), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.MANDATORY), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.MANDATORY, Value.IS_NOT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.MANDATORY), Value.IS_NOT);
-        assertFalse(this.childNodeDefinition.isMandatory());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.MANDATORY, Value.IS_NOT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.MANDATORY), is(Value.IS_NOT));
+        assertThat(this.childNodeDefinition.isMandatory(), is(false));
     }
 
     @Test
     public void shouldChangeOnParentVersionPropertyToVariantStateOnly() {
-        assertFalse(this.childNodeDefinition.changeState(PropertyName.ON_PARENT_VERSION, Value.IS));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.ON_PARENT_VERSION, Value.IS), is(false));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.ON_PARENT_VERSION, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.ON_PARENT_VERSION), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.ON_PARENT_VERSION));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.ON_PARENT_VERSION, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.ON_PARENT_VERSION), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.ON_PARENT_VERSION), is(true));
 
-        assertFalse(this.childNodeDefinition.changeState(PropertyName.ON_PARENT_VERSION, Value.IS_NOT));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.ON_PARENT_VERSION, Value.IS_NOT), is(false));
     }
 
     @Test
     public void shouldChangeProtectedPropertyState() {
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.PROTECTED, Value.IS));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.PROTECTED), Value.IS);
-        assertTrue(this.childNodeDefinition.isProtected());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.PROTECTED, Value.IS), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.PROTECTED), is(Value.IS));
+        assertThat(this.childNodeDefinition.isProtected(), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.PROTECTED, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.PROTECTED), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.PROTECTED));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.PROTECTED, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.PROTECTED), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.PROTECTED), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.PROTECTED, Value.IS_NOT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.PROTECTED), Value.IS_NOT);
-        assertFalse(this.childNodeDefinition.isProtected());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.PROTECTED, Value.IS_NOT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.PROTECTED), is(Value.IS_NOT));
+        assertThat(this.childNodeDefinition.isProtected(), is(false));
     }
 
     @Test
     public void shouldChangeRequiredTypesPropertyToVariantStateOnly() {
-        assertFalse(this.childNodeDefinition.changeState(PropertyName.REQUIRED_TYPES, Value.IS));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.REQUIRED_TYPES, Value.IS), is(false));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.REQUIRED_TYPES, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.REQUIRED_TYPES), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.REQUIRED_TYPES));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.REQUIRED_TYPES, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.REQUIRED_TYPES), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.REQUIRED_TYPES), is(true));
 
-        assertFalse(this.childNodeDefinition.changeState(PropertyName.REQUIRED_TYPES, Value.IS_NOT));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.REQUIRED_TYPES, Value.IS_NOT), is(false));
     }
 
     @Test
     public void shouldChangeSameNameSiblingsPropertyState() {
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.SAME_NAME_SIBLINGS, Value.IS));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), Value.IS);
-        assertTrue(this.childNodeDefinition.allowsSameNameSiblings());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.SAME_NAME_SIBLINGS, Value.IS), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), is(Value.IS));
+        assertThat(this.childNodeDefinition.allowsSameNameSiblings(), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.SAME_NAME_SIBLINGS, Value.VARIANT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), Value.VARIANT);
-        assertTrue(this.childNodeDefinition.isVariant(PropertyName.SAME_NAME_SIBLINGS));
+        assertThat(this.childNodeDefinition.changeState(PropertyName.SAME_NAME_SIBLINGS, Value.VARIANT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), is(Value.VARIANT));
+        assertThat(this.childNodeDefinition.isVariant(PropertyName.SAME_NAME_SIBLINGS), is(true));
 
-        assertTrue(this.childNodeDefinition.changeState(PropertyName.SAME_NAME_SIBLINGS, Value.IS_NOT));
-        assertEquals(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), Value.IS_NOT);
-        assertFalse(this.childNodeDefinition.allowsSameNameSiblings());
+        assertThat(this.childNodeDefinition.changeState(PropertyName.SAME_NAME_SIBLINGS, Value.IS_NOT), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), is(Value.IS_NOT));
+        assertThat(this.childNodeDefinition.allowsSameNameSiblings(), is(false));
     }
 
     @Test
     public void shouldClearRequiredTypes() {
-        assertTrue(this.childNodeDefinition.addRequiredType("requiredType")); //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.clearRequiredTypes());
-        assertEquals(0, this.childNodeDefinition.getRequiredPrimaryTypeNames().length);
+        assertThat(this.childNodeDefinition.addRequiredType("requiredType"), is(true)); //$NON-NLS-1$
+        assertThat(this.childNodeDefinition.clearRequiredTypes(), is(true));
+        assertThat(this.childNodeDefinition.getRequiredPrimaryTypeNames().length, is(0));
     }
 
     @Test
     public void shouldNotAllowDuplicateRequiredType() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
-        assertFalse(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(true));
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(false));
     }
 
     @Test
     public void shouldNotChangeCommentToSameValue() {
         this.childNodeDefinition.setComment("newComment"); //$NON-NLS-1$
-        assertFalse(this.childNodeDefinition.setComment(this.childNodeDefinition.getComment()));
+        assertThat(this.childNodeDefinition.setComment(this.childNodeDefinition.getComment()), is(false));
     }
 
     @Test
     public void shouldNotClearSuperTypesWhenEmpty() {
-        assertFalse(this.childNodeDefinition.clearRequiredTypes());
+        assertThat(this.childNodeDefinition.clearRequiredTypes(), is(false));
     }
 
     @Test
     public void shouldNotDefaultTypeAfterConstruction() {
-        assertNull(this.childNodeDefinition.getDefaultPrimaryTypeName());
+        assertThat(this.childNodeDefinition.getDefaultPrimaryTypeName(), is(nullValue()));
     }
 
     @Test
     public void shouldNotHaveDefaultRequiredTypeAfterConstruction() {
-        assertNull(this.childNodeDefinition.getDefaultPrimaryTypeName());
+        assertThat(this.childNodeDefinition.getDefaultPrimaryTypeName(), is(nullValue()));
     }
 
     @Test
     public void shouldNotHaveRequiredTypesAfterConstruction() {
-        assertEquals(0, this.childNodeDefinition.getRequiredPrimaryTypeNames().length);
+        assertThat(this.childNodeDefinition.getRequiredPrimaryTypeNames().length, is(0));
     }
 
     @Test
     public void shouldNotRemoveRequiredTypeThatDoesNotExist() {
-        assertFalse(this.childNodeDefinition.removeRequiredType("requiredType")); //$NON-NLS-1$
+        assertThat(this.childNodeDefinition.removeRequiredType("requiredType"), is(false)); //$NON-NLS-1$
     }
 
     @Test
     public void shouldReceiveEventAfterAddingRequiredType() {
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(true));
 
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.REQUIRED_TYPES.toString(), l.getPropertyName());
-        assertEquals(REQUIRED_TYPE, l.getNewValue());
-        assertNull(l.getOldValue());
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.REQUIRED_TYPES.toString()));
+        assertThat((String)l.getNewValue(), is(REQUIRED_TYPE));
+        assertThat(l.getOldValue(), is(nullValue()));
     }
 
     @Test
     public void shouldReceiveEventAfterChangingName() {
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
         final String NEW_NAME = "newName"; //$NON-NLS-1$
         this.childNodeDefinition.setName(NEW_NAME);
 
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.NAME.toString(), l.getPropertyName());
-        assertEquals(NEW_NAME, l.getNewValue());
-        assertNull(l.getOldValue());
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.NAME.toString()));
+        assertThat((String)l.getNewValue(), is(NEW_NAME));
+        assertThat(l.getOldValue(), is(nullValue()));
     }
 
     @Test
     public void shouldReceiveEventAfterChangingPrimaryTypeName() {
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
         final String PRIMARY_TYPE = "primaryType"; //$NON-NLS-1$
         this.childNodeDefinition.setDefaultPrimaryTypeName(PRIMARY_TYPE);
 
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.DEFAULT_TYPE.toString(), l.getPropertyName());
-        assertEquals(PRIMARY_TYPE, l.getNewValue());
-        assertNull(l.getOldValue());
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.DEFAULT_TYPE.toString()));
+        assertThat((String)l.getNewValue(), is(PRIMARY_TYPE));
+        assertThat(l.getOldValue(), is(nullValue()));
     }
 
     @Test
     public void shouldReceiveEventAfterClearingSuperTypes() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(true));
         final String[] oldValue = new String[] { REQUIRED_TYPE };
 
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
-        assertTrue(this.childNodeDefinition.clearRequiredTypes());
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.REQUIRED_TYPES.toString(), l.getPropertyName());
-        assertNull(l.getNewValue());
-        assertEquals(oldValue[0], ((String[])l.getOldValue())[0]);
+        assertThat(this.childNodeDefinition.clearRequiredTypes(), is(true));
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.REQUIRED_TYPES.toString()));
+        assertThat(l.getNewValue(), is(nullValue()));
+        assertThat(((String[])l.getOldValue())[0], is(oldValue[0]));
     }
 
     @Test
     public void shouldReceiveEventAfterRemovingRequiredType() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(true));
 
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
-        assertTrue(this.childNodeDefinition.removeRequiredType(REQUIRED_TYPE));
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.REQUIRED_TYPES.toString(), l.getPropertyName());
-        assertEquals(REQUIRED_TYPE, l.getOldValue());
-        assertNull(l.getNewValue());
+        assertThat(this.childNodeDefinition.removeRequiredType(REQUIRED_TYPE), is(true));
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.REQUIRED_TYPES.toString()));
+        assertThat((String)l.getOldValue(), is(REQUIRED_TYPE));
+        assertThat(l.getNewValue(), is(nullValue()));
     }
 
     @Test
     public void shouldReceiveEventWhenCommentIsChanged() {
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
         final String NEW_COMMENT = "comment"; //$NON-NLS-1$
         this.childNodeDefinition.setComment(NEW_COMMENT);
 
-        assertEquals(NEW_COMMENT, this.childNodeDefinition.getComment());
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.COMMENT.toString(), l.getPropertyName());
-        assertEquals(NEW_COMMENT, l.getNewValue());
-        assertNull(l.getOldValue());
+        assertThat(this.childNodeDefinition.getComment(), is(NEW_COMMENT));
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.COMMENT.toString()));
+        assertThat((String)l.getNewValue(), is(NEW_COMMENT));
+        assertThat(l.getOldValue(), is(nullValue()));
     }
 
     @Test
     public void shouldReceiveEventWhenOnParentVersionIsChanged() {
         final Listener l = new Listener();
-        assertTrue(this.childNodeDefinition.addListener(l));
+        assertThat(this.childNodeDefinition.addListener(l), is(true));
 
         final int OPV = OnParentVersion.COMPUTE.asJcrValue();
         this.childNodeDefinition.setOnParentVersion(OPV);
 
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.ON_PARENT_VERSION.toString(), l.getPropertyName());
-        assertEquals(OPV, l.getNewValue());
-        assertEquals(OnParentVersion.DEFAULT_VALUE, l.getOldValue());
+        assertThat(l.getCount(), is(1));
+        assertThat(l.getPropertyName(), is(PropertyName.ON_PARENT_VERSION.toString()));
+        assertThat((Integer)l.getNewValue(), is(OPV));
+        assertThat((Integer)l.getOldValue(), is(OnParentVersion.DEFAULT_VALUE.asJcrValue()));
     }
 
     @Test
     public void shouldRemoveRequiredType() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
-        assertTrue(this.childNodeDefinition.removeRequiredType(REQUIRED_TYPE));
-        assertEquals(0, this.childNodeDefinition.getRequiredPrimaryTypeNames().length);
+        assertThat(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE), is(true));
+        assertThat(this.childNodeDefinition.removeRequiredType(REQUIRED_TYPE), is(true));
+        assertThat(this.childNodeDefinition.getRequiredPrimaryTypeNames().length, is(0));
     }
 
     @Test
     public void shouldSetAutoCreated() {
         this.childNodeDefinition.setAutoCreated(true);
-        assertTrue(this.childNodeDefinition.isAutoCreated());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.AUTOCREATED) == Value.IS);
+        assertThat(this.childNodeDefinition.isAutoCreated(), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), is(Value.IS));
 
         this.childNodeDefinition.setAutoCreated(false);
-        assertFalse(this.childNodeDefinition.isAutoCreated());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.AUTOCREATED) == Value.IS_NOT);
+        assertThat(this.childNodeDefinition.isAutoCreated(), is(false));
+        assertThat(this.childNodeDefinition.getState(PropertyName.AUTOCREATED), is(Value.IS_NOT));
     }
 
     @Test
     public void shouldSetComment() {
         final String NEW_COMMENT = "newComment"; //$NON-NLS-1$
-        assertTrue(this.childNodeDefinition.setComment(NEW_COMMENT));
-        assertEquals(NEW_COMMENT, this.childNodeDefinition.getComment());
+        assertThat(this.childNodeDefinition.setComment(NEW_COMMENT), is(true));
+        assertThat(this.childNodeDefinition.getComment(), is(NEW_COMMENT));
     }
 
     @Test
     public void shouldSetMandatory() {
         this.childNodeDefinition.setMandatory(true);
-        assertTrue(this.childNodeDefinition.isMandatory());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.MANDATORY) == Value.IS);
+        assertThat(this.childNodeDefinition.isMandatory(), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.MANDATORY), is(Value.IS));
 
         this.childNodeDefinition.setMandatory(false);
-        assertFalse(this.childNodeDefinition.isMandatory());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.MANDATORY) == Value.IS_NOT);
+        assertThat(this.childNodeDefinition.isMandatory(), is(false));
+        assertThat(this.childNodeDefinition.getState(PropertyName.MANDATORY), is(Value.IS_NOT));
     }
 
     @Test
     public void shouldSetName() {
         final String NEW_NAME = "newName"; //$NON-NLS-1$
         this.childNodeDefinition.setName(NEW_NAME);
-        assertEquals(NEW_NAME, this.childNodeDefinition.getName());
+        assertThat(this.childNodeDefinition.getName(), is(NEW_NAME));
     }
 
     @Test
     public void shouldSetNameWithEmptyString() {
         this.childNodeDefinition.setName(Utils.EMPTY_STRING);
-        assertTrue(Utils.isEmpty(this.childNodeDefinition.getName()));
+        assertThat(Utils.isEmpty(this.childNodeDefinition.getName()), is(true));
     }
 
     @Test
     public void shouldSetNameWithNull() {
         this.childNodeDefinition.setName(null);
-        assertTrue(Utils.isEmpty(this.childNodeDefinition.getName()));
+        assertThat(Utils.isEmpty(this.childNodeDefinition.getName()), is(true));
     }
 
     @Test
@@ -464,7 +498,7 @@ public class ChildNodeDefinitionTest {
         for (final OnParentVersion opv : OnParentVersion.values()) {
             if (opv != OnParentVersion.VARIANT) {
                 this.childNodeDefinition.setOnParentVersion(opv.asJcrValue());
-                assertEquals(opv.asJcrValue(), this.childNodeDefinition.getOnParentVersion());
+                assertThat(this.childNodeDefinition.getOnParentVersion(), is(opv.asJcrValue()));
             }
         }
     }
@@ -473,8 +507,8 @@ public class ChildNodeDefinitionTest {
     public void shouldSetOnParentVersionUsingString() {
         for (final OnParentVersion opv : OnParentVersion.values()) {
             if (opv != OnParentVersion.VARIANT) {
-                assertTrue(this.childNodeDefinition.setOnParentVersion(opv.toString()));
-                assertEquals(opv.asJcrValue(), this.childNodeDefinition.getOnParentVersion());
+                assertThat(this.childNodeDefinition.setOnParentVersion(opv.toString()), is(true));
+                assertThat(this.childNodeDefinition.getOnParentVersion(), is(opv.asJcrValue()));
             }
         }
     }
@@ -483,30 +517,30 @@ public class ChildNodeDefinitionTest {
     public void shouldSetPrimaryTypeName() {
         final String PRIMARY_TYPE = "primaryType"; //$NON-NLS-1$
         this.childNodeDefinition.setDefaultPrimaryTypeName(PRIMARY_TYPE);
-        assertEquals(PRIMARY_TYPE, this.childNodeDefinition.getDefaultPrimaryTypeName());
+        assertThat(this.childNodeDefinition.getDefaultPrimaryTypeName(), is(PRIMARY_TYPE));
     }
 
     @Test
     public void shouldSetPrimaryTypeNameUsingEmptyValue() {
         this.childNodeDefinition.setDefaultPrimaryTypeName(Utils.EMPTY_STRING);
-        assertTrue(Utils.isEmpty(this.childNodeDefinition.getDefaultPrimaryTypeName()));
+        assertThat(Utils.isEmpty(this.childNodeDefinition.getDefaultPrimaryTypeName()), is(true));
     }
 
     @Test
     public void shouldSetPrimaryTypeNameUsingNull() {
         this.childNodeDefinition.setDefaultPrimaryTypeName(null);
-        assertTrue(Utils.isEmpty(this.childNodeDefinition.getDefaultPrimaryTypeName()));
+        assertThat(Utils.isEmpty(this.childNodeDefinition.getDefaultPrimaryTypeName()), is(true));
     }
 
     @Test
     public void shouldSetProtected() {
         this.childNodeDefinition.setProtected(true);
-        assertTrue(this.childNodeDefinition.isProtected());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.PROTECTED) == Value.IS);
+        assertThat(this.childNodeDefinition.isProtected(), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.PROTECTED), is(Value.IS));
 
         this.childNodeDefinition.setProtected(false);
-        assertFalse(this.childNodeDefinition.isProtected());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.PROTECTED) == Value.IS_NOT);
+        assertThat(this.childNodeDefinition.isProtected(), is(false));
+        assertThat(this.childNodeDefinition.getState(PropertyName.PROTECTED), is(Value.IS_NOT));
     }
 
     @Test
@@ -518,33 +552,33 @@ public class ChildNodeDefinitionTest {
         this.childNodeDefinition.setRequiredPrimaryTypeNames(SUPER_TYPES);
 
         final String[] requiredTypeNames = this.childNodeDefinition.getRequiredPrimaryTypeNames();
-        assertEquals(REQUIRED_TYPE1, requiredTypeNames[0]);
-        assertEquals(REQUIRED_TYPE2, requiredTypeNames[1]);
-        assertEquals(REQUIRED_TYPE3, requiredTypeNames[2]);
+        assertThat(requiredTypeNames[0], is(REQUIRED_TYPE1));
+        assertThat(requiredTypeNames[1], is(REQUIRED_TYPE2));
+        assertThat(requiredTypeNames[2], is(REQUIRED_TYPE3));
     }
 
     @Test
     public void shouldSetRequiredTypesWithEmptyArray() {
-        assertTrue(this.childNodeDefinition.addRequiredType("requiredType")); //$NON-NLS-1$
+        assertThat(this.childNodeDefinition.addRequiredType("requiredType"), is(true)); //$NON-NLS-1$
         this.childNodeDefinition.setRequiredPrimaryTypeNames(new String[0]);
-        assertEquals(0, this.childNodeDefinition.getRequiredPrimaryTypeNames().length);
+        assertThat(this.childNodeDefinition.getRequiredPrimaryTypeNames().length, is(0));
     }
 
     @Test
     public void shouldSetRequiredTypesWithNull() {
-        assertTrue(this.childNodeDefinition.addRequiredType("requiredType")); //$NON-NLS-1$
+        assertThat(this.childNodeDefinition.addRequiredType("requiredType"), is(true)); //$NON-NLS-1$
         this.childNodeDefinition.setRequiredPrimaryTypeNames(null);
-        assertEquals(0, this.childNodeDefinition.getRequiredPrimaryTypeNames().length);
+        assertThat(this.childNodeDefinition.getRequiredPrimaryTypeNames().length, is(0));
     }
 
     @Test
     public void shouldSetSameNameSiblings() {
         this.childNodeDefinition.setSameNameSiblings(true);
-        assertTrue(this.childNodeDefinition.allowsSameNameSiblings());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS) == Value.IS);
+        assertThat(this.childNodeDefinition.allowsSameNameSiblings(), is(true));
+        assertThat(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), is(Value.IS));
 
         this.childNodeDefinition.setSameNameSiblings(false);
-        assertFalse(this.childNodeDefinition.allowsSameNameSiblings());
-        assertTrue(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS) == Value.IS_NOT);
+        assertThat(this.childNodeDefinition.allowsSameNameSiblings(), is(false));
+        assertThat(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS), is(Value.IS_NOT));
     }
 }
