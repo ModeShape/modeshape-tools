@@ -7,10 +7,13 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import org.jboss.tools.modeshape.jcr.Listener;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.Utils;
@@ -19,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class NamespaceMappingTest {
 
@@ -210,8 +213,8 @@ public class NamespaceMappingTest {
         final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
         final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix() + "different", namespace1.getUri()); //$NON-NLS-1$
 
-        assertFalse(namespace1.equals(namespace2));
-        assertFalse(namespace1.hashCode() == namespace2.hashCode());
+        assertThat(namespace1, is(not(equalTo(namespace2))));
+        assertThat(namespace1.hashCode(), is(not(equalTo(namespace2.hashCode()))));
     }
 
     @Test
@@ -219,8 +222,8 @@ public class NamespaceMappingTest {
         final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
         final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri() + "different"); //$NON-NLS-1$
 
-        assertFalse(namespace1.equals(namespace2));
-        assertFalse(namespace1.hashCode() == namespace2.hashCode());
+        assertThat(namespace1, is(not(equalTo(namespace2))));
+        assertThat(namespace1.hashCode(), is(not(equalTo(namespace2.hashCode()))));
     }
 
     @Test
@@ -230,8 +233,8 @@ public class NamespaceMappingTest {
         final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri());
         namespace2.setComment(namespace1.getComment() + "changed"); //$NON-NLS-1$
 
-        assertFalse(namespace1.equals(namespace2));
-        assertFalse(namespace1.hashCode() == namespace2.hashCode());
+        assertThat(namespace1, is(not(equalTo(namespace2))));
+        assertThat(namespace1.hashCode(), is(not(equalTo(namespace2.hashCode()))));
     }
 
     @Test

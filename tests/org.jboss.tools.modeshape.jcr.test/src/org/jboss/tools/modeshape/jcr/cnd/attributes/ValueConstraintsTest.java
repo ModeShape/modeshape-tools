@@ -10,8 +10,6 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
@@ -21,17 +19,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class ValueConstraintsTest implements Constants {
 
     private ValueConstraints attribute;
-
-    private void add( final String item ) {
-        if (!this.attribute.add(item)) {
-            fail();
-        }
-    }
 
     @Before
     public void beforeEach() {
@@ -45,16 +37,10 @@ public class ValueConstraintsTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
     }
 
-    private void remove( final String item ) {
-        if (!this.attribute.remove(item)) {
-            fail();
-        }
-    }
-
     @Test
     public void verifyAddedItem() {
         // setup
-        add(ITEM_ONE);
+        this.attribute.add(ITEM_ONE);
 
         // tests
         assertEquals(1, this.attribute.getSupportedItems().size());
@@ -74,9 +60,9 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifyMultipleElementsCndNotation() {
         // setup
-        add(VALUE_CONSTRAINT1);
-        add(VALUE_CONSTRAINT2);
-        add(VALUE_CONSTRAINT3);
+        this.attribute.add(VALUE_CONSTRAINT1);
+        this.attribute.add(VALUE_CONSTRAINT2);
+        this.attribute.add(VALUE_CONSTRAINT3);
 
         // tests
         assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -87,7 +73,7 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifyOneElementCndNotation() {
         // setup
-        add(VALUE_CONSTRAINT1);
+        this.attribute.add(VALUE_CONSTRAINT1);
 
         // tests
         assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -98,9 +84,9 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifyRemoveItem() {
         // setup
-        add(ITEM_ONE);
-        add(ITEM_TWO);
-        remove(ITEM_ONE);
+        this.attribute.add(ITEM_ONE);
+        this.attribute.add(ITEM_TWO);
+        this.attribute.remove(ITEM_ONE);
 
         // tests
         assertFalse(this.attribute.getSupportedItems().contains(ITEM_ONE));
@@ -109,20 +95,17 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifySameElementIsNotAdded() {
         // setup
-        add(ITEM_ONE);
+        this.attribute.add(ITEM_ONE);
 
         // tests
-        if (this.attribute.add(ITEM_ONE)) {
-            fail();
-        }
-
+        assertFalse(this.attribute.add(ITEM_ONE));
         assertEquals(1, this.attribute.getSupportedItems().size());
     }
 
     @Test
     public void verifyStateShouldBeIsAfterAdd() {
         // setup
-        add(ITEM_ONE);
+        this.attribute.add(ITEM_ONE);
 
         // tests
         assertEquals(AttributeState.Value.IS, this.attribute.get());
@@ -131,8 +114,8 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifyStateShouldBeIsNotWhenEmpty() {
         // setup
-        add(ITEM_ONE);
-        remove(ITEM_ONE);
+        this.attribute.add(ITEM_ONE);
+        this.attribute.remove(ITEM_ONE);
 
         // tests
         assertEquals(0, this.attribute.getSupportedItems().size());

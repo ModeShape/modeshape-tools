@@ -17,4 +17,5 @@ Require-Bundle: org.jboss.tools.modeshape.jcr,
  org.eclipse.ui.ide,
  org.eclipse.help
 Bundle-Activator: org.jboss.tools.modeshape.jcr.ui.Activator
-Export-Package: org.jboss.tools.modeshape.jcr.ui
+Export-Package: org.jboss.tools.modeshape.jcr.ui,
+ org.jboss.tools.modeshape.jcr.ui.dnd

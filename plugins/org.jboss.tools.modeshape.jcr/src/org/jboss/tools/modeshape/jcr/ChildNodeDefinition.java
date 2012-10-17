@@ -11,10 +11,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.jcr.nodetype.NodeDefinitionTemplate;
 import javax.jcr.nodetype.NodeType;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -111,7 +109,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * Constructs an instance set to all defaults.
-     * 
+     *
      * @param ownerProvider the item owner provider that owns this child node (cannot be <code>null</code>)
      */
     public ChildNodeDefinition( final ItemOwnerProvider ownerProvider ) {
@@ -137,7 +135,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     /**
      * If added, broadcasts a {@link PropertyChangeEvent} with an old value of <code>null</code> and a new value equal to
      * <code>requiredTypeBeingAdded</code>.
-     * 
+     *
      * @param requiredTypeBeingAdded the required type being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
@@ -152,7 +150,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinition#allowsSameNameSiblings()
      */
     @Override
@@ -164,7 +162,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
      * If state was changed, a property change event is broadcast to all registered listeners. Can be used to change the
      * autocreated, default type, mandatory, on parent version variant, protected, required types, and same name siblings
      * properties.
-     * 
+     *
      * @param propertyName the property whose attribute state is being changed (cannot be <code>null</code>)
      * @param newState the new attribute state (cannot be <code>null</code>)
      * @return <code>true</code> if the attribute state was changed
@@ -215,7 +213,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     /**
      * If at least one required type was removed, broadcasts a {@link PropertyChangeEvent} with an old value equal to the old
      * required types collection and a new value of <code>null</code>.
-     * 
+     *
      * @return <code>true</code> if at least one required type was removed
      */
     public boolean clearRequiredTypes() {
@@ -231,7 +229,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -241,7 +239,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -295,7 +293,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
      */
     @Override
@@ -305,7 +303,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getDeclaringNodeType()
      * @throws UnsupportedOperationException if method is called
      */
@@ -316,7 +314,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getDeclaringNodeTypeDefinitionName()
      */
     @Override
@@ -326,7 +324,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinition#getDefaultPrimaryType()
      * @throws UnsupportedOperationException if method is called
      */
@@ -337,7 +335,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinition#getDefaultPrimaryTypeName()
      */
     @Override
@@ -361,7 +359,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getName()
      */
     @Override
@@ -376,7 +374,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getOnParentVersion()
      */
     @Override
@@ -386,7 +384,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getQualifiedName()
      */
     @Override
@@ -396,7 +394,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinition#getRequiredPrimaryTypeNames()
      */
     @Override
@@ -406,7 +404,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinition#getRequiredPrimaryTypes()
      * @throws UnsupportedOperationException if method is called
      */
@@ -439,7 +437,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     /**
      * Can be used to find the attribute state of the autocreated, default type, mandatory, protected, required types, same name
      * siblings, and on parent version properties.
-     * 
+     *
      * @param propertyName the property whose attribute state is being requested (cannot be <code>null</code>)
      * @return the attribute state (never <code>null</code>)
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
@@ -484,7 +482,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -495,7 +493,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#isAutoCreated()
      */
     @Override
@@ -505,7 +503,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#isMandatory()
      */
     @Override
@@ -515,7 +513,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#isProtected()
      */
     @Override
@@ -574,7 +572,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     /**
      * If required type is removed, broadcasts a {@link PropertyChangeEvent} with an old value of
      * <code>requiredTypeBeingRemoved</code> and a new value of <code>null</code>.
-     * 
+     *
      * @param requiredTypeBeingRemoved the required type being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
@@ -591,7 +589,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setAutoCreated(boolean)
      */
     @Override
@@ -602,7 +600,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
      */
     @Override
@@ -624,7 +622,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setDefaultPrimaryTypeName(java.lang.String)
      */
     @Override
@@ -638,7 +636,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setMandatory(boolean)
      */
     @Override
@@ -649,7 +647,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setName(java.lang.String)
      */
     @Override
@@ -663,12 +661,13 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setOnParentVersion(int)
+     * @throws IllegalArgumentException if not a valid OPV
      */
     @Override
     public void setOnParentVersion( final int newOpv ) {
-        final OnParentVersion oldValue = this.attributes.getOnParentVersion();
+        final int oldValue = this.attributes.getOnParentVersion().asJcrValue();
 
         if (this.attributes.setOnParentVersion(OnParentVersion.findUsingJcrValue(newOpv))) {
             notifyChangeListeners(PropertyName.ON_PARENT_VERSION, oldValue, newOpv);
@@ -677,12 +676,13 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * If changed, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param newOpv the new OPV value (cannot be <code>null</code>)
      * @return <code>true</code> if successfully changed
+     * @throws IllegalArgumentException if not a valid OPV
      */
     public boolean setOnParentVersion( final String newOpv ) {
-        final OnParentVersion oldValue = this.attributes.getOnParentVersion();
+        final int oldValue = this.attributes.getOnParentVersion().asJcrValue();
 
         if (this.attributes.setOnParentVersion(OnParentVersion.find(newOpv))) {
             notifyChangeListeners(PropertyName.ON_PARENT_VERSION, oldValue, newOpv);
@@ -694,7 +694,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setProtected(boolean)
      */
     @Override
@@ -705,7 +705,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setRequiredPrimaryTypeNames(java.lang.String[])
      */
     @Override
@@ -728,7 +728,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setSameNameSiblings(boolean)
      */
     @Override
@@ -739,7 +739,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
@@ -835,7 +835,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.lang.Enum#toString()
          */
         @Override

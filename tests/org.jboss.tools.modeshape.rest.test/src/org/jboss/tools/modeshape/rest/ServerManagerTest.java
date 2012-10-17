@@ -95,7 +95,7 @@ public final class ServerManagerTest {
     @Test
     public void shouldHaveServerExistsSystemPropertyIfThereIsARegisteredServer() {
         this.serverManager.addServer(SERVER1);
-        assertThat(System.getProperty(ServerManager.SERVER_EXISTS_PROPERTY), notNullValue());
+        assertThat(System.getProperty(ServerManager.SERVER_EXISTS_PROPERTY), is(notNullValue()));
     }
 
     @Test
@@ -147,7 +147,7 @@ public final class ServerManagerTest {
     @Test
     public void shouldNotHaveServerExistsSystemPropertyIfNoRegisteredServers() {
         // make sure initially property doesn't exist
-        assertThat(System.getProperty(ServerManager.SERVER_EXISTS_PROPERTY), nullValue());
+        assertThat(System.getProperty(ServerManager.SERVER_EXISTS_PROPERTY), is(nullValue()));
     }
 
     @Test

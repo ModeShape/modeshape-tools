@@ -259,8 +259,8 @@ public class NodeTypeDefinition
         }
 
         // thisName is not empty
-        if (thatName == null) {
-            return 1;
+        if (Utils.isEmpty(thatName)) {
+            return -1;
         }
 
         // thisName and thatName are not empty

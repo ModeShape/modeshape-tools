@@ -10,8 +10,6 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
@@ -22,17 +20,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class QueryOperatorsTest implements Constants {
 
     private QueryOperators attribute;
-
-    private void add( final QueryOperator operator ) {
-        if (!this.attribute.add(operator)) {
-            fail();
-        }
-    }
 
     @Before
     public void beforeEach() {
@@ -53,16 +45,10 @@ public class QueryOperatorsTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
     }
 
-    private void remove( final QueryOperator operator ) {
-        if (!this.attribute.remove(operator)) {
-            fail();
-        }
-    }
-
     @Test
     public void shouldAddUsingOperatorNotation() {
         // setup
-        remove(OPERATOR_ONE);
+        this.attribute.remove(OPERATOR_ONE);
         assertTrue(this.attribute.add(OPERATOR_ONE.toString()));
 
         // test
@@ -77,8 +63,8 @@ public class QueryOperatorsTest implements Constants {
     @Test
     public void verifyAddedItem() {
         // setup
-        remove(OPERATOR_ONE);
-        add(OPERATOR_ONE);
+        this.attribute.remove(OPERATOR_ONE);
+        this.attribute.add(OPERATOR_ONE);
 
         // tests
         assertTrue(this.attribute.supports(OPERATOR_ONE));
@@ -93,9 +79,9 @@ public class QueryOperatorsTest implements Constants {
     public void verifyMultipleElementsCndNotation() {
         // setup
         assertTrue(this.attribute.clear());
-        add(OPERATOR_ONE);
-        add(OPERATOR_TWO);
-        add(OPERATOR_THREE);
+        this.attribute.add(OPERATOR_ONE);
+        this.attribute.add(OPERATOR_TWO);
+        this.attribute.add(OPERATOR_THREE);
 
         // tests
         assertEquals(QUERY_OPS_THREE_OPERATOR_COMPACT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -107,7 +93,7 @@ public class QueryOperatorsTest implements Constants {
     public void verifyOneElementCndNotation() {
         // setup
         assertTrue(this.attribute.clear());
-        add(OPERATOR_ONE);
+        this.attribute.add(OPERATOR_ONE);
 
         // tests
         assertEquals(QUERY_OPS_ONE_OPERATOR_COMPACT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -118,7 +104,7 @@ public class QueryOperatorsTest implements Constants {
     @Test
     public void verifyRemoveItem() {
         // setup
-        remove(OPERATOR_ONE);
+        this.attribute.remove(OPERATOR_ONE);
 
         // tests
         assertFalse(this.attribute.supports(OPERATOR_ONE));
@@ -126,10 +112,7 @@ public class QueryOperatorsTest implements Constants {
 
     @Test
     public void verifySameElementIsNotAdded() {
-        // tests
-        if (this.attribute.add(OPERATOR_ONE)) {
-            fail();
-        }
+        assertFalse(this.attribute.add(OPERATOR_ONE));
     }
 
     @Test

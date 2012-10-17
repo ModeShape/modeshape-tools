@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Test Plug-in
+Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jboss.tools.modeshape.rest.test
 Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.jboss.tools.modeshape.rest,
  org.junit4,
- org.jboss.tools.modeshape.client,
- org.hamcrest
+ org.jboss.tools.modeshape.client
 Bundle-ClassPath: .
+Bundle-Vendor: %bundleVendor

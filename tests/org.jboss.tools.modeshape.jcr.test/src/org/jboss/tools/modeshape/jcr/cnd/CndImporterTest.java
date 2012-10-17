@@ -56,6 +56,10 @@ public class CndImporterTest {
 
     private Collection<Throwable> problems;
 
+    private String getFirstProblem() {
+        return (this.problems.isEmpty() ? "" : this.problems.iterator().next().getLocalizedMessage());
+    }
+
     private void assertChild( final String nodeTypeName,
                               final String childName,
                               final String requiredType,
@@ -163,7 +167,7 @@ public class CndImporterTest {
         assertEquals(propDefn.getOnParentVersion(), opv);
 
         if ((defaultValues == null) || (defaultValues.length == 0)) {
-            assertTrue(propDefn.getDefaultValues().length == 0);
+            assertEquals(0, propDefn.getDefaultValues().length);
         } else {
             int i = 0;
 
@@ -173,7 +177,7 @@ public class CndImporterTest {
         }
 
         if ((valueConstraints == null) || (valueConstraints.length == 0)) {
-            assertTrue(propDefn.getValueConstraints().length == 0);
+            assertEquals(0, propDefn.getValueConstraints().length);
         } else {
             assertArrayEquals(propDefn.getValueConstraints(), valueConstraints);
         }
@@ -330,12 +334,6 @@ public class CndImporterTest {
         return opv;
     }
 
-    protected void printProblems() {
-        for (final Throwable problem : this.problems) {
-            System.out.println(problem.getLocalizedMessage());
-        }
-    }
-
     private PropertyDefinition propDefn( final NodeTypeDefinition nodeType,
                                          final String name ) {
         for (final PropertyDefinition defn : nodeType.getDeclaredPropertyDefinitions()) {
@@ -351,12 +349,7 @@ public class CndImporterTest {
     @Test
     public void shouldImportCndForAircraft() throws Exception {
         this.importer.importFrom(openCndFile("aircraft.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     //
@@ -377,24 +370,15 @@ public class CndImporterTest {
     @Test
     public void shouldImportCndForCars() throws Exception {
         this.importer.importFrom(openCndFile("cars.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportCndForCommentsTest() throws Exception {
         final CompactNodeTypeDefinition cnd = this.importer.importFrom(openCndFile("commentsTest.cnd"), this.problems); //$NON-NLS-1$
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
+
         final NodeTypeDefinition nodeType = cnd.getNodeTypeDefinitions().get(0);
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
 
         { // check node type comments
             final String expected = "comment above node type\n" + "comment same line as node type name\n" + "comment above supertypes\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -457,46 +441,26 @@ public class CndImporterTest {
     @Test
     public void shouldImportCndForImageSequencer() throws Exception {
         this.importer.importFrom(openCndFile("images.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportCndForJavaSequencer() throws Exception {
         this.importer.importFrom(openCndFile("javaSource.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportCndForMp3Sequencer() throws Exception {
         this.importer.importFrom(openCndFile("mp3.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportCndForTeiidSequencer() throws Exception {
         this.cnd = this.importer.importFrom(openCndFile("teiid.cnd"), this.problems); //$NON-NLS-1$
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
 
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        // registerImportedNamespaces();
-        assertEquals(0, this.problems.size());
         assertNodeType("relational:catalog", new String[] { "nt:unstructured", "relational:relationalEntity" }, NO_PRIMARY_NAME, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                        NodeOptions.Queryable, NodeOptions.Ordered);
     }
@@ -514,12 +478,7 @@ public class CndImporterTest {
     @Test
     public void shouldImportCndThatIsEmpty() throws Exception {
         this.importer.importFrom(openCndFile("empty.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
@@ -537,10 +496,7 @@ public class CndImporterTest {
     public void shouldParseEmptyNodeType() {
         final String content = "[]"; //$NON-NLS-1$
         this.cnd = this.importer.importFrom(content, this.problems, "string"); //$NON-NLS-1$
-
-        if (!this.problems.isEmpty()) {
-            printProblems();
-        }
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
@@ -552,10 +508,7 @@ public class CndImporterTest {
                 + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder < 'constraint1', 'constraint2'" //$NON-NLS-1$
                 + "+ ex:node (ex:reqType1, ex:reqType2) = ex:defaultType mandatory autocreated protected sns version"; //$NON-NLS-1$
         this.cnd = this.importer.importFrom(content, this.problems, "string"); //$NON-NLS-1$
-
-        if (!this.problems.isEmpty()) {
-            printProblems();
-        }
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
 
         // check the namespace
         assertEquals(this.cnd.getNamespaceMappings().size(), 1);
@@ -621,35 +574,19 @@ public class CndImporterTest {
     @Test
     public void shouldImportDerbyDdlCnd() throws Exception {
         this.importer.importFrom(openCndFile("DerbyDdl.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportJackRabbitCndReaderTestCnd() throws Exception {
         this.importer.importFrom(openCndFile("cnd-reader-test-input.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportJcrBuiltinNodeTypesForJSR170() throws Exception {
         this.cnd = this.importer.importFrom(openCndFile("jcr-builtins-170.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        // registerImportedNamespaces();
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
 
         // [nt:base]
         // - jcr:primaryType (name) mandatory autocreated protected compute
@@ -734,13 +671,7 @@ public class CndImporterTest {
     @Test
     public void shouldImportJcrBuiltinNodeTypesForJSR283() throws Exception {
         this.cnd = this.importer.importFrom(openCndFile("jcr-builtins-283-early-draft.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        // registerImportedNamespaces();
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
 
         // [nt:base]
         // - jcr:primaryType (name) mandatory autocreated protected compute
@@ -831,34 +762,19 @@ public class CndImporterTest {
     @Test
     public void shouldImportOracleDdlCnd() throws Exception {
         this.importer.importFrom(openCndFile("OracleDdl.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportPostgresDdlCnd() throws Exception {
         this.importer.importFrom(openCndFile("PostgresDdl.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
     public void shouldImportStandardDdlCnd() throws Exception {
         this.importer.importFrom(openCndFile("StandardDdl.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        assertEquals(0, this.problems.size());
+        assertTrue(getFirstProblem(), this.problems.isEmpty());
     }
 
     @Test
