@@ -11,10 +11,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Collection;
 import java.util.Collections;
-
 import org.jboss.tools.modeshape.jcr.Listener;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
@@ -30,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class PropertyDefinitionTest {
 
@@ -62,7 +60,12 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setAutoCreated(!this.propDefn.isAutoCreated());
+        this.propDefn.setAutoCreated(true);
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setAutoCreated(false);
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -72,17 +75,32 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setFullTextSearchable(!this.propDefn.isFullTextSearchable());
+        this.propDefn.setFullTextSearchable(true);
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setMandatory(!this.propDefn.isMandatory());
+        this.propDefn.setFullTextSearchable(false);
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setMultiple(!this.propDefn.isMultiple());
+        this.propDefn.setMandatory(true);
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setMandatory(false);
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setMultiple(true);
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setMultiple(false);
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -97,12 +115,22 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setProtected(!this.propDefn.isProtected());
+        this.propDefn.setProtected(true);
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setQueryOrderable(!this.propDefn.isQueryOrderable());
+        this.propDefn.setProtected(false);
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setQueryOrderable(true);
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setQueryOrderable(false);
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -129,7 +157,12 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setAutoCreated(!this.propDefn.isAutoCreated());
+        this.propDefn.setAutoCreated(true);
+        thatPropDefn.setAutoCreated(this.propDefn.isAutoCreated());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setAutoCreated(false);
         thatPropDefn.setAutoCreated(this.propDefn.isAutoCreated());
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -144,17 +177,32 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setFullTextSearchable(!this.propDefn.isFullTextSearchable());
+        this.propDefn.setFullTextSearchable(true);
         thatPropDefn.setFullTextSearchable(this.propDefn.isFullTextSearchable());
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setMandatory(!this.propDefn.isMandatory());
+        this.propDefn.setFullTextSearchable(false);
+        thatPropDefn.setFullTextSearchable(this.propDefn.isFullTextSearchable());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setMandatory(true);
         thatPropDefn.setMandatory(this.propDefn.isMandatory());
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setMultiple(!this.propDefn.isMultiple());
+        this.propDefn.setMandatory(false);
+        thatPropDefn.setMandatory(this.propDefn.isMandatory());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setMultiple(true);
+        thatPropDefn.setMultiple(this.propDefn.isMultiple());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setMultiple(false);
         thatPropDefn.setMultiple(this.propDefn.isMultiple());
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -169,12 +217,22 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setProtected(!this.propDefn.isProtected());
+        this.propDefn.setProtected(true);
         thatPropDefn.setProtected(this.propDefn.isProtected());
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setQueryOrderable(!this.propDefn.isQueryOrderable());
+        this.propDefn.setProtected(false);
+        thatPropDefn.setProtected(this.propDefn.isProtected());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setQueryOrderable(true);
+        thatPropDefn.setQueryOrderable(this.propDefn.isQueryOrderable());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setQueryOrderable(false);
         thatPropDefn.setQueryOrderable(this.propDefn.isQueryOrderable());
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -197,7 +255,7 @@ public class PropertyDefinitionTest {
 
     @Test
     public void onParentVersionShouldBeSetToDefaultAfterConstruction() {
-        assertTrue(this.propDefn.getOnParentVersion() == OnParentVersion.DEFAULT_VALUE.asJcrValue());
+        assertEquals(OnParentVersion.DEFAULT_VALUE.asJcrValue(), this.propDefn.getOnParentVersion());
     }
 
     @Test
@@ -207,7 +265,7 @@ public class PropertyDefinitionTest {
 
     @Test
     public void propertyTypeShouldBeSetToDefaultAfterConstruction() {
-        assertTrue(this.propDefn.getType() == PropertyType.DEFAULT_VALUE);
+        assertEquals(PropertyType.DEFAULT_VALUE, this.propDefn.getType());
         assertEquals(PropertyType.DEFAULT_VALUE.asJcrValue(), this.propDefn.getRequiredType());
     }
 
@@ -718,11 +776,11 @@ public class PropertyDefinitionTest {
     public void shouldSetAutoCreated() {
         this.propDefn.setAutoCreated(true);
         assertTrue(this.propDefn.isAutoCreated());
-        assertTrue(this.propDefn.getState(PropertyName.AUTOCREATED) == Value.IS);
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.AUTOCREATED));
 
         this.propDefn.setAutoCreated(false);
         assertFalse(this.propDefn.isAutoCreated());
-        assertTrue(this.propDefn.getState(PropertyName.AUTOCREATED) == Value.IS_NOT);
+        assertEquals(Value.IS_NOT, this.propDefn.getState(PropertyName.AUTOCREATED));
     }
 
     @Test
@@ -768,33 +826,33 @@ public class PropertyDefinitionTest {
     public void shouldSetFullTextSearchable() {
         this.propDefn.setFullTextSearchable(true);
         assertTrue(this.propDefn.isFullTextSearchable());
-        assertTrue(this.propDefn.getState(PropertyName.NO_FULL_TEXT) == Value.IS_NOT);
+        assertEquals(Value.IS_NOT, this.propDefn.getState(PropertyName.NO_FULL_TEXT));
 
         this.propDefn.setFullTextSearchable(false);
         assertFalse(this.propDefn.isFullTextSearchable());
-        assertTrue(this.propDefn.getState(PropertyName.NO_FULL_TEXT) == Value.IS);
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.NO_FULL_TEXT));
     }
 
     @Test
     public void shouldSetMandatory() {
         this.propDefn.setMandatory(true);
         assertTrue(this.propDefn.isMandatory());
-        assertTrue(this.propDefn.getState(PropertyName.MANDATORY) == Value.IS);
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.MANDATORY));
 
         this.propDefn.setMandatory(false);
         assertFalse(this.propDefn.isMandatory());
-        assertTrue(this.propDefn.getState(PropertyName.MANDATORY) == Value.IS_NOT);
+        assertEquals(Value.IS_NOT, this.propDefn.getState(PropertyName.MANDATORY));
     }
 
     @Test
     public void shouldSetMultiple() {
         this.propDefn.setMultiple(true);
         assertTrue(this.propDefn.isMultiple());
-        assertTrue(this.propDefn.getState(PropertyName.MULTIPLE) == Value.IS);
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.MULTIPLE));
 
         this.propDefn.setMultiple(false);
         assertFalse(this.propDefn.isMultiple());
-        assertTrue(this.propDefn.getState(PropertyName.MULTIPLE) == Value.IS_NOT);
+        assertEquals(Value.IS_NOT, this.propDefn.getState(PropertyName.MULTIPLE));
     }
 
     @Test
@@ -849,11 +907,11 @@ public class PropertyDefinitionTest {
     public void shouldSetProtected() {
         this.propDefn.setProtected(true);
         assertTrue(this.propDefn.isProtected());
-        assertTrue(this.propDefn.getState(PropertyName.PROTECTED) == Value.IS);
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.PROTECTED));
 
         this.propDefn.setProtected(false);
         assertFalse(this.propDefn.isProtected());
-        assertTrue(this.propDefn.getState(PropertyName.PROTECTED) == Value.IS_NOT);
+        assertEquals(Value.IS_NOT, this.propDefn.getState(PropertyName.PROTECTED));
     }
 
     @Test
@@ -888,11 +946,11 @@ public class PropertyDefinitionTest {
     public void shouldSetQueryOrderable() {
         this.propDefn.setQueryOrderable(true);
         assertTrue(this.propDefn.isQueryOrderable());
-        assertTrue(this.propDefn.getState(PropertyName.NO_QUERY_ORDER) == Value.IS_NOT);
+        assertEquals(Value.IS_NOT, this.propDefn.getState(PropertyName.NO_QUERY_ORDER));
 
         this.propDefn.setQueryOrderable(false);
         assertFalse(this.propDefn.isQueryOrderable());
-        assertTrue(this.propDefn.getState(PropertyName.NO_QUERY_ORDER) == Value.IS);
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.NO_QUERY_ORDER));
     }
 
     @Test

@@ -7,10 +7,13 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.PrimaryItem;
@@ -20,7 +23,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class PrimaryItemTest implements Constants {
 
@@ -49,7 +52,7 @@ public class PrimaryItemTest implements Constants {
         final PrimaryItem that = new PrimaryItem();
         that.setPrimaryItem(this.attribute.getPrimaryItem().get() + "changed"); //$NON-NLS-1$
         assertFalse(this.attribute.equals(that));
-        assertFalse(this.attribute.hashCode() == that.hashCode());
+        assertThat(this.attribute.hashCode(), is(not(equalTo(that.hashCode()))));
     }
 
     @Test

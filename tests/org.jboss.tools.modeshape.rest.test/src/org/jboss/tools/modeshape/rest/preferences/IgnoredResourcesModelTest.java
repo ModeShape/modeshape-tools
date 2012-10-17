@@ -10,12 +10,11 @@ package org.jboss.tools.modeshape.rest.preferences;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public final class IgnoredResourcesModelTest {
 
@@ -78,7 +77,7 @@ public final class IgnoredResourcesModelTest {
         final ResourcePattern rp = DISABLED_PATTERNS[0];
         this.model.addPattern(rp);
         assertThat(this.model.getPatterns().size(), is(1));
-        assertThat(this.model.getPatterns().iterator().next(), sameInstance(rp));
+        assertThat(rp, is(sameInstance(this.model.getPatterns().iterator().next())));
     }
 
     @Test

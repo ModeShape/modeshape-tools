@@ -7,11 +7,13 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
+import java.beans.PropertyChangeEvent;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.Listener;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
@@ -23,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class NodeTypeDefinitionTest {
 
@@ -54,22 +56,42 @@ public class NodeTypeDefinitionTest {
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
-        this.nodeTypeDefinition.setAbstract(!this.nodeTypeDefinition.isAbstract());
+        this.nodeTypeDefinition.setAbstract(true);
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
-        this.nodeTypeDefinition.setMixin(!this.nodeTypeDefinition.isMixin());
+        this.nodeTypeDefinition.setAbstract(false);
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
-        this.nodeTypeDefinition.setOrderableChildNodes(!this.nodeTypeDefinition.hasOrderableChildNodes());
+        this.nodeTypeDefinition.setMixin(true);
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
-        this.nodeTypeDefinition.setQueryable(!this.nodeTypeDefinition.isQueryable());
+        this.nodeTypeDefinition.setMixin(false);
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.setOrderableChildNodes(true);
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.setOrderableChildNodes(false);
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.setQueryable(true);
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.setQueryable(false);
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
@@ -191,6 +213,52 @@ public class NodeTypeDefinitionTest {
     }
 
     @Test
+    public void shouldHaveSameOrder() {
+        final NodeTypeDefinition nodeType1 = new NodeTypeDefinition();
+        final NodeTypeDefinition nodeType2 = new NodeTypeDefinition();
+
+        // empty name
+        assertThat(nodeType1.compareTo(nodeType2), is(0));
+
+        final String name = "name";
+        nodeType1.setName(name);
+        nodeType1.setAbstract(true);
+
+        nodeType2.setName(name);
+        nodeType2.setAbstract(false);
+
+        assertThat(nodeType1.compareTo(nodeType2), is(0));
+    }
+
+    @Test
+    public void shouldHavePositiveOrder() {
+        final NodeTypeDefinition nodeType1 = new NodeTypeDefinition();
+        final NodeTypeDefinition nodeType2 = new NodeTypeDefinition();
+        nodeType2.setName("bar");
+
+        // sort empty name after a name
+        assertThat((nodeType1.compareTo(nodeType2) > 0), is(true));
+
+        // sort by name
+        nodeType1.setName("foo");
+        assertThat((nodeType1.compareTo(nodeType2) > 0), is(true));
+    }
+
+    @Test
+    public void shouldHaveNegativeOrder() {
+        final NodeTypeDefinition nodeType1 = new NodeTypeDefinition();
+        nodeType1.setName("bar");
+        final NodeTypeDefinition nodeType2 = new NodeTypeDefinition();
+
+        // sort name before empty name
+        assertThat((nodeType1.compareTo(nodeType2) < 0), is(true));
+
+        // sort by name
+        nodeType2.setName("foo");
+        assertThat((nodeType1.compareTo(nodeType2) < 0), is(true));
+    }
+
+    @Test
     public void shouldNotAllowDuplicateSuperType() {
         final String SUPER_TYPE = "superType"; //$NON-NLS-1$
         assertTrue(this.nodeTypeDefinition.addSuperType(SUPER_TYPE));
@@ -210,6 +278,16 @@ public class NodeTypeDefinitionTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullSuperTypeToBeAdded() {
         this.nodeTypeDefinition.addSuperType(null);
+    }
+
+    @Test
+    public void shouldNotBeEqualToNull() {
+        assertFalse(this.nodeTypeDefinition.equals(null));
+    }
+
+    @Test
+    public void shouldNotBeEqualToDifferentType() {
+        assertFalse(this.nodeTypeDefinition.equals(new Object()));
     }
 
     @Test
@@ -246,6 +324,26 @@ public class NodeTypeDefinitionTest {
 
         assertTrue(this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition));
         assertEquals(0, l.getCount());
+    }
+
+    @Test
+    public void shouldNotReceiveFutureEventAfterThrowingException() {
+        final Listener l = new Listener() {
+            @Override
+            public void propertyChange( PropertyChangeEvent e ) {
+                super.propertyChange(e);
+                throw new RuntimeException();
+            }
+        };
+        this.nodeTypeDefinition.addListener(l);
+
+        // create property change
+        this.nodeTypeDefinition.setName("name");
+        assertEquals(1, l.getCount()); // will get first event
+
+        // create another property change
+        this.nodeTypeDefinition.setName("namechange");
+        assertEquals(1, l.getCount()); // should not have another event
     }
 
     @Test

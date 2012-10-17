@@ -9,11 +9,10 @@ package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public final class ResourcePatternTest {
 
@@ -59,30 +58,27 @@ public final class ResourcePatternTest {
     public void shouldSetPatternCorrectly() {
         final String pattern = "mypattern"; //$NON-NLS-1$
         ResourcePattern rp = new ResourcePattern(pattern, true);
-        assertThat(rp.getPattern(), is(pattern));
+        assertThat(pattern, is(rp.getPattern()));
     }
 
     @Test
     public void shouldSetEnabledStateCorrectlyAtConstruction() {
-        boolean enabled = true;
-        ResourcePattern rp = new ResourcePattern("mypattern", enabled); //$NON-NLS-1$
-        assertThat(rp.isEnabled(), is(enabled));
+        ResourcePattern rp = new ResourcePattern("mypattern", true); //$NON-NLS-1$
+        assertThat(rp.isEnabled(), is(true));
 
-        enabled = !enabled;
-        rp = new ResourcePattern("mypattern", enabled); //$NON-NLS-1$
-        assertThat(rp.isEnabled(), is(enabled));
+        rp = new ResourcePattern("mypattern", false); //$NON-NLS-1$
+        assertThat(rp.isEnabled(), is(false));
     }
 
     @Test
     public void shouldSetEnabledStateCorrectly() {
-        boolean enabled = true;
-        ResourcePattern rp = new ResourcePattern("mypattern", enabled); //$NON-NLS-1$
-        rp.setEnabled(!enabled);
-        assertThat(rp.isEnabled(), is(!enabled));
+        ResourcePattern rp = new ResourcePattern("mypattern", true); //$NON-NLS-1$
+        rp.setEnabled(false);
+        assertThat(rp.isEnabled(), is(false));
 
-        rp = new ResourcePattern("mypattern", !enabled); //$NON-NLS-1$
-        rp.setEnabled(enabled);
-        assertThat(rp.isEnabled(), is(enabled));
+        rp = new ResourcePattern("mypattern", false); //$NON-NLS-1$
+        rp.setEnabled(true);
+        assertThat(rp.isEnabled(), is(true));
     }
 
 }

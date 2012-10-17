@@ -14,7 +14,6 @@ package org.jboss.tools.modeshape.rest;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
-
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,24 +36,24 @@ public final class ServerRegistryEventTest {
         assertThat(ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).isNew(), is(true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullServerManagerWhenCreatingNewEvent() {
         ServerRegistryEvent.createNewEvent(null, SERVER);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullServerWhenCreatingNewEvent() {
         ServerRegistryEvent.createNewEvent(this.serverManager, null);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test( expected = UnsupportedOperationException.class )
     public void shouldNotBeAllowedToGetUpdatedServerOnNewEvent() {
         ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).getUpdatedServer();
     }
 
     @Test
     public void shouldGetSameServerOnNewEvent() {
-        assertThat(ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).getServer(), sameInstance(SERVER));
+        assertThat(SERVER, is(sameInstance(ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).getServer())));
     }
 
     @Test
@@ -62,24 +61,24 @@ public final class ServerRegistryEventTest {
         assertThat(ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).isRemove(), is(true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullServerManagerWhenCreatingRemoveEvent() {
         ServerRegistryEvent.createRemoveEvent(null, SERVER);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullServerWhenCreatingRemoveEvent() {
         ServerRegistryEvent.createRemoveEvent(this.serverManager, null);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test( expected = UnsupportedOperationException.class )
     public void shouldNotBeAllowedToGetUpdatedServerOnRemoveEvent() {
         ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).getUpdatedServer();
     }
 
     @Test
     public void shouldGetSameServerOnRemoveEvent() {
-        assertThat(ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).getServer(), sameInstance(SERVER));
+        assertThat(SERVER, is(sameInstance(ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).getServer())));
     }
 
     @Test
@@ -87,26 +86,26 @@ public final class ServerRegistryEventTest {
         assertThat(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).isUpdate(), is(true));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullServerManagerWhenCreatingUpdateEvent() {
         ServerRegistryEvent.createUpdateEvent(null, SERVER, UPDATED_SERVER);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test( expected = IllegalArgumentException.class )
     public void shouldNotAllowNullServersWhenCreatingUpdateEvent() {
         ServerRegistryEvent.createUpdateEvent(this.serverManager, null, null);
     }
 
     @Test
     public void shouldGetSameServerOnUpdateEvent() {
-        assertThat(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).getServer(),
-                   sameInstance(SERVER));
+        assertThat(SERVER,
+                   is(sameInstance(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).getServer())));
     }
 
     @Test
     public void shouldGetSameUpdatedServerOnUpdateEvent() {
-        assertThat(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).getUpdatedServer(),
-                   sameInstance(UPDATED_SERVER));
+        assertThat(UPDATED_SERVER,
+                   is(sameInstance(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).getUpdatedServer())));
     }
 
 }

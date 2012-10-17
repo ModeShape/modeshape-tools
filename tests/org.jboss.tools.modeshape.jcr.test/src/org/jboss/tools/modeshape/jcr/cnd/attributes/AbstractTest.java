@@ -7,9 +7,8 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.Abstract;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
@@ -19,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class AbstractTest implements Constants {
 
@@ -32,50 +31,50 @@ public class AbstractTest implements Constants {
 
     @Test
     public void initialCndNotationShouldBeEmpty() {
-        assertTrue(Utils.isEmpty(this.attribute.toCndNotation(NotationType.LONG)));
-        assertTrue(Utils.isEmpty(this.attribute.toCndNotation(NotationType.COMPRESSED)));
-        assertTrue(Utils.isEmpty(this.attribute.toCndNotation(NotationType.COMPACT)));
+        assertThat(Utils.isEmpty(this.attribute.toCndNotation(NotationType.LONG)), is(true));
+        assertThat(Utils.isEmpty(this.attribute.toCndNotation(NotationType.COMPRESSED)), is(true));
+        assertThat(Utils.isEmpty(this.attribute.toCndNotation(NotationType.COMPACT)), is(true));
     }
 
     @Test
     public void initialStateShouldBeIsNot() {
-        assertEquals(AttributeState.Value.IS_NOT, this.attribute.get());
+        assertThat(this.attribute.get(), is(AttributeState.Value.IS_NOT));
     }
 
     @Test
     public void verifyCompactCndNotation() {
         this.attribute.set(AttributeState.Value.IS);
-        assertEquals(Abstract.NOTATION[NotationType.COMPACT_INDEX], this.attribute.toCndNotation(NotationType.COMPACT));
+        assertThat(this.attribute.toCndNotation(NotationType.COMPACT), is(Abstract.NOTATION[NotationType.COMPACT_INDEX]));
     }
 
     @Test
     public void verifyCompressedCndNotation() {
         this.attribute.set(AttributeState.Value.IS);
-        assertEquals(Abstract.NOTATION[NotationType.COMPRESSED_INDEX], this.attribute.toCndNotation(NotationType.COMPRESSED));
+        assertThat(this.attribute.toCndNotation(NotationType.COMPRESSED), is(Abstract.NOTATION[NotationType.COMPRESSED_INDEX]));
     }
 
     @Test
     public void verifyLongCndNotation() {
         this.attribute.set(AttributeState.Value.IS);
-        assertEquals(Abstract.NOTATION[NotationType.LONG_INDEX], this.attribute.toCndNotation(NotationType.LONG));
+        assertThat(this.attribute.toCndNotation(NotationType.LONG), is(Abstract.NOTATION[NotationType.LONG_INDEX]));
     }
 
     @Test
     public void verifyVariantCompactCndNotation() {
         this.attribute.set(AttributeState.Value.VARIANT);
-        assertEquals(ABSTRACT_VARIANT_COMPACT_FORM, this.attribute.toCndNotation(NotationType.COMPACT));
+        assertThat(this.attribute.toCndNotation(NotationType.COMPACT), is(ABSTRACT_VARIANT_COMPACT_FORM));
     }
 
     @Test
     public void verifyVariantCompressedCndNotation() {
         this.attribute.set(AttributeState.Value.VARIANT);
-        assertEquals(ABSTRACT_VARIANT_COMPRESSED_FORM, this.attribute.toCndNotation(NotationType.COMPRESSED));
+        assertThat(this.attribute.toCndNotation(NotationType.COMPRESSED), is(ABSTRACT_VARIANT_COMPRESSED_FORM));
     }
 
     @Test
     public void verifyVariantLongCndNotation() {
         this.attribute.set(AttributeState.Value.VARIANT);
-        assertEquals(ABSTRACT_VARIANT_LONG_FORM, this.attribute.toCndNotation(NotationType.LONG));
+        assertThat(this.attribute.toCndNotation(NotationType.LONG), is(ABSTRACT_VARIANT_LONG_FORM));
     }
 
 }

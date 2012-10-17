@@ -9,14 +9,13 @@ package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public final class PublishingFileFilterTest {
-    
+
     private static final String PARTS_PROJECT = "PartsProject"; //$NON-NLS-1$
 
     @Test

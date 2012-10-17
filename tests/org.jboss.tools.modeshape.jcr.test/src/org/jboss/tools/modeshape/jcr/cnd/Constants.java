@@ -9,15 +9,12 @@ package org.jboss.tools.modeshape.jcr.cnd;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import javax.jcr.PropertyType;
-
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.Abstract;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
-import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.Autocreated;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultValues;
@@ -42,7 +39,7 @@ import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants.CndPrefer
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
- * 
+ *
  */
 public interface Constants {
 
@@ -197,8 +194,8 @@ public interface Constants {
     String SAME_NAME_SIBLINGS_VARIANT_COMPRESSED_FORM = SameNameSiblings.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
     String SAME_NAME_SIBLINGS_VARIANT_LONG_FORM = SameNameSiblings.NOTATION[NotationType.LONG_INDEX] + VARIANT;
 
-    String ITEM_ONE = "item1"; //$NON-NLS-1$ 
-    String ITEM_TWO = "item2"; //$NON-NLS-1$ 
+    String ITEM_ONE = "item1"; //$NON-NLS-1$
+    String ITEM_TWO = "item2"; //$NON-NLS-1$
     String ITEM_THREE = "item3"; //$NON-NLS-1$
     String ONE_ITEM_SINGLE_QUOTED_FORM = prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_ONE
             + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
@@ -270,16 +267,6 @@ public interface Constants {
             + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT3 + Utils.SINGLE_QUOTE;
 
     class Helper {
-        public static void changeValue( AttributeState attribute ) {
-            if (attribute.is()) {
-                attribute.set(Value.IS_NOT);
-            } else if (attribute.isNot()) {
-                attribute.set(Value.IS);
-            } else {
-                attribute.set(Value.IS);
-            }
-        }
-
         public static Collection<NamespaceMapping> getDefaultNamespaces() {
             return Arrays.asList(DEFAULT_NAMESPACE_MAPPINGS);
         }
@@ -321,6 +308,13 @@ public interface Constants {
         public static javax.jcr.Value[] getDefaultStringValues() {
             return new PropertyValue[] { new PropertyValue(PropertyType.STRING, ITEM_ONE),
                     new PropertyValue(PropertyType.STRING, ITEM_TWO), new PropertyValue(PropertyType.STRING, ITEM_THREE) };
+        }
+
+        /**
+         * Don't allow construction.
+         */
+        private Helper() {
+            // nothing to do
         }
     }
 
