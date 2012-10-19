@@ -13,6 +13,13 @@
 	<version>3.0.0-SNAPSHOT</version>
 	<name>modeshape.all</name>	
 	<packaging>pom</packaging>
+
+        <properties>
+                <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
+                <maven.dependency.version>2.5.1</maven.dependency.version>
+                <modeshape.client.version>3.0-SNAPSHOT</modeshape.client.version>
+        </properties>
+
 	<modules>
 		<module>features</module>
 		<module>plugins</module>
