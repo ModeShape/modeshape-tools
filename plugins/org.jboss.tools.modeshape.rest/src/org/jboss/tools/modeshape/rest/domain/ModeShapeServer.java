@@ -11,10 +11,10 @@
  */
 package org.jboss.tools.modeshape.rest.domain;
 
-import net.jcip.annotations.Immutable;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.modeshape.rest.properties.ModeShapePropertySource;
+import org.modeshape.common.annotation.Immutable;
 import org.modeshape.web.jcr.rest.client.domain.Server;
 import org.modeshape.web.jcr.rest.client.json.JsonRestClient;
 

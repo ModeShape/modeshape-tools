@@ -12,7 +12,7 @@
 	<name>modeshape.plugins</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>org.jboss.tools.modeshape.client</module>
+        <module>org.jboss.tools.modeshape.client</module>
 		<module>org.jboss.tools.modeshape.jcr</module>
         <module>org.jboss.tools.modeshape.jcr.doc.user</module>
 		<module>org.jboss.tools.modeshape.jcr.ui</module>

@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import net.jcip.annotations.GuardedBy;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -62,6 +61,7 @@ import org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
+import org.modeshape.common.annotation.GuardedBy;
 
 /**
  * The <code>ModeShapeContentProvider</code> is a content and label provider for the repositories. This class <strong>MUST</strong>

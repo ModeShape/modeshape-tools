@@ -10,12 +10,14 @@ package org.jboss.tools.modeshape.rest.domain;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.modeshape.rest.properties.ModeShapePropertySource;
+import org.modeshape.common.annotation.Immutable;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
- *
+ * The <code>ModeShapeWorkspace</code> is a UI wrapper for a ModeShape workspace.
  */
+@Immutable
 public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObject {
 
     /**
