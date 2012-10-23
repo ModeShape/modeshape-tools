@@ -1,10 +1,12 @@
 package org.jboss.tools.modeshape.rest.domain;
 
+import org.modeshape.common.annotation.Immutable;
 import org.modeshape.common.util.CheckArg;
 
 /**
  * The <code>WorkspaceArea</code> represents a known area in a ModeShape repository where sequencing of resources occurs.
  */
+@Immutable
 public final class WorkspaceArea implements ModeShapeDomainObject {
 
     /**
@@ -40,7 +42,7 @@ public final class WorkspaceArea implements ModeShapeDomainObject {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getName()
      */
     @Override
@@ -57,7 +59,7 @@ public final class WorkspaceArea implements ModeShapeDomainObject {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getShortDescription()
      */
     @Override
