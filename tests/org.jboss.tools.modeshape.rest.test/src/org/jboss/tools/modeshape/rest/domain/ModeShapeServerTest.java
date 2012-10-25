@@ -11,8 +11,9 @@
  */
 package org.jboss.tools.modeshape.rest.domain;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public final class ModeShapeServerTest {
@@ -24,22 +25,22 @@ public final class ModeShapeServerTest {
 
     @Test
     public void shouldNotBeEqualIfDifferentPasswordSettings() {
-        assertThat(PERSISTED.equals(NOT_PERSISTED), is(false));
+        assertFalse(PERSISTED.equals(NOT_PERSISTED));
     }
 
     @Test
     public void shouldHaveSameHashCodeIfDifferentPasswordSettings() {
-        assertThat(PERSISTED.hashCode(), is(NOT_PERSISTED.hashCode()));
+        assertEquals(NOT_PERSISTED.hashCode(), PERSISTED.hashCode());
     }
 
     @Test
     public void shouldHavePasswordBeingPersisted() {
-        assertThat(PERSISTED.isPasswordBeingPersisted(), is(true));
+        assertTrue(PERSISTED.isPasswordBeingPersisted());
     }
 
     @Test
     public void shouldNotHavePasswordBeingPersisted() {
-        assertThat(NOT_PERSISTED.isPasswordBeingPersisted(), is(false));
+        assertFalse(NOT_PERSISTED.isPasswordBeingPersisted());
     }
 
 }
