@@ -9,7 +9,9 @@ package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,34 +44,34 @@ public final class IgnoredResourcesModelTest {
     public void shouldClearPatternsWhenLoading() {
         this.model.load(IgnoredResourcesModel.createList(DISABLED_PATTERNS));
         this.model.load(IgnoredResourcesModel.createList(ENABLED_PATTERNS));
-        assertThat(this.model.getPatterns().size(), is(NUM_PATTERNS));
+        assertEquals(NUM_PATTERNS, this.model.getPatterns().size());
     }
 
     @Test
     public void shouldHaveNoPatternsAfterConstruction() {
-        assertThat(this.model.getPatterns().isEmpty(), is(true));
+        assertTrue(this.model.getPatterns().isEmpty());
     }
 
     @Test
     public void shouldLoadEmptyString() {
         this.model.load(""); //$NON-NLS-1$
-        assertThat(this.model.getPatterns().isEmpty(), is(true));
+        assertTrue(this.model.getPatterns().isEmpty());
     }
 
     @Test
     public void shouldLoadNullString() {
         this.model.load(null);
-        assertThat(this.model.getPatterns().isEmpty(), is(true));
+        assertTrue(this.model.getPatterns().isEmpty());
     }
 
     @Test
     public void shouldNotLoadSamePatternTwice() {
         this.model.load(IgnoredResourcesModel.createList(DISABLED_PATTERNS[0]));
         this.model.load(IgnoredResourcesModel.createList(DISABLED_PATTERNS[0]));
-        assertThat(this.model.getPatterns().size(), is(1));
+        assertEquals(1, this.model.getPatterns().size());
 
         this.model.load(IgnoredResourcesModel.createList(ENABLED_PATTERNS[0]));
-        assertThat(this.model.getPatterns().size(), is(1));
+        assertEquals(1, this.model.getPatterns().size());
     }
 
     @Test
@@ -85,7 +87,7 @@ public final class IgnoredResourcesModelTest {
         final ResourcePattern rp = DISABLED_PATTERNS[0];
         this.model.addPattern(rp);
         this.model.removePattern(rp);
-        assertThat(this.model.getPatterns().isEmpty(), is(true));
+        assertTrue(this.model.getPatterns().isEmpty());
     }
 
     @Test

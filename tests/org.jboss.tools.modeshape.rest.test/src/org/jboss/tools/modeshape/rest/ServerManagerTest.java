@@ -14,7 +14,10 @@ package org.jboss.tools.modeshape.rest;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.junit.Before;
@@ -53,8 +56,8 @@ public final class ServerManagerTest {
     @Test
     public void shouldBeRegisteredIfAdded() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.isRegistered(SERVER1), is(true));
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertTrue(this.serverManager.isRegistered(SERVER1));
+        assertEquals(1, this.serverManager.getServers().size());
     }
 
     @Test
@@ -64,7 +67,7 @@ public final class ServerManagerTest {
                                                                        SERVER1.getUser(),
                                                                        PSWD2,
                                                                        SERVER1.isPasswordBeingPersisted())), is(true));
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertEquals(1, this.serverManager.getServers().size());
     }
 
     @Test
@@ -73,23 +76,23 @@ public final class ServerManagerTest {
         this.serverManager.addServer(SERVER2);
 
         this.serverManager.removeServer(SERVER1);
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertEquals(1, this.serverManager.getServers().size());
 
         this.serverManager.removeServer(SERVER2);
-        assertThat(this.serverManager.getServers().isEmpty(), is(true));
+        assertTrue(this.serverManager.getServers().isEmpty());
     }
 
     @Test
     public void shouldHaveOkStatusWhenAddingServerSuccessfully() {
-        assertThat(this.serverManager.addServer(SERVER1).isOk(), is(true));
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertTrue(this.serverManager.addServer(SERVER1).isOk());
+        assertEquals(1, this.serverManager.getServers().size());
     }
 
     @Test
     public void shouldHaveOkStatusWhenRemovingServerSuccessfully() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.removeServer(SERVER1).isOk(), is(true));
-        assertThat(this.serverManager.getServers().isEmpty(), is(true));
+        assertTrue(this.serverManager.removeServer(SERVER1).isOk());
+        assertTrue(this.serverManager.getServers().isEmpty());
     }
 
     @Test
@@ -101,24 +104,24 @@ public final class ServerManagerTest {
     @Test
     public void shouldHaveOkStatusWhenUpdateServerSuccessfully() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.updateServer(SERVER1, SERVER1_UPDATE).isOk(), is(true));
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertTrue(this.serverManager.updateServer(SERVER1, SERVER1_UPDATE).isOk());
+        assertEquals(1, this.serverManager.getServers().size());
     }
 
     @Test
     public void shouldIncreaseRegistrySizeWhenServerAdded() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertEquals(1, this.serverManager.getServers().size());
 
         this.serverManager.addServer(SERVER2);
-        assertThat(this.serverManager.getServers().size(), is(2));
+        assertEquals(2, this.serverManager.getServers().size());
     }
 
     @Test
     public void shouldNotAddServerIfAlreadyAdded() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.addServer(SERVER1).isOk(), is(false));
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertFalse(this.serverManager.addServer(SERVER1).isOk());
+        assertEquals(1, this.serverManager.getServers().size());
     }
 
     @Test
@@ -132,16 +135,16 @@ public final class ServerManagerTest {
     @Test
     public void shouldNotBeRegisteredIfNotAdded() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.isRegistered(SERVER2), is(false));
-        assertThat(this.serverManager.getServers().size(), is(1));
+        assertFalse(this.serverManager.isRegistered(SERVER2));
+        assertEquals(1, this.serverManager.getServers().size());
     }
 
     @Test
     public void shouldNotBeRegisteredIfRemoved() {
         this.serverManager.addServer(SERVER1);
         this.serverManager.removeServer(SERVER1);
-        assertThat(this.serverManager.isRegistered(SERVER1), is(false));
-        assertThat(this.serverManager.getServers().isEmpty(), is(true));
+        assertFalse(this.serverManager.isRegistered(SERVER1));
+        assertTrue(this.serverManager.getServers().isEmpty());
     }
 
     @Test
@@ -157,13 +160,13 @@ public final class ServerManagerTest {
         this.serverManager.addRegistryListener(listener);
         this.serverManager.removeRegistryListener(listener);
         this.serverManager.addServer(SERVER1);
-        assertThat(listener.wasNotified(), is(false));
+        assertFalse(listener.wasNotified());
     }
 
     @Test
     public void shouldNotRemoveServerIfNotAdded() {
-        assertThat(this.serverManager.removeServer(SERVER1).isOk(), is(false));
-        assertThat(this.serverManager.getServers().isEmpty(), is(true));
+        assertFalse(this.serverManager.removeServer(SERVER1).isOk());
+        assertTrue(this.serverManager.getServers().isEmpty());
     }
 
     @Test(expected = RuntimeException.class)
@@ -183,16 +186,16 @@ public final class ServerManagerTest {
         this.serverManager.addRegistryListener(listener);
 
         this.serverManager.addServer(SERVER1);
-        assertThat(listener.wasNotified(), is(true));
+        assertTrue(listener.wasNotified());
     }
 
     @Test
     public void shouldReceiveNotificationIfRegisteredListener() {
         RegistryListener listener = new RegistryListener();
-        assertThat(this.serverManager.addRegistryListener(listener), is(true));
+        assertTrue(this.serverManager.addRegistryListener(listener));
 
         this.serverManager.addServer(SERVER1);
-        assertThat(listener.wasNotified(), is(true));
+        assertTrue(listener.wasNotified());
     }
 
     @Test
@@ -201,9 +204,9 @@ public final class ServerManagerTest {
         this.serverManager.addRegistryListener(listener);
 
         this.serverManager.addServer(SERVER1);
-        assertThat(listener.getEvent().isNew(), is(true));
-        assertThat(listener.getEvent().isRemove(), is(false));
-        assertThat(listener.getEvent().isUpdate(), is(false));
+        assertTrue(listener.getEvent().isNew());
+        assertFalse(listener.getEvent().isRemove());
+        assertFalse(listener.getEvent().isUpdate());
     }
 
     @Test
@@ -214,9 +217,9 @@ public final class ServerManagerTest {
         this.serverManager.addRegistryListener(listener);
 
         this.serverManager.removeServer(SERVER1);
-        assertThat(listener.getEvent().isRemove(), is(true));
-        assertThat(listener.getEvent().isNew(), is(false));
-        assertThat(listener.getEvent().isUpdate(), is(false));
+        assertTrue(listener.getEvent().isRemove());
+        assertFalse(listener.getEvent().isNew());
+        assertFalse(listener.getEvent().isUpdate());
     }
 
     @Test
@@ -231,16 +234,16 @@ public final class ServerManagerTest {
                                                             SERVER1.getUser(),
                                                             PSWD2,
                                                             !SERVER1.isPasswordBeingPersisted()));
-        assertThat(listener.getEvent().isUpdate(), is(true));
-        assertThat(listener.getEvent().isNew(), is(false));
-        assertThat(listener.getEvent().isRemove(), is(false));
+        assertTrue(listener.getEvent().isUpdate());
+        assertFalse(listener.getEvent().isNew());
+        assertFalse(listener.getEvent().isRemove());
     }
 
     @Test
     public void shouldRemoveServerIfNotAddedButKeyMatches() {
         this.serverManager.addServer(SERVER1_UPDATE);
-        assertThat(this.serverManager.removeServer(SERVER1).isOk(), is(true));
-        assertThat(this.serverManager.getServers().isEmpty(), is(true));
+        assertTrue(this.serverManager.removeServer(SERVER1).isOk());
+        assertTrue(this.serverManager.getServers().isEmpty());
     }
 
     class RegistryListener implements IServerRegistryListener {
