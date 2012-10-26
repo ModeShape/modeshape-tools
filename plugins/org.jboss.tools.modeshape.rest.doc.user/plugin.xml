@@ -34,4 +34,14 @@
                file="index.xml">
          </index>
    </extension>
+
+<!-- Welcome Page content -->
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+         <configExtension
+               configId="org.eclipse.ui.intro.universalConfig" 
+               content="intro/rest-overview.xml">
+         </configExtension>
+   </extension>
+
 </plugin>
