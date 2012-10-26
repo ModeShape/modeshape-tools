@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+     <extensionContent 
+        id="org.jboss.tools.modeshape.jcr.intro-overview" 
+        style="css/overview.css" 
+        alt-style="css/overview.properties" 
+        name="ModeShape JCR Tools" 
+        path="overview/@">
+        <group id="content-group" style-id="content-group">
+            <link label="ModeShape JCR Tools"
+                url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.jboss.tools.modeshape.jcr.doc.user/cnd-editor/Editor.html" 
+                id="jcr" 
+                style-id="content-link">
+                <text>Learn about the JCR Compact Node Type Definition (CND) editor.</text>
+            </link>
+        </group>
+    </extensionContent>
+</introContent>

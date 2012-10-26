@@ -6,5 +6,6 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: %bundleVendor
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.help
+Require-Bundle: org.eclipse.help,
+ org.eclipse.ui.intro
 Eclipse-BundleShape: dir

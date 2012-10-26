@@ -37,4 +37,13 @@
          </index>
    </extension>
 
+<!-- Welcome Page content -->
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+         <configExtension
+               configId="org.eclipse.ui.intro.universalConfig" 
+               content="intro/jcr-overview.xml">
+         </configExtension>
+   </extension>
+
 </plugin>
