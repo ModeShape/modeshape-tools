@@ -10,4 +10,61 @@
     <groupId>org.jboss.tools.modeshape.plugins</groupId>
     <artifactId>org.jboss.tools.modeshape.client</artifactId>
     <packaging>eclipse-plugin</packaging>
- </project>
+ 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Removes invalid problem marker in Ecipse -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>${eclipse.m2e.version}</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>get</goal>
+                                            <goal>copy</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Download the ModeShape client jar from repo -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven.dependency.version}</version>
+                <executions>
+                    <execution>
+                        <id>get-modeshape-client</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>get</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>org.modeshape</groupId>
+                            <artifactId>modeshape-client</artifactId>
+                            <version>${modeshape.client.version}</version>
+                            <destination>${basedir}/modeshape-client.jar</destination>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
