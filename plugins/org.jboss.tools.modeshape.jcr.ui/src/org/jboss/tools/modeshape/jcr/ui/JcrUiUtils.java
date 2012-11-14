@@ -7,6 +7,9 @@
  */
 package org.jboss.tools.modeshape.jcr.ui;
 
+import static org.jboss.tools.modeshape.jcr.ui.JcrUiConstants.FileExtensions.CND;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -44,6 +47,33 @@ public class JcrUiUtils {
 
     /**
      * @param status the validation status whose severity is being converted to a form message area message type
+     * @return the {@link org.eclipse.core.resources.IMarker marker severity} or -1 if status is OK
+     */
+    public static int getMarkerSeverity( final ValidationStatus status) {
+        Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
+
+        if (status.isOk()) {
+            return -1;
+        }
+
+        if (status.isError()) {
+            return IMarker.SEVERITY_ERROR;
+        }
+
+        if (status.isWarning()) {
+            return IMarker.SEVERITY_WARNING;
+        }
+
+        if (status.isInfo()) {
+            return IMarker.SEVERITY_INFO;
+        }
+
+        assert false : "Unexpected severity type"; //$NON-NLS-1$
+        return IMarker.SEVERITY_ERROR;
+    }
+
+    /**
+     * @param status the validation status whose severity is being converted to a form message area message type
      * @return the message type
      */
     public static int getMessageType( final ValidationStatus status ) {
@@ -75,6 +105,14 @@ public class JcrUiUtils {
     public static ImageDescriptor getNewImageDescriptor() {
         return org.jboss.tools.modeshape.ui.Activator.getSharedInstance()
                                                      .getImageDescriptor(org.jboss.tools.modeshape.ui.UiConstants.Images.NEW_16X);
+    }
+
+    /**
+     * @param resource the resource being checked (can be <code>null</code>)
+     * @return <code>true</code> if resource is a CND file
+     */
+    public static boolean isCndFile( final IResource resource ) {
+        return ((resource != null) && (resource.getType() == IResource.FILE) && CND.equals(resource.getFileExtension()) && resource.exists());
     }
 
     /**
