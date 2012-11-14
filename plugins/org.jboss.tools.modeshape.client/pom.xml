@@ -14,7 +14,7 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!-- Removes invalid problem marker in Ecipse -->
+                <!-- Removes invalid problem marker in Eclipse -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
