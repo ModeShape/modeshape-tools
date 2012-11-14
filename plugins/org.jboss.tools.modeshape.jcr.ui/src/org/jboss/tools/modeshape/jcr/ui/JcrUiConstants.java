@@ -7,6 +7,7 @@
  */
 package org.jboss.tools.modeshape.jcr.ui;
 
+
 /**
  * Constants used within the <code>org.jboss.tools.modeshape.jcr.ui</code> plug-in.
  */
@@ -139,5 +140,21 @@ public interface JcrUiConstants {
      */
     interface PreferenceIds {
         String CND_PREFERENCE_PAGE = "org.jboss.tools.modeshape.jcr.ui.jcrPreferencePage"; //$NON-NLS-1$
+    }
+
+    /**
+     * Constants relating to workspace objects.
+     */
+    interface WorkspaceIds {
+
+        /**
+         * The identifier of the CND problem marker.
+         */
+        String CND_PROBLEM_MARKER = PLUGIN_ID + ".cndMarker"; //$NON-NLS-1$";
+
+        /**
+         * The identifier of the CND project builder.
+         */
+        String CND_PROJECT_BUILDER = PLUGIN_ID + ".cndBuilder";
     }
 }

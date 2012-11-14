@@ -55,7 +55,8 @@
       </wizard>
    </extension> 
  -->
- <!--
+
+<!-- Problem marker -->
    <extension
          id="cndMarker"
          name="%cndMarker.name"
@@ -63,23 +64,31 @@
          <super type="org.eclipse.core.resources.problemmarker" />
          <persistent value="true" />
    </extension>
--->
-<!--
+
+<!-- CND Project Builder -->
    <extension
          id="cndBuilder"
          name="%cndBuilder.name"
          point="org.eclipse.core.resources.builders">
       <builder
          callOnEmptyDelta="false"
-         hasNature="true"
+         hasNature="false"
          isConfigurable="false"
          supportsConfigurations="false">
          <run
-            class="org.jboss.tools.modeshape.jcr.ui.cnd.CndBuilder">
+            class="org.jboss.tools.modeshape.jcr.ui.resources.CndProjectBuilder">
             <parameter name="optimize" value="true"/>
             <parameter name="comment" value="%cndBuilder.name"/>
          </run>
       </builder>
    </extension>
+   
+<!--
+    <extension point="org.eclipse.ui.ide.markerResolution"> 
+       <markerResolutionGenerator 
+          class="org.teiid.designer.extension.ui.actions.MedMarkerResolutionGenerator" 
+          markerType="org.teiid.designer.extension.ui.medMarker"> 
+       </markerResolutionGenerator> 
+    </extension> 
 -->
 </plugin>

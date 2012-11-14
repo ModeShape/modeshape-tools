@@ -195,6 +195,16 @@ public class CndMessages extends NLS {
     public static String childNodeRequiredTypesToolTip;
 
     /**
+     * The CND project builder task name.
+     */
+    public static String cndBuildTaskName;
+
+    /**
+     * The CND project builder subtask name. One paramater, the CND file name, is required.
+     */
+    public static String cndBuildSubTaskName;
+
+    /**
      * The message of the dialog shown within the CND editor when the editor notices that the CND file has been changed outside the
      * editor. One parameter, the file name, is expected.
      */
@@ -205,6 +215,16 @@ public class CndMessages extends NLS {
      * editor.
      */
     public static String cndChangedOnFileSystemDialogTitle;
+
+    /**
+     * The CND clean project task name.
+     */
+    public static String cndCleanTaskName;
+
+    /**
+     * The CND clean project subtask name. One paramater, the CND file name, is required.
+     */
+    public static String cndCleanSubTaskName;
 
     /**
      * The description of the child node definition section in the CND editor's form page.
@@ -308,6 +328,11 @@ public class CndMessages extends NLS {
      * The title of the CND editor.
      */
     public static String cndEditorTitle;
+
+    /**
+     * The CND project builder error message for a CND file. One paramater, the CND file name, is required.
+     */
+    public static String cndFileParseError;
 
     /**
      * The message area message of the CND validation message dialog. Four parameters, the name of the CND, the number of errors,
