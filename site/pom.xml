@@ -12,4 +12,40 @@
 	<name>modeshape.site</name>
 	
 	<packaging>eclipse-repository</packaging>
+
+	<properties>
+		<update.site.name>ModeShape Tools</update.site.name>
+		<update.site.description>Nightly Build</update.site.description>
+		<update.site.version>3.0.0.${BUILD_ALIAS}</update.site.version>
+		<target.eclipse.version>4.2 (Juno)</target.eclipse.version>
+		<siteTemplateFolder>siteTemplateFolder</siteTemplateFolder>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jboss.tools.tycho-plugins</groupId>
+				<artifactId>repository-utils</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>generate-facade</id>
+						<phase>package</phase>
+						<goals>
+							<goal>generate-repository-facade</goal>
+						</goals>
+						<configuration>
+							<siteTemplateFolder>${siteTemplateFolder}</siteTemplateFolder>
+							<symbols>
+								<update.site.name>${update.site.name}</update.site.name>
+								<update.site.description>${update.site.description}</update.site.description>
+								<update.site.version>${update.site.version}</update.site.version>
+								<target.eclipse.version>${target.eclipse.version}</target.eclipse.version>
+							</symbols>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
