@@ -7,7 +7,7 @@
 		<artifactId>parent</artifactId>
 
                 <!-- for dev use version that is latest JBT release -->
-<!--		<version>4.1.0.Alpha1-SNAPSHOT</version> -->
+<!--		<version>4.30.0.Alpha1-SNAPSHOT</version> -->
 
                 <!-- for releases use version that is compatible with latest JBDS release -->
                 <version>4.0.0.Final-SNAPSHOT</version>
