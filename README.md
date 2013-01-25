@@ -17,7 +17,7 @@ _ModeShape Tools_ is installed into Eclipse by following these steps:
 
 1. Start up Eclipse 3.7
 1. Select `Help > Install New Software… > Add...`
-1. In the `Add Repository` dialog, enter a name, for instance "ModeShape Tools Update-Site" and enter this URL, TBD, for the location. Then select `OK` to close the dialog.
+1. In the `Add Repository` dialog, enter a name, for instance "ModeShape Tools Update-Site" and enter the URL for the [update-site](http://download.jboss.org/jbosstools/updates/stable/juno/soa-tooling/modeshape/). Then select `OK` to close the dialog.
 1. After the update-site loads select one or more of the _ModeShape Tools_ features you want to install.
 
 ## Get the code
