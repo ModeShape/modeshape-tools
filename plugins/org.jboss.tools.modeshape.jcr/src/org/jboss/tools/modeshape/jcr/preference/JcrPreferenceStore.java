@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.jcr.preference;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -126,7 +125,7 @@ public final class JcrPreferenceStore extends AbstractPreferenceInitializer {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
      */
     @Override
@@ -137,7 +136,6 @@ public final class JcrPreferenceStore extends AbstractPreferenceInitializer {
         prefs.put(CndPreference.CHILD_NODE_PROPERTY_DELIMITER.getId(), Utils.SPACE_STRING);
         prefs.put(CndPreference.ELEMENT_DELIMITER.getId(), "\n"); //$NON-NLS-1$
         prefs.put(CndPreference.ELEMENTS_END_DELIMITER.getId(), Utils.EMPTY_STRING);
-        prefs.put(CndPreference.ELEMENTS_START_DELIMITER.getId(), "\t"); //$NON-NLS-1$
         prefs.put(CndPreference.NAMESPACE_MAPPING_DELIMITER.getId(), "\n"); //$NON-NLS-1$
         prefs.put(CndPreference.NAMESPACE_MAPPING_SECTION_END_DELIMITER.getId(), "\n"); //$NON-NLS-1$
         prefs.put(CndPreference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER.getId(), Utils.SPACE_STRING);
@@ -160,7 +158,6 @@ public final class JcrPreferenceStore extends AbstractPreferenceInitializer {
         this.testDefaultPrefs.put(CndPreference.CHILD_NODE_PROPERTY_DELIMITER.getId(), Utils.SPACE_STRING);
         this.testDefaultPrefs.put(CndPreference.ELEMENT_DELIMITER.getId(), "\n"); //$NON-NLS-1$
         this.testDefaultPrefs.put(CndPreference.ELEMENTS_END_DELIMITER.getId(), Utils.EMPTY_STRING);
-        this.testDefaultPrefs.put(CndPreference.ELEMENTS_START_DELIMITER.getId(), "\t"); //$NON-NLS-1$
         this.testDefaultPrefs.put(CndPreference.NAMESPACE_MAPPING_DELIMITER.getId(), "\n"); //$NON-NLS-1$
         this.testDefaultPrefs.put(CndPreference.NAMESPACE_MAPPING_SECTION_END_DELIMITER.getId(), "\n"); //$NON-NLS-1$
         this.testDefaultPrefs.put(CndPreference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER.getId(), Utils.SPACE_STRING);

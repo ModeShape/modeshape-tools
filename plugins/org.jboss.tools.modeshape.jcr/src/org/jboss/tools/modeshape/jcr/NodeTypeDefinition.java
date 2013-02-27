@@ -879,7 +879,7 @@ public class NodeTypeDefinition
                     commentNotation += '\n';
                 }
 
-                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, null) + '\n';
+                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment);
 
                 // add comment above node type
                 builder.append(commentNotation);
@@ -916,14 +916,9 @@ public class NodeTypeDefinition
             final List<CndElement> elements = getElements();
 
             if (!Utils.isEmpty(elements)) {
-                final String elementStartDelimiter = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_START_DELIMITER);
                 final String elementDelimiter = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENT_DELIMITER);
 
                 for (final CndElement element : elements) {
-                    if (NotationType.LONG == notationType) {
-                        builder.append(elementStartDelimiter);
-                    }
-
                     builder.append(element.toCndNotation(notationType));
                     builder.append(elementDelimiter);
                 }

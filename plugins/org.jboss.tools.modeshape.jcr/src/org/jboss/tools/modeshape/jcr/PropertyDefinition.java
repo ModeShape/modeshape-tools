@@ -12,10 +12,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -136,7 +134,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * Constructs an instance with a default type of {@link PropertyType#STRING}.
-     * 
+     *
      * @param ownerProvider the item owner provider that owns this property (cannot be <code>null</code>)
      */
     public PropertyDefinition( final ItemOwnerProvider ownerProvider ) {
@@ -154,7 +152,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * If added, broadcasts a {@link PropertyChangeEvent} with an old value of <code>null</code> and a new value equal to
      * <code>defaultValueBeingAdded</code>.
-     * 
+     *
      * @param defaultValueBeingAdded the default value being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
@@ -192,7 +190,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * If added, broadcasts a {@link PropertyChangeEvent} with an old value of <code>null</code> and a new value equal to
      * <code>valueConstraintBeingAdded</code>.
-     * 
+     *
      * @param valueConstraintBeingAdded the value constraint being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
@@ -209,7 +207,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
      * If state was changed, a property change event is broadcast to all registered listeners. Can be used to change the
      * autocreated, default values, mandatory, multiple, no full text, no query order, on parent version variant, protected, query
      * operators, property type, and value constraints properties.
-     * 
+     *
      * @param propertyName the property whose attribute state is being changed (cannot be <code>null</code>)
      * @param newState the new attribute state (cannot be <code>null</code>)
      * @return <code>true</code> if the attribute state was changed
@@ -273,7 +271,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * If at least one default value was removed, broadcasts a {@link PropertyChangeEvent} with an old value equal to the old
      * default values collection and a new value of <code>null</code>.
-     * 
+     *
      * @return <code>true</code> if at least one default value was removed
      */
     public boolean clearDefaultValues() {
@@ -290,7 +288,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * If at least one value constraint was removed, broadcasts a {@link PropertyChangeEvent} with an old value equal to the old
      * value constraints collection and a new value of <code>null</code>.
-     * 
+     *
      * @return <code>true</code> if at least one value constraint was removed
      */
     public boolean clearValueConstraints() {
@@ -306,7 +304,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -316,7 +314,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -374,7 +372,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#getAvailableQueryOperators()
      */
     @Override
@@ -384,7 +382,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
      */
     @Override
@@ -394,7 +392,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getDeclaringNodeType()
      * @throws UnsupportedOperationException if method is called
      */
@@ -405,7 +403,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getDeclaringNodeTypeDefinitionName()
      */
     @Override
@@ -415,7 +413,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#getDefaultValues()
      */
     @Override
@@ -432,7 +430,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getName()
      */
     @Override
@@ -447,7 +445,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getOnParentVersion()
      */
     @Override
@@ -457,7 +455,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getQualifiedName()
      */
     @Override
@@ -467,7 +465,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#getRequiredType()
      */
     @Override
@@ -478,7 +476,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * Can be used to find the attribute state of the autocreated, default values, mandatory, multiple, no full text, no query
      * order, on parent version, protected, query operators, property type, and value constraints properties.
-     * 
+     *
      * @param propertyName the property whose attribute state is being requested (cannot be <code>null</code>)
      * @return the attribute state (never <code>null</code>)
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
@@ -542,7 +540,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#getValueConstraints()
      */
     @Override
@@ -560,7 +558,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -571,7 +569,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#isAutoCreated()
      */
     @Override
@@ -581,7 +579,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#isFullTextSearchable()
      */
     @Override
@@ -591,7 +589,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#isMandatory()
      */
     @Override
@@ -601,7 +599,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#isMultiple()
      */
     @Override
@@ -611,7 +609,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#isProtected()
      */
     @Override
@@ -621,7 +619,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinition#isQueryOrderable()
      */
     @Override
@@ -675,7 +673,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * If default value is removed, broadcasts a {@link PropertyChangeEvent} with an old value of
      * <code>defaultValueBeingRemoved</code> and a new value of <code>null</code>.
-     * 
+     *
      * @param defaultValueBeingRemoved the default value being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
@@ -713,7 +711,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     /**
      * If value constraint is removed, broadcasts a {@link PropertyChangeEvent} with an old value of
      * <code>valueConstraintBeingRemoved</code> and a new value of <code>null</code>.
-     * 
+     *
      * @param valueConstraintBeingRemoved the value constraint being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
@@ -728,7 +726,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setAutoCreated(boolean)
      */
     @Override
@@ -739,7 +737,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setAvailableQueryOperators(java.lang.String[])
      */
     @Override
@@ -771,7 +769,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
      */
     @Override
@@ -793,7 +791,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setDefaultValues(javax.jcr.Value[])
      */
     @Override
@@ -824,7 +822,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setFullTextSearchable(boolean)
      */
     @Override
@@ -835,7 +833,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setMandatory(boolean)
      */
     @Override
@@ -846,7 +844,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setMultiple(boolean)
      */
     @Override
@@ -869,7 +867,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setOnParentVersion(int)
      */
     @Override
@@ -883,7 +881,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * If changed, a property change event is broadcast to all registered listeners.
-     * 
+     *
      * @param newOpv the new OPV value (cannot be <code>null</code>)
      * @return <code>true</code> if successfully changed
      */
@@ -900,7 +898,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setProtected(boolean)
      */
     @Override
@@ -911,7 +909,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setQueryOrderable(boolean)
      */
     @Override
@@ -922,7 +920,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setRequiredType(int)
      */
     @Override
@@ -932,7 +930,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * If type is changed, a {@link PropertyChangeEvent} is broadcast.
-     * 
+     *
      * @param newType the proposed new type (cannot be <code>null</code>)
      * @return <code>true</code> if the type was changed
      */
@@ -949,7 +947,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setValueConstraints(java.lang.String[])
      */
     @Override
@@ -972,18 +970,13 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
         final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
         final StringBuilder builder = new StringBuilder();
-        String indent = Utils.EMPTY_STRING;
-
-        if (NotationType.LONG == notationType) {
-            indent = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_START_DELIMITER);
-        }
 
         { // comment
             if (!Utils.isEmpty(this.comment)) {
@@ -993,14 +986,10 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
                     commentNotation += '\n';
                 }
 
-                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, indent) + '\n';
+                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment);
 
                 // add comment above node type
                 builder.append(commentNotation);
-
-                if (NotationType.LONG == notationType) {
-                    builder.append(indent);
-                }
             }
         }
 
@@ -1090,7 +1079,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.lang.Enum#toString()
          */
         @Override
