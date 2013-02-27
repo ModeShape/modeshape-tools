@@ -281,7 +281,7 @@ public class NamespaceMapping implements CommentedCndElement, Comparable<Namespa
                 commentNotation += '\n';
             }
 
-            commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, null) + '\n';
+            commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment);
 
             // add comment above namespace
             builder.append(commentNotation);
