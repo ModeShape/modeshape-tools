@@ -54,31 +54,25 @@ public interface CommentedCndElement extends CndElement {
 
         /**
          * @param text the text that the comment characters will be added to (cannot be <code>null</code>)
-         * @param indent an optional indent string (can be <code>null</code> or empty)
          * @return the commented text (never <code>null</code>)
          */
-        public static String addCommentCharacters( final String text,
-                                                   String indent ) {
+        public static String addCommentCharacters( final String text ) {
             Utils.verifyIsNotNull(text, "text"); //$NON-NLS-1$
 
-            if (indent == null) {
-                indent = Utils.EMPTY_STRING;
-            }
-
-            final StringBuilder builder = new StringBuilder(indent + BLOCK_COMMENT_START_CHARS);
+            final StringBuilder builder = new StringBuilder(BLOCK_COMMENT_START_CHARS);
 
             if (!text.startsWith("\n")) { //$NON-NLS-1$
                 builder.append('\n');
             }
 
-            builder.append(indent + BLOCK_COMMENT_INNER_CHARS);
-            builder.append(text.replace("\n", '\n' + indent + BLOCK_COMMENT_INNER_CHARS)); //$NON-NLS-1$
+            builder.append(BLOCK_COMMENT_INNER_CHARS);
+            builder.append(text.replace("\n", '\n' + BLOCK_COMMENT_INNER_CHARS)); //$NON-NLS-1$
 
             if (!text.endsWith("\n")) { //$NON-NLS-1$
                 builder.append('\n');
             }
 
-            builder.append(indent + Utils.SPACE_STRING).append(BLOCK_COMMENT_END_CHARS);
+            builder.append(Utils.SPACE_STRING).append(BLOCK_COMMENT_END_CHARS).append('\n');
             return builder.toString();
         }
 

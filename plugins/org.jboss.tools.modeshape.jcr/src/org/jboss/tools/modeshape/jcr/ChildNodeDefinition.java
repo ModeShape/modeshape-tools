@@ -746,11 +746,6 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     public String toCndNotation( final NotationType notationType ) {
         final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
         final StringBuilder builder = new StringBuilder();
-        String indent = Utils.EMPTY_STRING;
-
-        if (NotationType.LONG == notationType) {
-            indent = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_START_DELIMITER);
-        }
 
         { // comment
             if (!Utils.isEmpty(this.comment)) {
@@ -760,14 +755,10 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
                     commentNotation += '\n';
                 }
 
-                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, indent) + '\n';
+                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment);
 
                 // add comment above node type
                 builder.append(commentNotation);
-
-                if (NotationType.LONG == notationType) {
-                    builder.append(indent);
-                }
             }
         }
 
