@@ -35,6 +35,9 @@
 							<goal>generate-repository-facade</goal>
 						</goals>
 						<configuration>
+							<associateSites>
+								<associateSite>http://download.jboss.org/jbosstools/updates/juno/</associateSite>
+							</associateSites>
 							<siteTemplateFolder>${siteTemplateFolder}</siteTemplateFolder>
 							<symbols>
 								<update.site.name>${update.site.name}</update.site.name>
