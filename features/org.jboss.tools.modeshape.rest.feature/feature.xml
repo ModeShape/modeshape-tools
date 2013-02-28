@@ -21,9 +21,6 @@
 
    <requires>
  	<import feature="org.eclipse.m2e.feature" version="1.2.0" match="greaterOrEqual"/>
- 	<!-- maybe need these too? <import feature="org.eclipse.m2e.wtp.jsf.feature" version="0.17.0" match="greaterOrEqual"/>
- 	<import feature="org.eclipse.m2e.wtp.jaxrs.feature" version="0.17.0" match="greaterOrEqual"/>
- 	<import feature="org.eclipse.m2e.wtp.jpa.feature" version="0.17.0" match="greaterOrEqual"/> -->
    </requires>
 
    <plugin
