@@ -10,7 +10,7 @@
 <!--		<version>4.30.0.Alpha1-SNAPSHOT</version> -->
 
                 <!-- for releases use version that is compatible with latest JBDS release -->
-                <version>4.0.0.Final-SNAPSHOT</version>
+                <version>4.0.1.Final-SNAPSHOT</version>
 		<relativePath>../build/parent/pom.xml</relativePath>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
