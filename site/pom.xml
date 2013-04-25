@@ -15,7 +15,7 @@
 
 	<properties>
 		<update.site.name>ModeShape Tools</update.site.name>
-		<update.site.description>Development Release</update.site.description>
+		<update.site.description>Stable Release</update.site.description>
 		<update.site.version>3.2.0.${BUILD_ALIAS}</update.site.version>
 		<target.eclipse.version>4.2 (Juno)</target.eclipse.version>
 		<siteTemplateFolder>siteTemplateFolder</siteTemplateFolder>
