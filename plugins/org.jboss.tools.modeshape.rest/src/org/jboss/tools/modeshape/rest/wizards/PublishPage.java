@@ -15,14 +15,13 @@ import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.PUBLISH_D
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.ENABLE_RESOURCE_VERSIONING;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.IGNORED_RESOURCES_PREFERENCE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.PUBLISHING_PREFERENCE_PAGE_ID;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -320,6 +319,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     private org.eclipse.swt.widgets.List lstResources;
 
     /**
+     * The list of workspace areas previously used in this Eclipse workspace.
+     */
+    private final List<String> mruWorkspaceAreas = new ArrayList<String>();
+
+    /**
      * Indicates if resources should be found recursively.
      */
     private boolean recurse = true;
@@ -501,6 +505,19 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             this.cbxWorkspaceAreas = new Combo(pnl, SWT.DROP_DOWN);
             this.cbxWorkspaceAreas.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
             this.cbxWorkspaceAreas.setToolTipText(RestClientI18n.publishPageWorkspaceAreaToolTip);
+
+            // set the MRU of workspace areas
+            if (getDialogSettings().getArray(WORKSPACE_AREA_KEY) != null) {
+                String[] areas = getDialogSettings().getArray(WORKSPACE_AREA_KEY);
+                this.mruWorkspaceAreas.addAll(Arrays.asList(areas));
+            }
+
+            // make sure MRU has default area
+            if (!this.mruWorkspaceAreas.contains(DEFAULT_WORKSPACE_AREA)) {
+                this.mruWorkspaceAreas.add(DEFAULT_WORKSPACE_AREA);
+            }
+
+            Collections.sort(this.mruWorkspaceAreas);
         }
     }
 
@@ -820,7 +837,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             if ((this.workspace == null) || !this.workspace.equals(newWorkspace)) {
                 this.workspace = newWorkspace;
 
-                // update workspace areas
+                // update workspace areas from server
                 WorkspaceArea[] workspaceAreas = null;
 
                 try {
@@ -832,19 +849,22 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                                              e));
                 }
 
-                if ((workspaceAreas == null) || (workspaceAreas.length == 0)) {
-                    // populate with default area name
-                    this.cbxWorkspaceAreas.setItems(new String[] { DEFAULT_WORKSPACE_AREA });
-                } else {
-                    String[] areaPaths = new String[workspaceAreas.length];
-                    int i = 0;
+                // start with all MRU workspace areas
+                final List<String> items = new ArrayList<String>(this.mruWorkspaceAreas);
 
+                // add in those workspace areas identified by server
+                if ((workspaceAreas != null) && (workspaceAreas.length != 0)) {
                     for (WorkspaceArea area : workspaceAreas) {
-                        areaPaths[i++] = area.getPath();
-                    }
+                        final String path = area.getPath();
 
-                    this.cbxWorkspaceAreas.setItems(areaPaths);
+                        if (!items.contains(path)) {
+                            items.add(path);
+                        }
+                    }
                 }
+
+                // populate combo
+                this.cbxWorkspaceAreas.setItems(items.toArray(new String[items.size()]));
             }
         } else {
             this.workspaceArea = null;
@@ -1221,7 +1241,13 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     void wizardFinished() {
         // update dialog settings
         getDialogSettings().put(RECURSE_KEY, this.recurse);
-        getDialogSettings().put(WORKSPACE_AREA_KEY, this.workspaceArea);
+
+        // add in current workspace area if necessary
+        if (!this.mruWorkspaceAreas.contains(this.workspaceArea)) {
+            this.mruWorkspaceAreas.add(this.workspaceArea);
+        }
+
+        getDialogSettings().put(WORKSPACE_AREA_KEY, this.mruWorkspaceAreas.toArray(new String[this.mruWorkspaceAreas.size()]));
     }
 
 }

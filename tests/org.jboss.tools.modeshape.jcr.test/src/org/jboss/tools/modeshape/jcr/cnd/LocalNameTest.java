@@ -11,7 +11,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 import org.jboss.tools.modeshape.jcr.LocalName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
@@ -65,6 +64,7 @@ public class LocalNameTest {
         this.localName.set(VALUE);
         JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.DOUBLE_QUOTE);
         assertEquals('"' + VALUE + '"', this.localName.toCndNotation(null));
+        resetPreference(JcrPreferenceConstants.CndPreference.QUOTE_CHAR);
     }
 
     @Test
@@ -73,6 +73,7 @@ public class LocalNameTest {
         this.localName.set(VALUE);
         JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.SINGLE_QUOTE);
         assertEquals('\'' + VALUE + '\'', this.localName.toCndNotation(null));
+        resetPreference(JcrPreferenceConstants.CndPreference.QUOTE_CHAR);
     }
 
     @Test
@@ -81,6 +82,7 @@ public class LocalNameTest {
         JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.EMPTY_STRING);
         this.localName.set(VALUE);
         assertEquals(VALUE, this.localName.toCndNotation(null));
+        resetPreference(JcrPreferenceConstants.CndPreference.QUOTE_CHAR);
     }
 
     @Test
@@ -100,6 +102,7 @@ public class LocalNameTest {
         this.localName.set(NEW_VALUE);
         JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.EMPTY_STRING);
         assertEquals('\'' + NEW_VALUE + '\'', this.localName.toCndNotation(null));
+        resetPreference(JcrPreferenceConstants.CndPreference.QUOTE_CHAR);
     }
 
     @Test
@@ -120,6 +123,11 @@ public class LocalNameTest {
         final String NULL_VALUE = null;
         this.localName.set(NULL_VALUE);
         assertNull(this.localName.get());
+    }
+
+    private void resetPreference( final JcrPreferenceConstants.CndPreference pref ) {
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        prefStore.set(pref, prefStore.getDefault(pref));
     }
 
 }

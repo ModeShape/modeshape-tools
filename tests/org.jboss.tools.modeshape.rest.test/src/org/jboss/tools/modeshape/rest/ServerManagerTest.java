@@ -51,6 +51,7 @@ public final class ServerManagerTest {
     @Before
     public void beforeEach() {
         this.serverManager = new ServerManager(null, new MockRestClient());
+        System.clearProperty(ServerManager.SERVER_EXISTS_PROPERTY);
     }
 
     @Test
