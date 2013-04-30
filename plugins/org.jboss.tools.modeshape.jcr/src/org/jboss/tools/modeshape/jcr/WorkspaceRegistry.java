@@ -47,6 +47,8 @@ public class WorkspaceRegistry {
 
     /**
      * Don't allow construction outside of this class.
+     * 
+     * @throws Exception if there is a problem finding the CND for built-in node types
      */
     private WorkspaceRegistry() throws Exception {
         final CndImporter importer = new CndImporter();
