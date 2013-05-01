@@ -13,11 +13,12 @@
 	
 	<packaging>eclipse-repository</packaging>
 
+    <!-- Commented out properties are now set using build job parameters -->
 	<properties>
 		<update.site.name>ModeShape Tools</update.site.name>
-		<update.site.description>Development Release</update.site.description>
+        <!-- <update.site.description>Development Release</update.site.description> -->
 		<update.site.version>3.3.0.${BUILD_ALIAS}</update.site.version>
-		<target.eclipse.version>4.2 (Juno)</target.eclipse.version>
+        <!-- <target.eclipse.version>4.3 (Kepler)</target.eclipse.version> -->
 		<siteTemplateFolder>siteTemplateFolder</siteTemplateFolder>
 	</properties>
 
