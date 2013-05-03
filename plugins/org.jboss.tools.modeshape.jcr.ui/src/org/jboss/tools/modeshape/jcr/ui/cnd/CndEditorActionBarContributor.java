@@ -2,6 +2,7 @@ package org.jboss.tools.modeshape.jcr.ui.cnd;
 
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineLayoutData;
@@ -202,13 +203,21 @@ public class CndEditorActionBarContributor extends EditorActionBarContributor {
 
             gc.dispose();
 
-            // create menu (cannot use same menu manager or menu)
+            // cannot use same menu manager twice to create menu (weird) so have to recreate each time (and this method gets called a lot)
             if (this.menuManager != null) {
-                this.label.setMenu(this.menuManager.createContextMenu(this.label));
+                final MenuManager mm = new MenuManager();
+
+                for (final IContributionItem item : this.menuManager.getItems()) {
+                    mm.add(item);
+                }
+
+                this.label.setMenu(mm.createContextMenu(this.label));
             }
 
             // add double-click listener
             if (this.doubleClickAction != null) {
+                final CLabel accessLabel = this.label;
+
                 this.label.addMouseListener(new MouseAdapter() {
 
                     /**
@@ -218,7 +227,10 @@ public class CndEditorActionBarContributor extends EditorActionBarContributor {
                      */
                     @Override
                     public void mouseDoubleClick( final MouseEvent e ) {
-                        handleDoubleClick();
+                        // only handle double click if there is a selected object
+                        if (!CndMessages.statusBarNoSelection.equals(accessLabel.getText())) {
+                            handleDoubleClick();
+                        }
                     }
                 });
             }
