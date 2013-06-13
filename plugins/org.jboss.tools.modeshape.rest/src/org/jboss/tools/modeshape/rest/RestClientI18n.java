@@ -127,6 +127,7 @@ public final class RestClientI18n extends NLS {
     public static String publishPagePublishTitle;
     public static String publishPageLocationGroupTitle;
     public static String publishPageMissingRepositoryStatusMsg;
+    public static String publishPageMissingPublishAreaStatusMsg;
     public static String publishPageMissingServerStatusMsg;
     public static String publishPageMissingWorkspaceStatusMsg;
     public static String publishPageNewServerButton;
