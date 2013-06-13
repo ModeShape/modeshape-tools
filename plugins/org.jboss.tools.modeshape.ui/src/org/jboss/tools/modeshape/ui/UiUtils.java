@@ -18,6 +18,8 @@ import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Common constants and methods used with JBoss Tool's ModeShape Tools project.
@@ -82,6 +84,20 @@ public final class UiUtils {
         FontMetrics fontMetrics = gc.getFontMetrics();
         gc.dispose();
         return Dialog.convertWidthInCharsToPixels(fontMetrics, numChars);
+    }
+
+    /**
+     * @param viewId the view identifier (cannot be <code>null</code> or empty)
+     * @return the first occurrence of the requested view that is open in the workbench or <code>null</code> if view is not open
+     */
+    public static IViewPart getView(final String viewId) {
+        verifyIsNotEmpty(viewId, "viewId"); //$NON-NLS-1$
+
+        if (PlatformUI.isWorkbenchRunning()) {
+            return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(viewId);
+        }
+
+        return null;
     }
 
     /**

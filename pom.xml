@@ -7,11 +7,10 @@
 		<artifactId>parent</artifactId>
 
         <!-- for dev use version that is latest JBT release -->
-		<version>4.1.0.Beta1-SNAPSHOT</version>
+		<!-- <version>4.1.0.Beta2-SNAPSHOT</version> -->
 
         <!-- for releases use version that is compatible with latest JBDS release -->
-        <!-- <version>4.0.1.Final-SNAPSHOT</version> -->
-		<relativePath>../build/parent/pom.xml</relativePath>
+        <version>4.0.1.Final-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.jboss.tools</groupId>
@@ -23,7 +22,7 @@
     <properties>
         <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
-        <modeshape.client.version>3.2.0.Final</modeshape.client.version>
+        <modeshape.client.version>3.3.0.Final</modeshape.client.version>
     </properties>
 
 	<modules>

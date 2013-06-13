@@ -104,7 +104,6 @@ public final class ServerManager {
     /**
      * Executes the commands run on the ModeShape REST server.
      */
-    @SuppressWarnings( "deprecation" )
     private final IRestClient delegate;
 
     /**
@@ -129,7 +128,7 @@ public final class ServerManager {
      * @param restClient the client that will communicate with the REST server (never <code>null</code>)
      */
     public ServerManager( String stateLocationPath,
-                          @SuppressWarnings( "deprecation" ) IRestClient restClient ) {
+                          IRestClient restClient ) {
         CheckArg.isNotNull(restClient, "restClient"); //$NON-NLS-1$
 
         this.servers = new ArrayList<ModeShapeServer>();
@@ -234,7 +233,6 @@ public final class ServerManager {
 
             if (isRegistered(server)) {
                 // need to wrap each repository
-                @SuppressWarnings( "deprecation" )
                 Collection<Repository> repositories = this.delegate.getRepositories(server.getDelegate());
                 Collection<ModeShapeRepository> result = new ArrayList<ModeShapeRepository>(repositories.size());
 
@@ -259,7 +257,6 @@ public final class ServerManager {
      * @return the URL where the file was published
      * @throws Exception if there is a problem obtaining the URL
      */
-    @SuppressWarnings( "deprecation" )
     public URL getUrl( File file,
                        String path,
                        ModeShapeWorkspace workspace ) throws Exception {
@@ -275,7 +272,6 @@ public final class ServerManager {
         final String path = "jcr:path"; //$NON-NLS-1$
         final String title = "jcr:title"; //$NON-NLS-1$
         final String statement = "SELECT [" + path + "], " + '[' + title + ']' + " FROM [mode:publishArea]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        @SuppressWarnings( "deprecation" )
         List<QueryRow> rows = this.delegate.query(workspace.getDelegate(), IJcrConstants.JCR_SQL2, statement);
         WorkspaceArea[] workspaceAreas = new WorkspaceArea[rows.size()];
 
@@ -300,7 +296,6 @@ public final class ServerManager {
 
             if (isRegistered(repository.getServer())) {
                 // wrap workspaces
-                @SuppressWarnings( "deprecation" )
                 Collection<Workspace> workspaces = this.delegate.getWorkspaces(repository.getDelegate());
                 Collection<ModeShapeWorkspace> result = new ArrayList<ModeShapeWorkspace>(workspaces.size());
 
@@ -430,6 +425,21 @@ public final class ServerManager {
     }
 
     /**
+     * Marks the workspace path as a publish area (creating the path if necessary).
+     * 
+     * @param workspace the workspace where the publish area is being created (cannot be <code>null</code>)
+     * @param path the workspace path of the publish area (cannot be <code>null</code> or empty)
+     * @return a status indicating if the publish area was added (never <code>null</code>)
+     * @throws Exception if there is a problem creating the publish area
+     */
+    public Status markAsPublishArea( final ModeShapeWorkspace workspace,
+                                     final String path ) throws Exception {
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+        CheckArg.isNotEmpty(path, "path"); //$NON-NLS-1$
+        return this.delegate.markAsPublishArea(workspace.getDelegate(), path, null, null);
+    }
+
+    /**
      * @param event the event the registry listeners are to process
      * @return any errors thrown by or found by the listeners or <code>null</code> (never empty)
      */
@@ -491,7 +501,6 @@ public final class ServerManager {
      * @return a status indicating if the server can be connected to
      * @see #isRegistered(ModeShapeServer)
      */
-    @SuppressWarnings( "deprecation" )
     public Status ping( ModeShapeServer server ) {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
@@ -510,7 +519,6 @@ public final class ServerManager {
      * @param version <code>true</code> if the file should be put under version control by ModeShape
      * @return the status of the outcome of this publishing operation
      */
-    @SuppressWarnings( "deprecation" )
     public Status publish( ModeShapeWorkspace workspace,
                            String path,
                            File file,
@@ -659,12 +667,23 @@ public final class ServerManager {
     }
 
     /**
+     * Unmark the workspace path as a publish area.
+     * 
+     * @param publishArea the workspace area being removed as a publish area (cannot be <code>null</code>)
+     * @return a status indicating if the path was successfully unmarked as a publish area (never <code>null</code>)
+     * @throws Exception if there is a problem unmarking the path
+     */
+    public Status unmarkAsPublishArea( final WorkspaceArea publishArea ) throws Exception {
+        CheckArg.isNotNull(publishArea, "publishArea"); //$NON-NLS-1$
+        return this.delegate.unmarkAsPublishArea(publishArea.getWorkspace().getDelegate(), publishArea.getName());
+    }
+
+    /**
      * @param workspace the workspace where the file should be unpublished from (cannot be <code>null</code>)
      * @param path the starting path in the repository (cannot be <code>null</code>)
      * @param file the file being unpublished (cannot be <code>null</code>)
      * @return the status of the outcome of this unpublishing operation
      */
-    @SuppressWarnings( "deprecation" )
     public Status unpublish( ModeShapeWorkspace workspace,
                              String path,
                              File file ) {

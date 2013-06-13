@@ -14,6 +14,7 @@ package org.jboss.tools.modeshape.rest.views;
 import static org.jboss.tools.modeshape.rest.IUiConstants.PUBLISHED_OVERLAY_IMAGE;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +62,7 @@ import org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
+import org.jboss.tools.modeshape.rest.domain.WorkspaceArea;
 import org.modeshape.common.annotation.GuardedBy;
 
 /**
@@ -204,6 +206,10 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
     @Override
     public Object getParent( final Object element ) {
         assert (element instanceof ModeShapeDomainObject);
+
+        if (element instanceof WorkspaceArea) {
+            return ((WorkspaceArea)element).getWorkspace();
+        }
 
         if (element instanceof ModeShapeWorkspace) {
             return ((ModeShapeWorkspace)element).getRepository();
@@ -502,7 +508,6 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
                             } finally {
                                 monitor.done();
                             }
-
                         }
 
                         /**
@@ -570,6 +575,55 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
                     addOfflineServer(repository.getServer());
                 }
             }
+        } else if (element instanceof ModeShapeWorkspace) {
+            final ModeShapeWorkspace workspace = (ModeShapeWorkspace)element;
+
+            if (isOkToConnect(workspace.getServer())) {
+                try {
+                    final ServerOperation op = new ServerOperation(workspace.getServer()) {
+
+                        /**
+                         * {@inheritDoc}
+                         *
+                         * @see org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider.ServerOperation#doRun(org.eclipse.core.runtime.IProgressMonitor)
+                         */
+                        @Override
+                        void doRun( final IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+                            if (monitor.isCanceled()) {
+                                throw new InterruptedException();
+                            }
+
+                            monitor.beginTask(RestClientI18n.runningWorkspacesQueryMsg, IProgressMonitor.UNKNOWN);
+
+                            try {
+                                final WorkspaceArea[] workspaceAreas = getServerManager().getWorkspaceAreas(workspace);
+
+                                if (workspaceAreas.length != currentChildCount) {
+                                    getViewer().setChildCount(workspace, workspaceAreas.length);
+                                }
+                            } catch (final Exception e) {
+                                throw new InvocationTargetException(e);
+                            } finally {
+                                monitor.done();
+                            }
+                        }
+
+                        /**
+                         * {@inheritDoc}
+                         *
+                         * @see org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider.ServerOperation#getDisplay()
+                         */
+                        @Override
+                        Display getDisplay() {
+                            return getViewer().getTree().getDisplay();
+                        }
+                    };
+
+                    run(op, true);
+                } catch (final Exception e) {
+                    addOfflineServer(workspace.getServer());
+                }
+            }
         }
     }
 
@@ -606,8 +660,20 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
                 try {
                     final ModeShapeWorkspace workspace = new ArrayList<ModeShapeWorkspace>(this.serverManager.getWorkspaces(repository)).get(index);
                     this.viewer.replace(repository, index, workspace);
+                    this.viewer.setHasChildren(workspace, true);
                 } catch (final Exception e) {
                     addOfflineServer(repository.getServer());
+                }
+            }
+        } else if (parent instanceof ModeShapeWorkspace) {
+            final ModeShapeWorkspace workspace = (ModeShapeWorkspace)parent;
+
+            if (isOkToConnect(workspace.getServer())) {
+                try {
+                    final WorkspaceArea workspaceArea = Arrays.asList(this.serverManager.getWorkspaceAreas(workspace)).get(index);
+                    this.viewer.replace(workspace, index, workspaceArea);
+                } catch (final Exception e) {
+                    addOfflineServer(workspace.getServer());
                 }
             }
         }
