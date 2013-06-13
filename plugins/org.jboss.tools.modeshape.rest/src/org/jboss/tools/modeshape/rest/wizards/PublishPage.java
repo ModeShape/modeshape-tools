@@ -828,7 +828,15 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
         // make sure there is a selection
         if (index != -1) {
-            this.repository = this.repositories.get(index);
+            // since repositories are sorted need to find right one
+            final String repoName = this.cbxRepository.getText();
+
+            for (ModeShapeRepository repo : this.repositories) {
+                if (repoName.equals(repo.getName())) {
+                    this.repository = repo;
+                    break;
+                }
+            }
         }
 
         // repository capabilities could affect the UI
@@ -903,28 +911,32 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
         // make sure there is a selection
         if (index != -1) {
-            ModeShapeWorkspace newWorkspace = this.workspaces.get(index);
+            final String workspaceName = this.cbxWorkspace.getText();
+ 
+            // since workspaces are sorted need to find the right one
+            for (ModeShapeWorkspace testWorkspace : this.workspaces) {
+                if (workspaceName.equals(testWorkspace.getName())) {
+                    this.workspace = testWorkspace;
+                    break;
+                }
+            }
 
-            if ((this.workspace == null) || !this.workspace.equals(newWorkspace)) {
-                this.workspace = newWorkspace;
+            // update workspace areas from server
+            final WorkspaceArea[] workspaceAreas = workspaceAreas();
+            final List<String> items = new ArrayList<String>();
 
-                // update workspace areas from server
-                final WorkspaceArea[] workspaceAreas = workspaceAreas();
-                final List<String> items = new ArrayList<String>();
-
-                // add in those workspace areas identified by server
-                if ((workspaceAreas != null) && (workspaceAreas.length != 0)) {
-                    for (final WorkspaceArea area : workspaceAreas) {
-                        final String path = area.getPath();
-                        items.add(path);
-                    }
-
-                    Collections.sort(items);
+            // add in those workspace areas identified by server
+            if ((workspaceAreas != null) && (workspaceAreas.length != 0)) {
+                for (final WorkspaceArea area : workspaceAreas) {
+                    final String path = area.getPath();
+                    items.add(path);
                 }
 
-                // populate combo
-                this.cbxWorkspaceAreas.setItems(items.toArray(new String[items.size()]));
+                Collections.sort(items);
             }
+
+            // populate combo
+            this.cbxWorkspaceAreas.setItems(items.toArray(new String[items.size()]));
 
             if (!this.cbxWorkspaceAreas.isEnabled()) {
                 this.cbxWorkspaceAreas.setEnabled(true);
@@ -940,7 +952,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             }
         }
 
-        if (this.cbxWorkspaceAreas.getItemCount() != 0) {
+        if (this.cbxWorkspaceAreas.getItemCount() == 0) {
+            this.workspaceArea = null;
+        } else {
             this.cbxWorkspaceAreas.select(0);
         }
 
@@ -1122,6 +1136,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             // disable controls if necessary
             if (this.cbxWorkspace.getEnabled()) {
                 this.cbxWorkspace.setEnabled(false);
+            }
+
+            if (this.cbxWorkspaceAreas.isEnabled()) {
                 this.cbxWorkspaceAreas.setEnabled(false);
                 this.btnNewArea.setEnabled(false);
             }
@@ -1133,6 +1150,13 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             // enable controls if necessary
             if (!this.cbxWorkspace.getEnabled()) {
                 this.cbxWorkspace.setEnabled(true);
+            }
+
+            final boolean enable = (this.cbxWorkspaceAreas.getItemCount() != 0);
+
+            if (this.cbxWorkspaceAreas.getEnabled() != enable) {
+                this.cbxWorkspaceAreas.setEnabled(enable);
+                this.btnNewArea.setEnabled(enable);
             }
         } else {
             // add an item for each workspace
@@ -1294,6 +1318,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         } else if (this.workspace == null) {
             int count = this.cbxWorkspace.getItemCount();
             msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableWorkspacesStatusMsg : RestClientI18n.publishPageMissingWorkspaceStatusMsg);
+        } else if (this.workspaceArea == null) {
+            msg = RestClientI18n.publishPageMissingPublishAreaStatusMsg;
         } else {
             severity = Severity.OK;
             msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg : RestClientI18n.publishPageUnpublishOkStatusMsg);
