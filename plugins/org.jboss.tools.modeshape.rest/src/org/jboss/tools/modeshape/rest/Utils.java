@@ -12,14 +12,16 @@
 package org.jboss.tools.modeshape.rest;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.PLUGIN_ID;
-
 import java.net.URL;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewPart;
+import org.jboss.tools.modeshape.rest.views.ServerView;
+import org.jboss.tools.modeshape.ui.UiUtils;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
@@ -111,6 +113,14 @@ public final class Utils {
         }
 
         return null;
+    }
+
+    /**
+     * @return the ModeShape View viewer or <code>null</code> if view is not being displayed
+     */
+    public static TreeViewer getServerViewer() {
+        final IViewPart serverView = UiUtils.getView(IUiConstants.SERVER_VIEW_ID);
+        return ((serverView == null) ? null : ((ServerView)serverView).getViewer());
     }
 
     /**

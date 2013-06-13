@@ -13,7 +13,6 @@ package org.jboss.tools.modeshape.rest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -26,6 +25,7 @@ import org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
+import org.jboss.tools.modeshape.rest.domain.WorkspaceArea;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
@@ -126,10 +126,11 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
             key = REPOSITORY_IMAGE;
         } else if (object instanceof ModeShapeServer) {
             key = SERVER_IMAGE;
-        } else if (object instanceof ModeShapeDomainObject) {
-            // should have an icon for every business object
-            assert false;
-        } else if (object instanceof String) {
+        } else if (object instanceof WorkspaceArea) {
+            key = PUBLISH_AREA_IMAGE;
+        }
+
+        if (object instanceof String) {
             key = (String)object;
         }
 

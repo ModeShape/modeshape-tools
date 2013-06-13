@@ -1,5 +1,7 @@
 package org.jboss.tools.modeshape.rest.domain;
 
+import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.modeshape.common.annotation.Immutable;
 import org.modeshape.common.util.CheckArg;
 
@@ -64,7 +66,8 @@ public final class WorkspaceArea implements ModeShapeDomainObject {
      */
     @Override
     public String getShortDescription() {
-        return getPath();
+        return NLS.bind(RestClientI18n.workspaceAreaDescription, new Object[] {this.workspace.getRepository().getName(),
+            this.workspace.getName(), getPath()});
     }
 
     /**

@@ -25,14 +25,13 @@ import org.modeshape.web.jcr.rest.client.domain.Server;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
- * The <code>MockRestExecutor</code> class is a test <code>IRestClient</code> implementation that does nothing.
+ * The <code>MockRestClient</code> class is a test <code>IRestClient</code> implementation that does nothing.
  */
 public final class MockRestClient implements IRestClient {
 
     /**
      * {@inheritDoc}
      *
-     * @throws UnsupportedOperationException if this method is called
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Repository)
      */
     @Override
@@ -177,6 +176,45 @@ public final class MockRestClient implements IRestClient {
     @Override
     public Server validate( Server server ) throws Exception {
         return server;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#markAsPublishArea(org.modeshape.web.jcr.rest.client.domain.Workspace, java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public Status markAsPublishArea( Workspace workspace,
+                                     String path,
+                                     String title,
+                                     String description ) {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#planForQuery(org.modeshape.web.jcr.rest.client.domain.Workspace, java.lang.String, java.lang.String, int, int, java.util.Map)
+     */
+    @Override
+    public String planForQuery( Workspace workspace,
+                                String language,
+                                String statement,
+                                int offset,
+                                int limit,
+                                Map<String, String> variables ) throws Exception {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#unmarkAsPublishArea(org.modeshape.web.jcr.rest.client.domain.Workspace, java.lang.String)
+     */
+    @Override
+    public Status unmarkAsPublishArea( Workspace workspace,
+                                       String path ) {
+        return null;
     }
 
 }

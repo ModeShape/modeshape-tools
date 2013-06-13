@@ -13,11 +13,11 @@ package org.jboss.tools.modeshape.rest.views;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.COLLAPSE_ALL_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.SERVER_VIEW_HELP_CONTEXT;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -43,6 +44,8 @@ import org.jboss.tools.modeshape.rest.IServerRegistryListener;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
+import org.jboss.tools.modeshape.rest.actions.AddPublishAreaAction;
+import org.jboss.tools.modeshape.rest.actions.DeletePublishAreaAction;
 import org.jboss.tools.modeshape.rest.actions.DeleteServerAction;
 import org.jboss.tools.modeshape.rest.actions.EditServerAction;
 import org.jboss.tools.modeshape.rest.actions.NewServerAction;
@@ -60,9 +63,19 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
     private IAction collapseAllAction;
 
     /**
+     * Adds a publish area to a workspace.
+     */
+    private BaseSelectionListenerAction addPublisAreaAction;
+
+    /**
      * Deletes a server.
      */
     private BaseSelectionListenerAction deleteAction;
+
+    /**
+     * Deletes a publish area from a workspace.
+     */
+    private BaseSelectionListenerAction deletePublisAreaAction;
 
     /**
      * Edits a server's properties.
@@ -120,6 +133,14 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
 
         // the new server action is always enabled
         this.newAction = new NewServerAction(shell, getServerManager());
+
+        // the add publish area action is only enabled when a workspace is selected
+        this.addPublisAreaAction = new AddPublishAreaAction(shell, getServerManager(), this.viewer);
+        this.viewer.addSelectionChangedListener(this.addPublisAreaAction);
+
+        // the delete publish area action is only enabled when a workspace area is selected
+        this.deletePublisAreaAction = new DeletePublishAreaAction(shell, getServerManager(), this.viewer);
+        this.viewer.addSelectionChangedListener(this.deletePublisAreaAction);
     }
 
     private void constructContextMenu() {
@@ -128,6 +149,9 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
         menuMgr.add(this.editAction);
         menuMgr.add(this.deleteAction);
         menuMgr.add(this.reconnectAction);
+        menuMgr.add(new Separator());
+        menuMgr.add(this.addPublisAreaAction);
+        menuMgr.add(this.deletePublisAreaAction);
 
         Menu menu = menuMgr.createContextMenu(this.viewer.getTree());
         this.viewer.getTree().setMenu(menu);
@@ -140,6 +164,10 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
         toolBar.add(this.editAction);
         toolBar.add(this.deleteAction);
         toolBar.add(this.reconnectAction);
+        toolBar.add(new Separator());
+        toolBar.add(this.addPublisAreaAction);
+        toolBar.add(this.deletePublisAreaAction);
+        toolBar.add(new Separator());
         toolBar.add(this.collapseAllAction);
     }
 
@@ -155,7 +183,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
         this.viewer.setContentProvider(this.provider);
         ILabelDecorator decorator = Activator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator();
         this.viewer.setLabelProvider(new DecoratingLabelProvider(this.provider, decorator));
-        ColumnViewerToolTipSupport.enableFor(this.viewer);
+        ColumnViewerToolTipSupport.enableFor(this.viewer, ToolTip.NO_RECREATE);
 
         this.viewer.addSelectionChangedListener(new ISelectionChangedListener() {
             /**
@@ -239,9 +267,9 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
     }
 
     /**
-     * @return the tree viewer
+     * @return the tree viewer (can be <code>null</code> if viewer was not constructed)
      */
-    TreeViewer getViewer() {
+    public TreeViewer getViewer() {
         return this.viewer;
     }
 

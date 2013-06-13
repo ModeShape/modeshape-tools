@@ -18,6 +18,20 @@ import org.eclipse.osgi.util.NLS;
  */
 public final class RestClientI18n extends NLS {
 
+    public static String addPublishAreaActionText;
+    public static String addPublishAreaActionToolTip;
+    public static String addPublishAreaDialogErrorsOccurredMsg;
+    public static String addPublishAreaDialogMessage;
+    public static String addPublishAreaDialogTitle;
+    public static String errorMarkingPublishArea;
+
+    public static String unmarkPublishActionText;
+    public static String unmarkPublishAreaActionToolTip;
+    public static String unmarkPublishAreaDialogErrorsOccurredMsg;
+    public static String deletePublishAreaDialogMessage;
+    public static String deletePublishAreaDialogTitle;
+    public static String errorUnmarkingPublishArea;
+
     public static String basePublishingActionPublishingWizardErrorMsg;
     public static String basePublishingActionUnpublishingWizardErrorMsg;
 
@@ -216,6 +230,9 @@ public final class RestClientI18n extends NLS {
 
     public static String testServerActionText;
     public static String testServerActionToolTip;
+
+    public static String workspaceAreaDescription;
+    public static String workspacePath;
 
     static {
         NLS.initializeMessages("org.jboss.tools.modeshape.rest.RestClientI18n", RestClientI18n.class); //$NON-NLS-1$
