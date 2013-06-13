@@ -12,7 +12,7 @@
 <h2>ModeShape Publishing Operations Dialog</h2>
 
 <p>The <i>Publishing Operations Dialog</i> is used to publish and unpublish workspace selected files and folders to/from 
-repository workspaces. When publishing, the selected files will be uploaded to the selected repository workspace. When 
+repository workspaces. When publishing, the selected files will be uploaded to the selected repository workspace publish area. When 
 unpublishing, the selected files will be removed from the selected repository workspace (if they exist there). See the 
 <a href="ModeShapePreferencesDialog.html">ModeShape Preference Pages</a> to identify the file extensions and folder names you
 don't want involved in publishing operations. Here is what the <i>Publishing Operations Dialog</i> looks like:</p>
@@ -41,8 +41,12 @@ don't want involved in publishing operations. Here is what the <i>Publishing Ope
 	<td>allows selection of a workspace of the selected repository</td>
 </tr>
 <tr>
-	<td align="right"><strong>Workspace Area Combo</strong>&nbsp;</td>
-	<td>allows selection of a known root path in the workspace where files will be sequenced (you can also choose to enter one of your own)</td>
+    <td align="right"><strong>Publish Area Combo</strong>&nbsp;</td>
+    <td>allows selection of a known root path in the workspace where files will be sequenced</td>
+</tr>
+<tr>
+    <td align="right"><strong>Add Publish Area Button</strong>&nbsp;</td>
+    <td>displays a dialog that can be used to create a new workspace publish area</td>
 </tr>
 <tr>
 	<td align="right"><strong>Resources List</strong>&nbsp;</td>
@@ -66,11 +70,12 @@ don't want involved in publishing operations. Here is what the <i>Publishing Ope
 </table>
 
 <p>A server must be selected before a repository can be selected. Likewise, a repository must be selected before a workspace 
-can be selected. The message area at the top of the dialog will indicate the type of operation (publish or unpublish) and if 
-there is any missing information. The workspace area is a path segment in the workspace that will be used as the root path
-for the publishing operation. Once the workspace has been selected the 'Finish' button will be enabled and the operation 
-can be executed. These operations can be run in the background so that multiple operations can be run at the same time. 
-The <a href="ModeShapeMessageConsole.html">ModeShape Message Console</a> displays output from the operations.</p>
+can be selected. And finally, a publish area must be selected in order for the publishing operation to be able to run. 
+The message area at the top of the dialog will indicate the type of operation (publish or unpublish) and if there is any 
+missing information. The publish area is a path segment in the workspace that will be used as the root path for the publishing 
+operation. Select the 'Finish' to run the publishing operation. Publishing operations can be run in the background so that 
+multiple operations can be run at the same time. The <a href="ModeShapeMessageConsole.html">ModeShape Message Console</a> 
+displays output from the operations.</p>
 
 <h3>Related Topics</h3>
 

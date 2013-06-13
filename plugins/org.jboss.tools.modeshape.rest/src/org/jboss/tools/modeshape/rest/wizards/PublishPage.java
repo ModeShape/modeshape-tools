@@ -16,7 +16,6 @@ import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.ENABLE_RES
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.IGNORED_RESOURCES_PREFERENCE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.PUBLISHING_PREFERENCE_PAGE_ID;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +46,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
@@ -54,6 +54,8 @@ import org.jboss.tools.modeshape.rest.IServerRegistryListener;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
+import org.jboss.tools.modeshape.rest.Utils;
+import org.jboss.tools.modeshape.rest.actions.AddPublishAreaAction;
 import org.jboss.tools.modeshape.rest.actions.NewServerAction;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
@@ -63,6 +65,7 @@ import org.jboss.tools.modeshape.rest.jobs.PublishJob.Type;
 import org.jboss.tools.modeshape.rest.preferences.IgnoredResourcesModel;
 import org.jboss.tools.modeshape.rest.preferences.PublishingFileFilter;
 import org.modeshape.common.util.CheckArg;
+import org.modeshape.common.util.StringUtil;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
 
@@ -72,19 +75,9 @@ import org.modeshape.web.jcr.rest.client.Status.Severity;
 public final class PublishPage extends WizardPage implements IServerRegistryListener, ModifyListener {
 
     /**
-     * The default repository workspace area where files are published.
-     */
-    private static final String DEFAULT_WORKSPACE_AREA = "/files"; //$NON-NLS-1$
-
-    /**
      * The key in the wizard <code>IDialogSettings</code> for the recurse flag.
      */
     private static final String RECURSE_KEY = "recurse"; //$NON-NLS-1$
-
-    /**
-     * The key in the wizard <code>IDialogSettings</code> for the workspace area path segment.
-     */
-    private static final String WORKSPACE_AREA_KEY = "workspaceArea"; //$NON-NLS-1$
 
     /**
      * Indicates if the file filter should be used.
@@ -103,7 +96,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                                           PublishingFileFilter filter ) throws CoreException {
         List<IFile> result = new ArrayList<IFile>();
 
-        if (((container instanceof IProject) && !((IProject)container).isOpen()) || ((filter != null) && !filter.accept(container))) {
+        if (((container instanceof IProject) && !((IProject)container).isOpen())
+            || ((filter != null) && !filter.accept(container))) {
             return result;
         }
 
@@ -274,6 +268,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     }
 
     /**
+     * The button that allows user to create a new publish area.
+     */
+    private Button btnNewArea;
+
+    /**
      * The repository chooser control.
      */
     private Combo cbxRepository;
@@ -317,11 +316,6 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
      * The control containing all the files being published or unpublished.
      */
     private org.eclipse.swt.widgets.List lstResources;
-
-    /**
-     * The list of workspace areas previously used in this Eclipse workspace.
-     */
-    private final List<String> mruWorkspaceAreas = new ArrayList<String>();
 
     /**
      * Indicates if resources should be found recursively.
@@ -397,8 +391,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                         List<IResource> resources ) throws CoreException {
         super(PublishPage.class.getSimpleName());
         CheckArg.isNotNull(resources, "resources"); //$NON-NLS-1$
-        setTitle((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishTitle
-                                       : RestClientI18n.publishPageUnpublishTitle);
+        setTitle((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishTitle : RestClientI18n.publishPageUnpublishTitle);
         setPageComplete(false);
 
         this.type = type;
@@ -434,9 +427,10 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             Label lblServer = new Label(pnlServer, SWT.LEFT);
             lblServer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
             lblServer.setText(RestClientI18n.publishPageServerLabel);
+            lblServer.setToolTipText(RestClientI18n.publishPageServerToolTip);
 
             this.cbxServer = new Combo(pnlServer, SWT.DROP_DOWN | SWT.READ_ONLY);
-            this.cbxServer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+            this.cbxServer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
             this.cbxServer.setToolTipText(RestClientI18n.publishPageServerToolTip);
 
             final IAction action = new NewServerAction(this.getShell(), getServerManager());
@@ -456,8 +450,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 }
             });
 
-            // update page message first time selected to get rid of initial
-            // message by forcing validation
+            // update page message first time selected to get rid of initial message by forcing validation
             btnNewServer.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
@@ -476,6 +469,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             Label lblRepository = new Label(pnl, SWT.LEFT);
             lblRepository.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
             lblRepository.setText(RestClientI18n.publishPageRepositoryLabel);
+            lblRepository.setToolTipText(RestClientI18n.publishPageRepositoryToolTip);
 
             this.cbxRepository = new Combo(pnl, SWT.DROP_DOWN | SWT.READ_ONLY);
             this.cbxRepository.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
@@ -495,29 +489,46 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             } else {
                 this.cbxWorkspace.setToolTipText(RestClientI18n.publishPageWorkspaceUnpublishToolTip);
             }
+
+            this.cbxWorkspace.setToolTipText(this.cbxWorkspace.getToolTipText());
         }
 
         { // row 4: workspace area
-            Label lblWorkspaceArea = new Label(pnl, SWT.LEFT);
+            Composite pnlArea = new Composite(parent, SWT.NONE);
+            GridLayout layout = new GridLayout(3, false);
+            layout.marginHeight = 0;
+            layout.marginWidth = 0;
+            pnlArea.setLayout(layout);
+            pnlArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            ((GridData)pnl.getLayoutData()).horizontalSpan = 2;
+
+            Label lblWorkspaceArea = new Label(pnlArea, SWT.LEFT);
             lblWorkspaceArea.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
             lblWorkspaceArea.setText(RestClientI18n.publishPageWorkspaceAreaLabel);
+            lblWorkspaceArea.setToolTipText(RestClientI18n.publishPageWorkspaceAreaToolTip);
 
-            this.cbxWorkspaceAreas = new Combo(pnl, SWT.DROP_DOWN);
-            this.cbxWorkspaceAreas.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+            this.cbxWorkspaceAreas = new Combo(pnlArea, SWT.DROP_DOWN | SWT.READ_ONLY);
+            this.cbxWorkspaceAreas.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
             this.cbxWorkspaceAreas.setToolTipText(RestClientI18n.publishPageWorkspaceAreaToolTip);
+            this.cbxWorkspaceAreas.setEnabled(false);
 
-            // set the MRU of workspace areas
-            if (getDialogSettings().getArray(WORKSPACE_AREA_KEY) != null) {
-                String[] areas = getDialogSettings().getArray(WORKSPACE_AREA_KEY);
-                this.mruWorkspaceAreas.addAll(Arrays.asList(areas));
-            }
+            this.btnNewArea = new Button(pnlArea, SWT.PUSH);
+            this.btnNewArea.setImage(Activator.getDefault().getSharedImage(ISharedImages.IMG_OBJ_ADD));
+            this.btnNewArea.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+            this.btnNewArea.setToolTipText(RestClientI18n.addPublishAreaActionToolTip);
+            this.btnNewArea.setEnabled(false);
+            this.btnNewArea.addSelectionListener(new SelectionAdapter() {
 
-            // make sure MRU has default area
-            if (!this.mruWorkspaceAreas.contains(DEFAULT_WORKSPACE_AREA)) {
-                this.mruWorkspaceAreas.add(DEFAULT_WORKSPACE_AREA);
-            }
-
-            Collections.sort(this.mruWorkspaceAreas);
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                 */
+                @Override
+                public void widgetSelected( SelectionEvent e ) {
+                    handleNewWorkspaceArea();
+                }
+            });
         }
     }
 
@@ -547,16 +558,12 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             this.lstResources = new org.eclipse.swt.widgets.List(pnl, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
             GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
             gd.horizontalSpan = 2;
-            gd.minimumHeight = this.lstResources.getItemHeight() * 2; // set min
-                                                                      // height
-            gd.heightHint = this.lstResources.getItemHeight() * 10; // set
-                                                                    // preferred
-                                                                    // height
+            gd.minimumHeight = this.lstResources.getItemHeight() * 2; // set min height
+            gd.heightHint = this.lstResources.getItemHeight() * 10; // set preferred height
             this.lstResources.setLayoutData(gd);
             final org.eclipse.swt.widgets.List finalLst = this.lstResources;
 
-            // update page message first time selected to get rid of initial
-            // message by forcing validation
+            // update page message first time selected to get rid of initial message by forcing validation
             this.lstResources.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
@@ -600,8 +607,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 }
             });
 
-            // update page message first time selected to get rid of initial
-            // message by forcing validation
+            // update page message first time selected to get rid of initial message by forcing validation
             chkRecurse.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
@@ -733,12 +739,62 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     }
 
     /**
+     * Opens dialog that will create a new workspace area.
+     */
+    void handleNewWorkspaceArea() {
+        final AddPublishAreaAction action = new AddPublishAreaAction(getShell(), getServerManager(), this.workspace,
+                                                                     Utils.getServerViewer());
+        action.run();
+
+        if (action.success()) {
+            String newPath = null;
+            final String[] before = this.cbxWorkspaceAreas.getItems();
+            final WorkspaceArea[] workspaceAreas = workspaceAreas();
+            final List<String> items = new ArrayList<String>();
+
+            // add in those workspace areas identified by server
+            if ((workspaceAreas != null) && (workspaceAreas.length != 0)) {
+                for (final WorkspaceArea area : workspaceAreas) {
+                    boolean found = false;
+                    final String path = area.getPath();
+                    items.add(path);
+
+                    // keep track of the new path added
+                    if (StringUtil.isBlank(newPath)) {
+                        for (final String beforeArea : before) {
+                            if (beforeArea.equals(path)) {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found) {
+                            newPath = path;
+                        }
+                    }
+                }
+
+                Collections.sort(items);
+            }
+
+            // populate combo
+            this.cbxWorkspaceAreas.setItems(items.toArray(new String[items.size()]));
+
+            // should always have a new path unless server went down
+            if (!StringUtil.isBlank(newPath)) {
+                this.cbxWorkspaceAreas.setText(newPath);
+            }
+        }
+    }
+
+    /**
      * Opens the preference page.
      */
     void handleOpenPreferencePage() {
-        // open preference page and only allow the pref page where the version
-        // setting is
-        PreferencesUtil.createPreferenceDialogOn(getShell(), PUBLISHING_PREFERENCE_PAGE_ID, new String[] { PUBLISHING_PREFERENCE_PAGE_ID },
+        // open preference page and only allow the pref page where the version setting is
+        PreferencesUtil.createPreferenceDialogOn(getShell(),
+                                                 PUBLISHING_PREFERENCE_PAGE_ID,
+                                                 new String[] {PUBLISHING_PREFERENCE_PAGE_ID},
                                                  null).open();
     }
 
@@ -757,7 +813,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageRecurseProcessingErrorMsg, e));
 
             if (getControl().isVisible()) {
-                MessageDialog.openError(getShell(), RestClientI18n.errorDialogTitle,
+                MessageDialog.openError(getShell(),
+                                        RestClientI18n.errorDialogTitle,
                                         RestClientI18n.publishPageRecurseProcessingErrorMsg);
             }
         }
@@ -824,6 +881,20 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         }
     }
 
+    WorkspaceArea[] workspaceAreas() {
+        try {
+            final WorkspaceArea[] workspaceAreas = getServerManager().getWorkspaceAreas(this.workspace);
+            return workspaceAreas;
+        } catch (Exception e) {
+            Activator.getDefault().log(new Status(
+                                                  Severity.ERROR,
+                                                  NLS.bind(RestClientI18n.publishPageUnableToObtainWorkspaceAreas, this.workspace),
+                                                  e));
+        }
+
+        return new WorkspaceArea[0];
+    }
+
     /**
      * Handler for when the workspace control value is modified.
      */
@@ -838,37 +909,35 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 this.workspace = newWorkspace;
 
                 // update workspace areas from server
-                WorkspaceArea[] workspaceAreas = null;
-
-                try {
-                    workspaceAreas = getServerManager().getWorkspaceAreas(this.workspace);
-                } catch (Exception e) {
-                    Activator.getDefault()
-                             .log(new Status(Severity.ERROR,
-                                             NLS.bind(RestClientI18n.publishPageUnableToObtainWorkspaceAreas, this.workspace),
-                                             e));
-                }
-
-                // start with all MRU workspace areas
-                final List<String> items = new ArrayList<String>(this.mruWorkspaceAreas);
+                final WorkspaceArea[] workspaceAreas = workspaceAreas();
+                final List<String> items = new ArrayList<String>();
 
                 // add in those workspace areas identified by server
                 if ((workspaceAreas != null) && (workspaceAreas.length != 0)) {
-                    for (WorkspaceArea area : workspaceAreas) {
+                    for (final WorkspaceArea area : workspaceAreas) {
                         final String path = area.getPath();
-
-                        if (!items.contains(path)) {
-                            items.add(path);
-                        }
+                        items.add(path);
                     }
+
+                    Collections.sort(items);
                 }
 
                 // populate combo
                 this.cbxWorkspaceAreas.setItems(items.toArray(new String[items.size()]));
             }
+
+            if (!this.cbxWorkspaceAreas.isEnabled()) {
+                this.cbxWorkspaceAreas.setEnabled(true);
+                this.btnNewArea.setEnabled(true);
+            }
         } else {
             this.workspaceArea = null;
             this.cbxWorkspaceAreas.removeAll();
+
+            if (this.cbxWorkspaceAreas.isEnabled()) {
+                this.cbxWorkspaceAreas.setEnabled(false);
+                this.btnNewArea.setEnabled(false);
+            }
         }
 
         if (this.cbxWorkspaceAreas.getItemCount() != 0) {
@@ -925,8 +994,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     }
 
     /**
-     * Refreshes the repository-related fields and controls based on the server registry. This in turn causes the workspaces to also
-     * to be refreshed.
+     * Refreshes the repository-related fields and controls based on the server registry. This in turn causes the workspaces to
+     * also to be refreshed.
      */
     private void refreshRepositories() {
         this.repository = null;
@@ -963,9 +1032,14 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             }
         } else {
             // add an item for each repository
+            final List<String> repoNames = new ArrayList<String>(this.repositories.size());
+
             for (ModeShapeRepository repository : this.repositories) {
-                this.cbxRepository.add(repository.getName());
+                repoNames.add(repository.getName());
             }
+
+            Collections.sort(repoNames);
+            this.cbxRepository.setItems(repoNames.toArray(new String[repoNames.size()]));
 
             // enable control if necessary
             if (!this.cbxRepository.getEnabled()) {
@@ -1048,10 +1122,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             // disable controls if necessary
             if (this.cbxWorkspace.getEnabled()) {
                 this.cbxWorkspace.setEnabled(false);
-            }
-
-            if (this.cbxWorkspaceAreas.getEnabled()) {
                 this.cbxWorkspaceAreas.setEnabled(false);
+                this.btnNewArea.setEnabled(false);
             }
         } else if (this.workspaces.size() == 1) {
             ModeShapeWorkspace temp = this.workspaces.get(0);
@@ -1062,23 +1134,25 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             if (!this.cbxWorkspace.getEnabled()) {
                 this.cbxWorkspace.setEnabled(true);
             }
-
-            if (!this.cbxWorkspaceAreas.getEnabled()) {
-                this.cbxWorkspaceAreas.setEnabled(true);
-            }
         } else {
             // add an item for each workspace
+            final List<String> workspaceNames = new ArrayList<String>(this.workspaces.size());
+
             for (ModeShapeWorkspace workspace : this.workspaces) {
-                this.cbxWorkspace.add(workspace.getName());
+                workspaceNames.add(workspace.getName());
             }
+
+            Collections.sort(workspaceNames);
+            this.cbxWorkspace.setItems(workspaceNames.toArray(new String[workspaceNames.size()]));
 
             // enable controls if necessary
             if (!this.cbxWorkspace.getEnabled()) {
                 this.cbxWorkspace.setEnabled(true);
             }
 
-            if (!this.cbxWorkspaceAreas.getEnabled()) {
-                this.cbxWorkspaceAreas.setEnabled(true);
+            if (this.cbxWorkspaceAreas.isEnabled()) {
+                this.cbxWorkspaceAreas.setEnabled(false);
+                this.btnNewArea.setEnabled(false);
             }
         }
     }
@@ -1117,8 +1191,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
             // set initial message
             if (this.status.isOk()) {
-                String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg
-                                                         : RestClientI18n.publishPageUnpublishOkStatusMsg);
+                String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg : RestClientI18n.publishPageUnpublishOkStatusMsg);
                 setMessage(msg, IMessageProvider.NONE);
             } else {
                 setMessage(this.status.getMessage(), IMessageProvider.ERROR);
@@ -1146,8 +1219,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
      * Updates the initial page message.
      */
     void updateInitialMessage() {
-        String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg
-                                                 : RestClientI18n.publishPageUnpublishOkStatusMsg);
+        String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg : RestClientI18n.publishPageUnpublishOkStatusMsg);
 
         if (msg.equals(getMessage())) {
             updateState();
@@ -1212,24 +1284,19 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         Severity severity = Severity.ERROR;
 
         if ((this.resources == null) || this.resources.isEmpty() || this.files.isEmpty()) {
-            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPageNoResourcesToPublishStatusMsg
-                                         : RestClientI18n.publishPageNoResourcesToUnpublishStatusMsg);
+            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPageNoResourcesToPublishStatusMsg : RestClientI18n.publishPageNoResourcesToUnpublishStatusMsg);
         } else if (this.server == null) {
             int count = this.cbxServer.getItemCount();
-            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableServersStatusMsg
-                               : RestClientI18n.publishPageMissingServerStatusMsg);
+            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableServersStatusMsg : RestClientI18n.publishPageMissingServerStatusMsg);
         } else if (this.repository == null) {
             int count = this.cbxRepository.getItemCount();
-            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableRepositoriesStatusMsg
-                               : RestClientI18n.publishPageMissingRepositoryStatusMsg);
+            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableRepositoriesStatusMsg : RestClientI18n.publishPageMissingRepositoryStatusMsg);
         } else if (this.workspace == null) {
             int count = this.cbxWorkspace.getItemCount();
-            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableWorkspacesStatusMsg
-                               : RestClientI18n.publishPageMissingWorkspaceStatusMsg);
+            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableWorkspacesStatusMsg : RestClientI18n.publishPageMissingWorkspaceStatusMsg);
         } else {
             severity = Severity.OK;
-            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg
-                                         : RestClientI18n.publishPageUnpublishOkStatusMsg);
+            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg : RestClientI18n.publishPageUnpublishOkStatusMsg);
         }
 
         this.status = new Status(severity, msg, null);
@@ -1241,13 +1308,6 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     void wizardFinished() {
         // update dialog settings
         getDialogSettings().put(RECURSE_KEY, this.recurse);
-
-        // add in current workspace area if necessary
-        if (!this.mruWorkspaceAreas.contains(this.workspaceArea)) {
-            this.mruWorkspaceAreas.add(this.workspaceArea);
-        }
-
-        getDialogSettings().put(WORKSPACE_AREA_KEY, this.mruWorkspaceAreas.toArray(new String[this.mruWorkspaceAreas.size()]));
     }
 
 }

@@ -20,6 +20,8 @@ public interface IUiConstants {
 
     String ICON_FOLDER = "icons/"; //$NON-NLS-1$
 
+    String SERVER_VIEW_ID = PLUGIN_ID + ".views.serverView"; //$NON-NLS-1$
+
     //
     // /icons/objects/
     //
@@ -27,6 +29,8 @@ public interface IUiConstants {
     String OBJECT_ICONS_FOLDER = ICON_FOLDER + "objects/"; //$NON-NLS-1$
 
     String CHECKMARK_IMAGE = OBJECT_ICONS_FOLDER + "checkmark.gif"; //$NON-NLS-1$
+
+    String PUBLISH_AREA_IMAGE = OBJECT_ICONS_FOLDER + "publish_area.png"; //$NON-NLS-1$
 
     String REPOSITORY_IMAGE = OBJECT_ICONS_FOLDER + "repository.gif"; //$NON-NLS-1$
 
@@ -44,6 +48,8 @@ public interface IUiConstants {
 
     String COLLAPSE_ALL_IMAGE = VIEWS_ICON_FOLDER + "collapse_all.gif"; //$NON-NLS-1$
 
+    String DELETE_PUBLISH_AREA_IMAGE = VIEWS_ICON_FOLDER + "delete_publish_area.png"; //$NON-NLS-1$
+
     String DELETE_SERVER_IMAGE = VIEWS_ICON_FOLDER + "delete_server.gif"; //$NON-NLS-1$
 
     String ModeShape_IMAGE_16x = VIEWS_ICON_FOLDER + "modeShape_icon_16x.png"; //$NON-NLS-1$
@@ -51,6 +57,8 @@ public interface IUiConstants {
     String EDIT_SERVER_IMAGE = VIEWS_ICON_FOLDER + "edit_server.gif"; //$NON-NLS-1$
 
     String ERROR_OVERLAY_IMAGE = VIEWS_ICON_FOLDER + "error_overlay.gif"; //$NON-NLS-1$
+
+    String NEW_PUBLISH_AREA_IMAGE = VIEWS_ICON_FOLDER + "new_publish_area.png"; //$NON-NLS-1$
 
     String NEW_SERVER_IMAGE = VIEWS_ICON_FOLDER + "new_server.gif"; //$NON-NLS-1$
 

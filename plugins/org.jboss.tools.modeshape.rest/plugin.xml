@@ -163,7 +163,7 @@
       
       <!-- Server view -->
       <view
-            id="serverView"
+            id="org.jboss.tools.modeshape.rest.views.serverView"
             name="%serverView"
             category="org.modeshape"
             class="org.jboss.tools.modeshape.rest.views.ServerView"
