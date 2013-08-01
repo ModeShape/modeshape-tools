@@ -246,7 +246,7 @@ public class CompactNodeTypeDefinition implements CndElement {
                 if (superTypeNodeType == null) {
                     // super type not found in CND so see if it is a built-in
                     childNodes.addAll(WorkspaceRegistry.get().getChildNodeDefinitions(superType.get(), true));
-                } else {
+                } else if (!nodeTypeDefinitionName.equals(superTypeNodeType.getName())) {
                     childNodes.addAll(getChildNodeDefinitions(superTypeNodeType.getName(), true));
                 }
             }
@@ -399,7 +399,7 @@ public class CompactNodeTypeDefinition implements CndElement {
                 if (superTypeNodeType == null) {
                     // super type not found in CND so see if it is a built-in
                     properties.addAll(WorkspaceRegistry.get().getPropertyDefinitions(superType.get(), true));
-                } else {
+                } else if (!nodeTypeDefinitionName.equals(superTypeNodeType.getName())) {
                     properties.addAll(getPropertyDefinitions(superTypeNodeType.getName(), true));
                 }
             }

@@ -2588,7 +2588,7 @@ public class CndFormsEditorPage extends CndEditorPage implements PropertyChangeL
             final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
             final QualifiedName newSupertype = dialog.getQualifiedName();
 
-            // add and select new supertype
+            // add, validate, and select new supertype
             if (nodeTypeDefinition.addSuperType(newSupertype.get())) {
                 this.superTypesViewer.setSelection(new StructuredSelection(newSupertype.get()), true);
 
@@ -3814,9 +3814,8 @@ public class CndFormsEditorPage extends CndEditorPage implements PropertyChangeL
     }
 
     void validateNodeTypes() {
-        final MultiValidationStatus status = CndValidator.validateNodeTypeDefinitions(getCnd().getNodeTypeDefinitions(),
-                                                                                      getCnd().getNamespacePrefixes(),
-                                                                                      true);
+        final MultiValidationStatus status = new MultiValidationStatus();
+        CndValidator.validateNodeTypeDefinitions(getCnd(), true, status);
         updateMessage(status, this.nodeTypeSection.getDescriptionControl());
     }
 

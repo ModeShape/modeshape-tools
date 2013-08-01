@@ -134,4 +134,15 @@ public class QueryOperatorsTest implements Constants {
         assertEquals(QUERY_OPS_VARIANT_COMPRESSED_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(QUERY_OPS_VARIANT_LONG_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void verifyInvalidFindParameter() {
+        QueryOperators.QueryOperator.find("bogus");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void verifyInvalidFindUsingJcrValueParameter() {
+        QueryOperators.QueryOperator.findUsingJcrValue("bogus");
+    }
+
 }

@@ -318,6 +318,11 @@ public final class Messages extends NLS {
     public static String namespaceUri;
 
     /**
+     * A message indicating a node type definition has itself as a super type. One parameter, the node type name, is required.
+     */
+    public static String nodeTypeCannotBeSuperTypeOfItself;
+
+    /**
      * A message indicating a node type definition does not have any property definitions or child node definitions. One parameter,
      * the node type definition name, is required.
      */
@@ -438,6 +443,12 @@ public final class Messages extends NLS {
      * definition name, is required.
      */
     public static String superTypesExistButMarkedAsVariant;
+
+    /**
+     * A message indicating a node type definition has a super type that is not a mixin when it is itself a mixin. These two
+     * parameters, the node type name and the super type name, are required.
+     */
+    public static String superTypeNotAMixin;
 
     /**
      * A message indicating that a property value couldn't be converted from one data type to another. Three parameters, the

@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
@@ -85,6 +84,16 @@ public class OnParentValueTest implements Constants {
         assertEquals(VERSION_NOTATION, this.attribute.toCndNotation(CndElement.NotationType.LONG));
         assertEquals(VERSION_NOTATION, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(VERSION_NOTATION, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void verifyInvalidFindParameter() {
+        OnParentVersion.find("bogus");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void verifyInvalidFindUsingJcrValueParameter() {
+        OnParentVersion.findUsingJcrValue(1234);
     }
 
 }
