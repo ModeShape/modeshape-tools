@@ -324,7 +324,7 @@ public final class CndValidator {
             if (Utils.isEmpty(nodeTypeDefinitions)) {
                 noNodeTypeDefinitions = true;
             } else {
-                validateNodeTypeDefinitions(nodeTypeDefinitions, cnd.getNamespacePrefixes(), true, status);
+                validateNodeTypeDefinitions(cnd, true, status);
             }
         }
 
@@ -475,7 +475,7 @@ public final class CndValidator {
 
     /**
      * Checks for duplicates and correct value for type.
-     *
+     * 
      * @param propertyName the name of the property definition (can be <code>null</code> or empty)
      * @param propertyType the property definition's property type (cannot be <code>null</code>)
      * @param defaultValues the default values (can be <code>null</code>)
@@ -493,7 +493,7 @@ public final class CndValidator {
 
     /**
      * Checks for duplicates and correct value for type.
-     *
+     * 
      * @param propertyName the name of the property definition (cannot be <code>null</code> or empty)
      * @param propertyType the property definition's property type (cannot be <code>null</code>)
      * @param defaultValues the default values (can be <code>null</code>)
@@ -925,16 +925,13 @@ public final class CndValidator {
 
     /**
      * @param nodeTypeDefinition the node type definition being validated (cannot be <code>null</code>)
-     * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be
-     *        <code>null</code> or empty)
-     * @param existingNodeTypeNames the existing node type names used to check for a duplicate (can be <code>null</code> or empty)
+     * @param cnd the CND associated with the node type definition (can be <code>null</code>)
      * @param validateEachPropertyAndChildNode indicates if property definition and child node definition validation should be
      *        done
      * @return the status (never <code>null</code>)
      */
     public static MultiValidationStatus validateNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinition,
-                                                                    final Collection<String> validNamespacePrefixes,
-                                                                    final Collection<QualifiedName> existingNodeTypeNames,
+                                                                    final CompactNodeTypeDefinition cnd,
                                                                     final boolean validateEachPropertyAndChildNode ) {
         Utils.verifyIsNotNull(nodeTypeDefinition, "nodeTypeDefinition"); //$NON-NLS-1$
 
@@ -959,9 +956,11 @@ public final class CndValidator {
             nodeTypeDefinitionName = Messages.missingName;
         }
 
+        final Collection<String> validNamespacePrefixes = ((cnd == null) ? null : cnd.getNamespacePrefixes());
+
         { // name
           // ERROR - Empty or invalid node type definition name
-            validateName(nodeTypeDefinition, validNamespacePrefixes, existingNodeTypeNames, status);
+            validateName(nodeTypeDefinition, validNamespacePrefixes, null, status);
         }
 
         { // super types
@@ -978,6 +977,12 @@ public final class CndValidator {
                                    nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
                                    superTypeNames,
                                    status);
+
+                if (cnd != null) {
+                    for (final QualifiedName superType : nodeTypeDefinition.getSupertypes()) {
+                        status.add(validateSuperType(nodeTypeDefinition, superType.get(), cnd));
+                    }
+                }
             }
         }
 
@@ -1017,45 +1022,22 @@ public final class CndValidator {
     }
 
     /**
-     * @param nodeTypeDefinition the node type definition being validated (cannot be <code>null</code>)
-     * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be
-     *        <code>null</code> or empty)
-     * @param existingNodeTypeNames the existing node type names used to check for a duplicate (can be <code>null</code> or empty)
-     * @param validateEachPropertyAndChildNode indicates if property definition and child node definition validation should be
-     *        done
-     * @param status the status to add the new status to (never <code>null</code>)
-     */
-    public static void validateNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinition,
-                                                   final Collection<String> validNamespacePrefixes,
-                                                   final Collection<QualifiedName> existingNodeTypeNames,
-                                                   final boolean validateEachPropertyAndChildNode,
-                                                   final MultiValidationStatus status ) {
-        final ValidationStatus newStatus = validateNodeTypeDefinition(nodeTypeDefinition,
-                                                                      validNamespacePrefixes,
-                                                                      existingNodeTypeNames,
-                                                                      validateEachPropertyAndChildNode);
-
-        if (!newStatus.isOk()) {
-            status.add(newStatus);
-        }
-    }
-
-    /**
-     * @param nodeTypeDefinitions the collection of namespace mappings to validate (can be <code>null</code> or empty)
-     * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be
-     *        <code>null</code> or empty)
+     * @param cnd the cnd whose node type definitions are being validated (cannot be <code>null</code>)
      * @param validateEachPropertyAndChildNode indicates if property definition and child node definition validation should be
      *        done
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validateNodeTypeDefinitions( final Collection<NodeTypeDefinition> nodeTypeDefinitions,
-                                                                     final Collection<String> validNamespacePrefixes,
+    public static MultiValidationStatus validateNodeTypeDefinitions( final CompactNodeTypeDefinition cnd,
                                                                      final boolean validateEachPropertyAndChildNode ) {
+        Utils.verifyIsNotNull(cnd, "cnd"); //$NON-NLS-1$
+
         /**
          * <pre>
          *     ERROR - Duplicate node type definition names
          * </pre>
          */
+
+        final Collection<NodeTypeDefinition> nodeTypeDefinitions = cnd.getNodeTypeDefinitions();
 
         // OK not to have node type definitions
         if (Utils.isEmpty(nodeTypeDefinitions)) {
@@ -1066,7 +1048,7 @@ public final class CndValidator {
         final Collection<String> names = new ArrayList<String>(nodeTypeDefinitions.size());
 
         for (final NodeTypeDefinition nodeTypeDefinition : nodeTypeDefinitions) {
-            validateNodeTypeDefinition(nodeTypeDefinition, validNamespacePrefixes, null, validateEachPropertyAndChildNode, status);
+            status.add(validateNodeTypeDefinition(nodeTypeDefinition, cnd, validateEachPropertyAndChildNode));
 
             { // ERROR - Duplicate node type definition names
                 final String name = nodeTypeDefinition.getName();
@@ -1086,20 +1068,17 @@ public final class CndValidator {
     }
 
     /**
-     * @param nodeTypeDefinitions the collection of namespace mappings to validate (can be <code>null</code> or empty)
-     * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be
-     *        <code>null</code> or empty)
+     * @param cnd the cnd whose node type definitions are being validated (cannot be <code>null</code>)
      * @param validateEachPropertyAndChildNode indicates if property definition and child node definition validation should be
      *        done
      * @param status the status to add the new status to (never <code>null</code>)
      */
-    public static void validateNodeTypeDefinitions( final Collection<NodeTypeDefinition> nodeTypeDefinitions,
-                                                    final Collection<String> validNamespacePrefixes,
+    public static void validateNodeTypeDefinitions( final CompactNodeTypeDefinition cnd,
                                                     final boolean validateEachPropertyAndChildNode,
                                                     final MultiValidationStatus status ) {
-        final ValidationStatus newStatus = validateNodeTypeDefinitions(nodeTypeDefinitions,
-                                                                       validNamespacePrefixes,
-                                                                       validateEachPropertyAndChildNode);
+        Utils.verifyIsNotNull(cnd, "cnd"); //$NON-NLS-1$
+
+        final ValidationStatus newStatus = validateNodeTypeDefinitions(cnd, validateEachPropertyAndChildNode);
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
@@ -1569,6 +1548,44 @@ public final class CndValidator {
     }
 
     /**
+     * @param nodeTypeDefinition the node type definition being validated (cannot be <code>null</code>)
+     * @param superTypeName the supertype name (cannot be <code>null</code> or empty)
+     * @param cnd the CND (cannot be <code>null</code>)
+     * @return the status (never <code>null</code>)
+     */
+    private static ValidationStatus validateSuperType( final NodeTypeDefinition nodeTypeDefinition,
+                                                       final String superTypeName,
+                                                       final CompactNodeTypeDefinition cnd ) {
+        Utils.verifyIsNotNull(nodeTypeDefinition, "nodeTypeDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotEmpty(superTypeName, "superTypeName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(cnd, "cnd"); //$NON-NLS-1$
+
+        // make sure if mixin then supertype must be a mixin
+        if (nodeTypeDefinition.isMixin()) {
+            // first check to see if supertype is in CND
+            NodeTypeDefinition superTypeNode = cnd.getNodeTypeDefinition(superTypeName);
+
+            // check to see if built-in node type
+            if (superTypeNode == null) {
+                try {
+                    superTypeNode = WorkspaceRegistry.get().getNodeTypeDefinition(superTypeName);
+                } catch (Exception e) {
+                    // should only happen if the registry does not load which would occur when the editor opens
+                }
+            }
+
+            if ((superTypeNode != null) && !superTypeNode.isMixin()) {
+                return ValidationStatus.createErrorMessage(CndValidator.StatusCodes.SUPER_TYPE_NOT_A_MIXIN,
+                                                           NLS.bind(Messages.superTypeNotAMixin,
+                                                                    nodeTypeDefinition.getName(),
+                                                                    superTypeName));
+            }
+        }
+
+        return ValidationStatus.OK_STATUS;
+    }
+
+    /**
      * @param nodeTypeDefinitionName the node type name whose supertypes are being checked (cannot be <code>null</code> or empty)
      * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
      * @param superTypesState the supertypes property state (cannot be <code>null</code>)
@@ -1587,6 +1604,7 @@ public final class CndValidator {
          * <pre>
          *     ERROR - Invalid super type name
          *     ERROR - Duplicate super type name
+         *     ERROR - Supertype name cannot be node type name
          *     ERROR - Cannot have explicit super types when super types is marked as a variant
          * </pre>
          */
@@ -1602,6 +1620,14 @@ public final class CndValidator {
         for (final QualifiedName superTypeName : superTypeNames) {
             // ERROR - Invalid super type name
             validateQualifiedName(superTypeName, Messages.superTypeName, validNamespacePrefixes, null, status);
+
+            // ERROR - Supertype name cannot be node type name
+            if (nodeTypeDefinitionName.equals(superTypeName.get())) {
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.NODE_TYPE_CANNOT_BE_SUPER_TYPE_OF_ITSELF,
+                                                               NLS.bind(Messages.nodeTypeCannotBeSuperTypeOfItself,
+                                                                        nodeTypeDefinitionName)));
+                continue;
+            }
 
             if (!Utils.isEmpty(superTypeName.get())) {
                 // ERROR - Duplicate super type name
@@ -1745,7 +1771,7 @@ public final class CndValidator {
 
     /**
      * Checks for valid constraint and duplicates.
-     *
+     * 
      * @param propertyName the property definition name (can be <code>null</code> or empty)
      * @param valueConstraints the value constraints (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
@@ -1759,7 +1785,7 @@ public final class CndValidator {
 
     /**
      * Checks for valid constraint and duplicates.
-     *
+     * 
      * @param propertyName the property definition name (can be <code>null</code> or empty)
      * @param valueConstraints the value constraints (can be <code>null</code> or empty)
      * @param status the status to add the new status to (cannot be <code>null</code>)
@@ -1800,7 +1826,7 @@ public final class CndValidator {
         // nothing to do
     }
 
-    interface StatusCodes {
+    public interface StatusCodes {
         int EMPTY_VALUE = 100;
         int INVALID_PROPERTY_VALUE_FOR_TYPE = 105;
         int ERROR_VALIDATING_PROPERTY_VALUE_FOR_TYPE = 110;
@@ -1842,6 +1868,8 @@ public final class CndValidator {
         int DUPLICATE_VALUE_CONSTRAINT = 290;
         int VALUE_CONSTRAINTS_EXIST_BUT_MARKED_AS_VARIANT = 295;
         int EMPTY_VALUE_CONSTRAINT = 300;
+        int SUPER_TYPE_NOT_A_MIXIN = 305;
+        int NODE_TYPE_CANNOT_BE_SUPER_TYPE_OF_ITSELF = 310;
     }
 
 }
