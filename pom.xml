@@ -22,7 +22,7 @@
     <properties>
         <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
-        <modeshape.client.version>3.3.0.Final</modeshape.client.version>
+        <modeshape.client.version>3.4.0.Final</modeshape.client.version>
     </properties>
 
 	<modules>
