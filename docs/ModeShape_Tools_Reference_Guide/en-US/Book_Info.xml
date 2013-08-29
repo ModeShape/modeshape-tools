@@ -9,7 +9,6 @@
 	<productname>JBoss Developer Studio</productname>
 	<productnumber>4.1</productnumber>
 	<edition>4.1.0</edition>
-	<pubsnumber>3</pubsnumber>
 	<abstract>
 		<para>
 			ModeShape Tools provides the ability to publish and remove content from ModeShape repositories.
