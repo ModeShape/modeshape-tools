@@ -887,6 +887,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         } else {
             this.workspaceArea = this.cbxWorkspaceAreas.getItems()[index];
         }
+
+        // update page state
+        updateState();
     }
 
     WorkspaceArea[] workspaceAreas() {
@@ -1152,11 +1155,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 this.cbxWorkspace.setEnabled(true);
             }
 
-            final boolean enable = (this.cbxWorkspaceAreas.getItemCount() != 0);
-
-            if (this.cbxWorkspaceAreas.getEnabled() != enable) {
-                this.cbxWorkspaceAreas.setEnabled(enable);
-                this.btnNewArea.setEnabled(enable);
+            if (!this.cbxWorkspaceAreas.getEnabled()) {
+                this.cbxWorkspaceAreas.setEnabled(true);
+                this.btnNewArea.setEnabled(true);
             }
         } else {
             // add an item for each workspace
