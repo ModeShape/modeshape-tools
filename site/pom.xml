@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>modeshape</artifactId>
-		<version>3.5.0-SNAPSHOT</version>
+		<version>3.6.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.modeshape</groupId>
 	<artifactId>modeshape.site</artifactId>
@@ -16,7 +16,7 @@
 	<properties>
 		<update.site.name>ModeShape Tools</update.site.name>
 		<update.site.description>Stable Release</update.site.description>
-		<update.site.version>3.5.0.${BUILD_ALIAS}</update.site.version>
+		<update.site.version>3.6.0.${BUILD_ALIAS}</update.site.version>
 <!--        <target.eclipse.version>4.2 (Juno)</target.eclipse.version> -->
         <target.eclipse.version>4.3 (Kepler)</target.eclipse.version>
 		<siteTemplateFolder>siteTemplateFolder</siteTemplateFolder>

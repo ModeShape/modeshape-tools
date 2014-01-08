@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jboss.tools.modeshape.jcr.test;singleton:=true
-Bundle-Version: 3.5.0.qualifier
+Bundle-Version: 3.6.0.qualifier
 Bundle-Vendor: %bundleVendor
 Fragment-Host: org.jboss.tools.modeshape.jcr
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
