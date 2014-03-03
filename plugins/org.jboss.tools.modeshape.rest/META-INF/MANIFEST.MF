@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jboss.tools.modeshape.rest;singleton:=true
-Bundle-Version: 3.6.0.qualifier
+Bundle-Version: 3.7.0.qualifier
 Bundle-Activator: org.jboss.tools.modeshape.rest.Activator
 Bundle-Vendor: %bundleVendor
 Bundle-Localization: plugin
@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.console,
  org.eclipse.jface.text,
  org.eclipse.debug.ui,
- org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional,
  org.eclipse.ui.views,
  org.jboss.tools.modeshape.client,
  org.jboss.tools.modeshape.ui

@@ -2,30 +2,31 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.jboss.tools</groupId>
-		<artifactId>parent</artifactId>
+    <parent>
+        <groupId>org.jboss.tools</groupId>
+        <artifactId>parent</artifactId>
 
         <!-- Eclipse Luna -->
-		<!-- <version>4.2.0.Alpha1-SNAPSHOT</version> -->
+        <version>4.2.0.Alpha2-SNAPSHOT</version>
 
         <!-- Eclipse Kepler -->
-		<version>4.1.1.Final-SNAPSHOT</version>
+        <!-- <version>4.1.1.Final-SNAPSHOT</version> -->
 
         <!-- Eclipse Juno -->
         <!-- <version>4.0.1.Final-SNAPSHOT</version> -->
-	</parent>
+    </parent>
 
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>modeshape</artifactId>
-	<version>3.6.0-SNAPSHOT</version>
+	<version>3.7.0-SNAPSHOT</version>
 	<name>modeshape.all</name>	
 	<packaging>pom</packaging>
 
     <properties>
         <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
-        <modeshape.client.version>3.7.0.Final</modeshape.client.version>
+        <modeshape.client.version>3.7.1.Final</modeshape.client.version>
+        <tycho.scmUrl>scm:git:https://github.com/jbosstools/jbosstools-central.git</tycho.scmUrl>
     </properties>
 
 	<modules>
@@ -34,5 +35,23 @@
 		<module>tests</module>
 		<module>site</module>
 	</modules>
+	
+    <repositories>
+		
+        <!-- To resolve parent artifact -->
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+		</repository>
+
+    </repositories>
+
 </project>
 	
