@@ -15,7 +15,8 @@ Require-Bundle: org.jboss.tools.modeshape.jcr,
  org.eclipse.ui.editors,
  org.eclipse.jface.text,
  org.eclipse.ui.ide,
- org.eclipse.help
+ org.eclipse.help,
+ org.jboss.tools.usage;resolution:=optional;x-installation:=greedy
 Bundle-Activator: org.jboss.tools.modeshape.jcr.ui.Activator
 Export-Package: org.jboss.tools.modeshape.jcr.ui,
  org.jboss.tools.modeshape.jcr.ui.dnd
