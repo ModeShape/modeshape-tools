@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.console,
  org.eclipse.jface.text,
  org.eclipse.debug.ui,
+ org.jboss.tools.usage;resolution:=optional;x-installation:=greedy,
  org.eclipse.ui.views,
  org.jboss.tools.modeshape.client,
  org.jboss.tools.modeshape.ui

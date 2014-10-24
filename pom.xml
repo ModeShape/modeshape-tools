@@ -1,57 +1,159 @@
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.jboss.tools</groupId>
         <artifactId>parent</artifactId>
 
         <!-- Eclipse Luna -->
-        <version>4.2.0.Alpha2-SNAPSHOT</version>
+        <!-- <version>4.2.0.Alpha2-SNAPSHOT</version> -->
+        <version>4.2.0.Final-SNAPSHOT</version>
 
         <!-- Eclipse Kepler -->
-        <!-- <version>4.1.1.Final-SNAPSHOT</version> -->
+        <!-- <version>4.1.2.Final-SNAPSHOT</version> -->
 
         <!-- Eclipse Juno -->
         <!-- <version>4.0.1.Final-SNAPSHOT</version> -->
     </parent>
 
-	<groupId>org.jboss.tools</groupId>
-	<artifactId>modeshape</artifactId>
-	<version>3.7.0-SNAPSHOT</version>
-	<name>modeshape.all</name>	
-	<packaging>pom</packaging>
+    <groupId>org.jboss.tools</groupId>
+    <artifactId>modeshape</artifactId>
+    <version>3.7.0-SNAPSHOT</version>
+    <name>modeshape.all</name>  
+    <packaging>pom</packaging>
 
     <properties>
         <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
+        <jbtis.version>4.2.0.Beta1b</jbtis.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
-        <modeshape.client.version>3.7.1.Final</modeshape.client.version>
+        <modeshape.client.version>3.8.1.Final</modeshape.client.version>
         <tycho.scmUrl>scm:git:https://github.com/jbosstools/jbosstools-central.git</tycho.scmUrl>
     </properties>
 
-	<modules>
-		<module>features</module>
-		<module>plugins</module>
-		<module>tests</module>
-		<module>site</module>
-	</modules>
-	
+    <modules>
+        <module>features</module>
+        <module>plugins</module>
+        <module>tests</module>
+        <module>site</module>
+    </modules>
+    
     <repositories>
-		
-        <!-- To resolve parent artifact -->
+        
+        <repository>
+            <id>jboss.org</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>ea.jboss.org</id>
+            <name>JBoss Early Access Repository</name>
+            <url>https://repository.jboss.org/nexus/content/groups/ea</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>m2-release-proxy.jboss.org</id>
+            <name>JBoss Release Proxy Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/m2-release-proxy/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Repository Group</name>
             <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </repository>
+    
+        <repository>
+            <id>jboss-snapshots-repository</id>
+            <name>JBoss Snapshots Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-		</repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
 
     </repositories>
 
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tychoVersion}</version>
+                <configuration>
+                    <resolver>p2</resolver>
+                    <pomDependencies>consider</pomDependencies>
+                    <target>
+                        <artifact>
+                            <groupId>org.jboss.tools.integration-stack</groupId>
+                            <artifactId>target-platform</artifactId>
+                            <version>${jbtis.version}</version>
+                            <classifier>base</classifier>
+                        </artifact>
+                    </target>
+                    <ignoreTychoRepositories>false</ignoreTychoRepositories>
+                    <environments> 
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                    </environments>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+  
 </project>
-	
+    
