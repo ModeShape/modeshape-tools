@@ -131,7 +131,8 @@ public final class PublishWizard extends Wizard {
         ModeShapeWorkspace workspace = this.page.getWorkspace();
         List<IFile> files = this.page.getFiles();
         String workspaceArea = this.page.getWorkspaceArea();
-        PublishJob job = new PublishJob(this.type, files, workspace, workspaceArea, this.page.isVersioning());
+        PublishJob job = new PublishJob(this.type, files, workspace, workspaceArea, this.page.isIncludingProjectPath(),
+                                        this.page.isVersioning());
         job.schedule();
 
         return true;

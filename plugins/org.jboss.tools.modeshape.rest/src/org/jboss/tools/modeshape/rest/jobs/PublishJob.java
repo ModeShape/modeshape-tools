@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
@@ -80,6 +81,11 @@ public final class PublishJob extends Job {
     private final List<IFile> files;
 
     /**
+     * Indicates if the published path should include the Eclipse workspace project.
+     */
+    private boolean includeProjectPath = false;
+
+    /**
      * The unique job identifier.
      */
     private final int jobId;
@@ -109,12 +115,14 @@ public final class PublishJob extends Job {
      * @param files the files being published or unpublished (never <code>null</code>)
      * @param workspace the workspace to use when publishing or unpublishing (never <code>null</code>)
      * @param workspaceArea the path segment prepended to the file project path (maybe be <code>null</code> or empty)
+     * @param includeProjectPath <true> if the Eclipse project should be included in the published path
      * @param version <true> if published resources should be versioned
      */
     public PublishJob( Type type,
                        List<IFile> files,
                        ModeShapeWorkspace workspace,
                        String workspaceArea,
+                       boolean includeProjectPath,
                        boolean version ) {
         super(getJobName(type, JOB_ID.incrementAndGet()));
 
@@ -124,6 +132,7 @@ public final class PublishJob extends Job {
         this.type = type;
         this.files = files;
         this.workspace = workspace;
+        this.includeProjectPath = includeProjectPath;
         this.version = version;
         this.jobId = JOB_ID.get();
 
@@ -189,10 +198,10 @@ public final class PublishJob extends Job {
             // write initial message to console
             if (isPublishing()) {
                 ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobPublish, new Object[] { this.jobId, serverUrl,
-                        repositoryName, workspaceName, fileCount }));
+                        repositoryName, workspaceName, fileCount, this.workspaceArea }));
             } else {
                 ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobUnpublish, new Object[] { this.jobId, serverUrl,
-                        repositoryName, workspaceName, fileCount }));
+                        repositoryName, workspaceName, fileCount, this.workspaceArea }));
             }
 
             PublishedResourceHelper resourceHelper = new PublishedResourceHelper(getServerManager());
@@ -205,7 +214,16 @@ public final class PublishJob extends Job {
                 }
 
                 File file = eclipseFile.getLocation().toFile();
-                String path = this.workspaceArea + eclipseFile.getParent().getFullPath().toString();
+                String path = this.workspaceArea;
+                IPath parentPath = eclipseFile.getParent().getFullPath();
+
+                if (this.includeProjectPath) {
+                    path += parentPath;
+                } else {
+                    // strip off project which is first segment
+                    path += '/' + parentPath.removeFirstSegments(1).toString();
+                }
+
                 URL url = getServerManager().getUrl(file, path, this.workspace);
                 Status status = null;
 
