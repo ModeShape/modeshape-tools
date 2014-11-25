@@ -125,6 +125,8 @@ public final class RestClientI18n extends NLS {
     public static String publishJobUnpublishTaskName;
 
     public static String publishPagePublishTitle;
+    public static String publishPageIncludeProjectCheckBox;
+    public static String publishPageIncludeProjectCheckBoxToolTip;
     public static String publishPageLocationGroupTitle;
     public static String publishPageMissingRepositoryStatusMsg;
     public static String publishPageMissingPublishAreaStatusMsg;

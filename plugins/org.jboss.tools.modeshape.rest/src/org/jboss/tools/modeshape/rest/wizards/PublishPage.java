@@ -308,6 +308,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     private PublishingFileFilter filter;
 
     /**
+     * Indicates if the published path should include the Eclipse workspace project.
+     */
+    private boolean includeProjectPath = false;
+
+    /**
      * A hyperlink to the preference page (will be <code>null</code> when unpublishing).
      */
     private Link linkPrefs;
@@ -540,8 +545,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         // pnl layout:
         // row 1: lbl
         // row 2: lstResources
-        // row 3: recurse chkbox
-        // row 4: versioning chkbox and link (only when publishing)
+        // row 3: include project name in publised path
+        // row 4: recurse chkbox
+        // row 5: versioning chkbox and link (only when publishing)
 
         { // row 1
             Label lbl = new Label(pnl, SWT.LEFT);
@@ -567,7 +573,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             this.lstResources.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                  */
                 @Override
@@ -598,7 +604,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             chkRecurse.addSelectionListener(new SelectionAdapter() {
                 /**
                  * {@inheritDoc}
-                 * 
+                 *
                  * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                  */
                 @Override
@@ -622,8 +628,41 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             });
         }
 
+        { // row 4 include project in published path chkbox
+            final Button chkIncludeProject = new Button(pnl, SWT.CHECK);
+            chkIncludeProject.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+            chkIncludeProject.setText(RestClientI18n.publishPageIncludeProjectCheckBox);
+            chkIncludeProject.setToolTipText(RestClientI18n.publishPageIncludeProjectCheckBoxToolTip);
+            chkIncludeProject.setSelection(this.includeProjectPath);
+            chkIncludeProject.addSelectionListener(new SelectionAdapter() {
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                 */
+                @Override
+                public void widgetSelected( SelectionEvent e ) {
+                    handleIncludeProjectInPathChanged(((Button)e.widget).getSelection());
+                }
+            });
+
+            // update page message first time selected to get rid of initial message by forcing validation
+            chkIncludeProject.addSelectionListener(new SelectionAdapter() {
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                 */
+                @Override
+                public void widgetSelected( SelectionEvent e ) {
+                    updateInitialMessage();
+                    ((Button)e.widget).removeSelectionListener(this);
+                }
+            });
+        }
+
         if (this.type == Type.PUBLISH) {
-            // row 4 versioning chkbox and link to open preference page
+            // row 5 versioning chkbox and link to open preference page
             Composite pnlVersioning = new Composite(pnl, SWT.NONE);
             pnlVersioning.setLayout(new GridLayout(2, false));
             ((GridLayout)pnlVersioning.getLayout()).marginWidth = 0;
@@ -736,6 +775,10 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
      */
     String getWorkspaceArea() {
         return this.workspaceArea;
+    }
+
+    void handleIncludeProjectInPathChanged( final boolean selected ) {
+        this.includeProjectPath = selected;
     }
 
     /**
@@ -962,6 +1005,13 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         }
 
         updateState();
+    }
+
+    /**
+     * @return <code>true</code> if resource published path should include the Eclipse project name
+     */
+    boolean isIncludingProjectPath() {
+        return this.includeProjectPath;
     }
 
     /**
