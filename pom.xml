@@ -25,7 +25,7 @@
 
     <properties>
         <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
-        <jbtis.version>4.2.0.Beta1b</jbtis.version>
+        <jbtis.version>4.2.0.Final</jbtis.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
         <modeshape.client.version>3.8.1.Final</modeshape.client.version>
         <tycho.scmUrl>scm:git:https://github.com/jbosstools/jbosstools-central.git</tycho.scmUrl>
