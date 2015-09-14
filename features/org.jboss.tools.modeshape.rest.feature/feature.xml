@@ -2,7 +2,9 @@
 <feature
       id="org.jboss.tools.modeshape.rest.feature"
       label="%featureName"
-      version="3.7.0.qualifier"
+      version="3.8.0.qualifier"
+      license-feature="org.jboss.tools.foundation.license.feature"
+      license-feature-version="0.0.0"
       provider-name="%featureProvider"
       plugin="org.jboss.tools.modeshape.rest"
       image="feature.png">
