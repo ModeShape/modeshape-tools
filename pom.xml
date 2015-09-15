@@ -26,6 +26,7 @@
 
     <properties>
         <eclipse.m2e.version>1.0.0</eclipse.m2e.version>
+        <jbt.tycho-plugins.version>0.23.1-SNAPSHOT</jbt.tycho-plugins.version>
         <jbtis.version>4.3.0.Beta1f-SNAPSHOT</jbtis.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
         <modeshape.client.version>3.8.1.Final</modeshape.client.version>
@@ -137,11 +138,6 @@
                         <environment>
                             <os>linux</os>
                             <ws>gtk</ws>
-                            <arch>x86</arch>
-                        </environment>
-                        <environment>
-                            <os>macosx</os>
-                            <ws>cocoa</ws>
                             <arch>x86</arch>
                         </environment>
                         <environment>
